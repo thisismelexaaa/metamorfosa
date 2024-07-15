@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('panel.layouts.app')
 
 @section('title')
     Dashboard

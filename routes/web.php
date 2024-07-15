@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\landingpage\HomeController;
+use App\Http\Controllers\Panel\DashboardController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -12,6 +12,6 @@ Auth::routes();
 
 // prefix routes for admin
 Route::prefix('panel/admin')->group(function () {
-    Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
 
