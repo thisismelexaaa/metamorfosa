@@ -61,9 +61,9 @@
     <div class="tap-top"><i data-feather="chevrons-up"></i></div>
     <!-- Loader ends-->
     <main class="page-wrapper compact-wrapper" id="pageWrapper">
-        <x-page-header />
+        <x-panel.page-header />
         <div class="page-body-wrapper">
-            <x-side-bar />
+            <x-panel.side-bar />
             <div class="page-body">
                 @yield('content')
             </div>

@@ -6,14 +6,17 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
+// use Illuminate\View\Component;
+
 class PageHeader extends Component
 {
+    // public $isLogin;
     /**
      * Create a new component instance.
      */
     public function __construct()
     {
-        //
+        // $this->isLogin = $isLogin;
     }
 
     /**
@@ -21,6 +24,6 @@ class PageHeader extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.page-header');
+        return view('components.panel.page-header');
     }
 }
