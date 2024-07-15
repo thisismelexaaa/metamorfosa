@@ -44,6 +44,8 @@
     <link id="color" rel="stylesheet" href="{{ asset('./assets/panel/css/color-1.css') }}" media="screen">
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="{{ asset('./assets/panel/css/responsive.css') }}">
+    <!-- Bootstrap Icon-->
+    <link rel="stylesheet" href="{{ asset('./assets/bootstrap-icons/font/bootstrap-icons.min.css') }}">
 </head>
 
 <body>
