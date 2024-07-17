@@ -115,8 +115,9 @@
     <script src="{{ asset('assets/panel/js/height-equal.js') }}"></script>
     <script src="{{ asset('assets/panel/js/script.js') }}"></script>
     <script src="{{ asset('assets/DataTables/datatables.min.js') }}"></script>
+    <script src="{{ asset('assets/fullcalendar-6.1.15/dist/index.global.min.js') }}"></script>
 
-    @stack('scripts')
+    @yield('scripts')
 
     <script>
         $(document).ready(function() {
