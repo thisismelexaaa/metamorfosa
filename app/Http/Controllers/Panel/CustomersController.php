@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Panel;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class KeuanganController extends Controller
+class CustomersController extends Controller
 {
     public function __construct()
     {
@@ -16,7 +16,7 @@ class KeuanganController extends Controller
      */
     public function index()
     {
-        return view('panel.admin.keuangan.index');
+        return view('panel.admin.customers.index');
     }
 
     /**
@@ -24,7 +24,7 @@ class KeuanganController extends Controller
      */
     public function create()
     {
-        //
+        return view('panel.admin.customers.create');
     }
 
     /**

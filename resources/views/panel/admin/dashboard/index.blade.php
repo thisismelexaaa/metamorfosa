@@ -14,7 +14,7 @@
                 <div class="col-12 col-sm-6">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a class="home-item" href="index.html">
+                            <a class="home-item" href="{{ route('dashboard.index') }}">
                                 <i data-feather="home"></i>
                             </a>
                         </li>
@@ -54,10 +54,10 @@
                 <div class="card yearly-chart">
                     <div class="card-header card-no-border pb-0">
                         <div class="d-flex justify-content-between">
-                            <h6 class="f-w-600">Total Keuangan</h6>
-                            <h6 class="pb-2">$3,500,000</h6>
+                            <h6 class="f-w-600">Monthly Income</h6>
+                            <h6 class="pb-2">Rp. 3.500.000</h6>
                         </div>
-                        <h6 class="font-theme-light f-14 m-0">November 2021</h6>
+                        <h6 class="font-theme-light f-14 m-0">November 2024</h6>
                     </div>
                     <div class="card-body pt-0">
                         <div>
@@ -71,8 +71,8 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
-                            <h6 class="f-w-600">Total Pelanggan</h6>
-                            <h6>$3,500,000</h6>
+                            <h6 class="f-w-600">Total Customers</h6>
+                            <h6>50.000</h6>
                         </div>
                     </div>
                 </div>

@@ -5,14 +5,14 @@ namespace App\Http\Controllers\Panel;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class JadwalController extends Controller
+class ScheduleController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('panel.admin.jadwal.index');
+        return view('panel.admin.schedule.index');
     }
 
     /**

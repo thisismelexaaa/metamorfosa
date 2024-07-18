@@ -118,65 +118,6 @@
     <script src="{{ asset('assets/fullcalendar-6.1.15/dist/index.global.min.js') }}"></script>
 
     @yield('scripts')
-
-    <script>
-        $(document).ready(function() {
-            $('#datatable').DataTable({
-                lengthMenu: [
-                    [5, 10, 25, 50, -1],
-                    [5, 10, 25, 50, "All"]
-                ],
-                pageLength: 5,
-                dom: 'Bfrtip',
-                buttons: [{
-                        text: 'Tambah Data',
-                        className: 'btn btn-primary me-2',
-                        action: function(e, dt, node, config) {
-                            // Get current route
-                            let route = window.location.href;
-
-                            // Define routes
-                            let pelangganRoute = "{{ route('pelanggan.index') }}";
-                            let keuanganRoute = "{{ route('keuangan.index') }}";
-
-                            // Redirect routes
-                            let pelangganRouteCreate = "{{ route('pelanggan.create') }}";
-                            let keuanganRouteCreate = "{{ route('keuangan.create') }}";
-
-                            // Redirect based on current route
-                            if (route.includes(pelangganRoute)) {
-                                window.location.href = pelangganRouteCreate;
-                            } else if (route.includes(keuanganRoute)) {
-                                window.location.href = keuanganRouteCreate;
-                            }
-                        }
-                    },
-                    {
-                        extend: 'collection',
-                        text: 'Export',
-                        buttons: [{
-                                extend: 'copy',
-                                text: 'Copy',
-                            },
-                            {
-                                extend: 'excel',
-                                text: 'XLSX',
-                            },
-                            {
-                                extend: 'pdf',
-                                text: 'PDF',
-                            },
-                            {
-                                extend: 'csv',
-                                text: 'CSV',
-                            },
-                        ],
-                    }
-                ]
-            });
-        });
-    </script>
-
 </body>
 
 </html>

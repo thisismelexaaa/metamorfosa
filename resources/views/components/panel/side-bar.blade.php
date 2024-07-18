@@ -36,21 +36,21 @@
                         </a>
                     </li>
                     <li class="sidebar-list">
-                        <a class="sidebar-link sidebar-title {{ request()->routeIs('pelanggan.*') ? 'active' : '' }}" href="{{ route('pelanggan.index') }}">
+                        <a class="sidebar-link sidebar-title {{ request()->routeIs('customers.*') ? 'active' : '' }}" href="{{ route('customers.index') }}">
                             <i class="bi bi-people-fill"></i>
-                            <span>Pelanggan</span>
+                            <span>Customers</span>
                         </a>
                     </li>
                     <li class="sidebar-list">
-                        <a class="sidebar-link sidebar-title {{ request()->routeIs('jadwal.*') ? 'active' : '' }}" href="{{ route('jadwal.index') }}">
+                        <a class="sidebar-link sidebar-title {{ request()->routeIs('schedule.*') ? 'active' : '' }}" href="{{ route('schedule.index') }}">
                             <i class="bi bi-calendar-week-fill"></i>
-                            <span>Jadwal</span>
+                            <span>Schedule</span>
                         </a>
                     </li>
                     <li class="sidebar-list">
-                        <a class="sidebar-link sidebar-title {{ request()->routeIs('keuangan.*') ? 'active' : '' }}" href="{{ route('keuangan.index') }}">
+                        <a class="sidebar-link sidebar-title {{ request()->routeIs('finance.*') ? 'active' : '' }}" href="{{ route('finance.index') }}">
                             <i class="bi bi-bank2"></i>
-                            <span>Keuangan</span>
+                            <span>Finance</span>
                         </a>
                     </li>
                 </ul>
