@@ -121,8 +121,8 @@
                             <form action="{{ route('logout') }}" method="post">
                                 @csrf
                                 @method('POST')
-                                <button class="dropdown-item"><i data-feather="log-in"> </i><span>Log
-                                        Out</span></button>
+                                <a onclick="this.closest('form').submit();"><i data-feather="log-out"></i><span>Log
+                                        Out</span></a>
                             </form>
                         </li>
                     </ul>

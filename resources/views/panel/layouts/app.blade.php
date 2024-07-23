@@ -47,6 +47,9 @@
     <!-- Bootstrap Icon-->
     <link rel="stylesheet" href="{{ asset('./assets/bootstrap-icons/font/bootstrap-icons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('./assets/DataTables/datatables.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('./assets/select2-4.1.0-rc.0/dist/css/select2.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('./assets/select2-4.1.0-rc.0/dist/css/select2-bootstrap-5-theme.min.css') }}">
 </head>
 
 <body>
@@ -94,28 +97,11 @@
     <script src="{{ asset('assets/panel/js/config.js') }}"></script>
     <!-- Plugins JS start-->
     <script src="{{ asset('assets/panel/js/sidebar-menu.js') }}"></script>
-    <script src="{{ asset('assets/panel/js/chart/knob/knob.min.js') }}"></script>
-    <script src="{{ asset('assets/panel/js/chart/knob/knob-chart.js') }}"></script>
-    <script src="{{ asset('assets/panel/js/chart/apex-chart/apex-chart.js') }}"></script>
-    <script src="{{ asset('assets/panel/js/chart/apex-chart/stock-prices.js') }}"></script>
-    <script src="{{ asset('assets/panel/js/notify/bootstrap-notify.min.js') }}"></script>
-    <script src="{{ asset('assets/panel/js/dashboard/default.js') }}"></script>
-    <script src="{{ asset('assets/panel/js/notify/index.js') }}"></script>
-    <script src="{{ asset('assets/panel/js/datepicker/date-picker/datepicker.js') }}"></script>
-    <script src="{{ asset('assets/panel/js/datepicker/date-picker/datepicker.en.js') }}"></script>
-    <script src="{{ asset('assets/panel/js/datepicker/date-picker/datepicker.custom.js') }}"></script>
-    <script src="{{ asset('assets/panel/js/photoswipe/photoswipe.min.js') }}"></script>
-    <script src="{{ asset('assets/panel/js/photoswipe/photoswipe-ui-default.min.js') }}"></script>
-    <script src="{{ asset('assets/panel/js/photoswipe/photoswipe.js') }}"></script>
-    <script src="{{ asset('assets/panel/js/typeahead/handlebars.js') }}"></script>
-    <script src="{{ asset('assets/panel/js/typeahead/typeahead.bundle.js') }}"></script>
-    <script src="{{ asset('assets/panel/js/typeahead/typeahead.custom.js') }}"></script>
-    <script src="{{ asset('assets/panel/js/typeahead-search/handlebars.js') }}"></script>
-    <script src="{{ asset('assets/panel/js/typeahead-search/typeahead-custom.js') }}"></script>
     <script src="{{ asset('assets/panel/js/height-equal.js') }}"></script>
     <script src="{{ asset('assets/panel/js/script.js') }}"></script>
     <script src="{{ asset('assets/DataTables/datatables.min.js') }}"></script>
     <script src="{{ asset('assets/fullcalendar-6.1.15/dist/index.global.min.js') }}"></script>
+    <script src="{{ asset('assets/select2-4.1.0-rc.0/dist/js/select2.full.min.js') }}"></script>
 
     @yield('scripts')
 </body>

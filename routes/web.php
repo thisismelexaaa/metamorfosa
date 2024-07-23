@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\landingpage\HomeController;
 use App\Http\Controllers\Panel\DashboardController;
 use App\Http\Controllers\Panel\ScheduleController;
@@ -8,14 +9,26 @@ use App\Http\Controllers\Panel\FinanceController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Auth::routes();
+// Public routes
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::resource('/', HomeController::class);
+// Guest routes
+Route::middleware('guest')->group(function () {
+    Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+    Route::post('login', [LoginController::class, 'login']);
+});
 
-// prefix routes for admin
-Route::prefix('panel/admin')->group(function () {
-    Route::resource('/dashboard', DashboardController::class);
-    Route::resource('/customers', CustomersController::class);
-    Route::resource('/finance', FinanceController::class);
-    Route::resource('/schedule', ScheduleController::class);
+// Authenticated routes
+Route::middleware('auth')->group(function () {
+    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+
+    // Admin panel routes
+    Route::prefix('/panel/admin')->group(function () {
+        Route::resources([
+            '/dashboard' => DashboardController::class,
+            '/customers' => CustomersController::class,
+            '/finance' => FinanceController::class,
+            '/schedule' => ScheduleController::class,
+        ]);
+    });
 });

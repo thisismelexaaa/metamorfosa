@@ -15140,7 +15140,7 @@ form.basic-html-input-control-form input[type="time"]::after {
 }
 .table-bordered td,
 .table-bordered th {
-    border-color: #ecf3fa !important;
+    /* border-color: #ecf3fa !important; */
 }
 .pills-component {
     width: 20%;
@@ -17672,7 +17672,7 @@ p.data-attributes svg {
     margin-left: 5px;
 }
 .apexcharts-menu {
-    border-color: #ecf3fa !important;
+    /* border-color: #ecf3fa !important; */
 }
 @media (max-width: 1660px) {
     .chat-history .call-content {
@@ -24412,7 +24412,7 @@ ul.pro-services li:nth-child(n + 2) {
 }
 .select2-container .select2-selection--single {
     border-radius: 0.25rem !important;
-    border-color: #ecf3fa !important;
+    /* border-color: #ecf3fa !important; */
     height: 40px !important;
     padding: 5px;
 }

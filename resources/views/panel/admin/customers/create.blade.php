@@ -31,37 +31,38 @@
     </div>
     <div class="container-fluid">
         <div class="card overflow-hidden p-5">
-            <form action="" method="POST">
+            <form action="{{ route('customers.store') }}" method="POST">
                 @csrf
                 <div class="row">
                     <h3>Data Diri Customer</h3>
-                    <div class="row mb-3">
+                    <div class="row mb-2">
                         <div class="col-md">
                             <label class="form-label" for="nama">Nama Lengkap</label>
-                            <input id="nama" type="text" class="form-control" name="nama"
+                            <input required id="nama" type="text" class="form-control" name="nama"
                                 placeholder="Masukkan Nama Lengkap Pelanggan">
                         </div>
                         <div class="col-md">
                             <label class="form-label" for="nik">NIK</label>
-                            <input id="nik" type="text" class="form-control" name="nik"
+                            <input required id="nik" type="text" class="form-control" name="nik"
                                 placeholder="Masukkan Nomor Induk Kependudukan">
                         </div>
                         <div class="col-md">
                             <label class="form-label" for="jenis_kelamin">Jenis Kelamin</label>
-                            <select class="form-select" id="jenis_kelamin" name="jenis_kelamin">
-                                <option disabled selected>Pilih Jenis Kelamin</option>
+                            <select required class="form-select select2" id="jenis_kelamin" name="jenis_kelamin"
+                                data-placeholder="Pilih Jenis Kelamin">
+                                <option></option>
                                 <option value="Laki-laki">Laki-laki</option>
                                 <option value="Perempuan">Perempuan</option>
                             </select>
                         </div>
                         <div class="col-md">
                             <label class="form-label" for="tgl_lahir">Tanggal Lahir</label>
-                            <input id="tgl_lahir" type="date" class="form-control" name="tgl_lahir"
+                            <input required id="tgl_lahir" type="date" class="form-control" name="tgl_lahir"
                                 placeholder="Masukkan Tanggal Lahir">
                         </div>
                     </div>
 
-                    <div class="row mb-3">
+                    <div class="row mb-2">
                         <div class="col-md">
                             <label class="form-label" for="alamat">Alamat</label>
                             <input id="alamat" type="text" class="form-control" name="alamat"
@@ -82,13 +83,14 @@
                 <hr>
                 <div class="row">
                     <h3>Data Layanan</h3>
-                    <div class="row mb-3">
+                    <div class="row mb-2">
                         <div class="col-md">
                             <label class="form-label" for="layanan">Layanan</label>
-                            <select class="form-select text-capitalize" id="layanan" name="layanan">
-                                <option disabled selected>Pilih Jenis Layanan</option>
-                                <option value="layanan 1">layanan 1</option>
-                                <option value="layanan 2">layanan 2</option>
+                            <select class="form-select select2" id="layanan" name="layanan"
+                                data-placeholder="Pilih Jenis Layanan">
+                                <option></option>
+                                <option value="layanan 1">Layanan 1</option>
+                                <option value="layanan 2">Layanan 2</option>
                             </select>
                         </div>
                         <div class="col-md">
@@ -98,25 +100,37 @@
                         </div>
                         <div class="col-md">
                             <label class="form-label" for="durasi_selesai">Durasi Konsultas</label>
-                            <input id="durasi_konsultasi" type="date" class="form-control" name="durasi_konsultasi"
-                                placeholder="Masukkan Durasi Konsultasi">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="durasi">Durasi</span>
+                                <button type="button" class="input-group-text dropdown-toggle dropdown-toggle-split"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Durasi</span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><button type="button" class="dropdown-item" id="hari">Hari</button></li>
+                                    <li><button type="button" class="dropdown-item" id="bulan">Bulan</button></li>
+                                </ul>
+                                <input type="text" id="durasi" name="durasi" placeholder="Masukkan Durasi Sesuai Pilihan" class="form-control"
+                                    aria-label="Text input with segmented dropdown button">
+                            </div>
                         </div>
                     </div>
 
-                    <div class="row mb-3">
+                    <div class="row mb-2    ">
                         <div class="col-md">
                             <label class="form-label" for="profesional">Profesional</label>
-                            <select class="form-select text-capitalize" id="profesional" name="profesional">
-                                <option disabled selected>Pilih Profesional</option>
-                                <option value="profesional 1">profesional 1</option>
-                                <option value="profesional 2">profesional 2</option>
+                            <select class="form-select text-capitalize select2" id="profesional" name="profesional"
+                                data-placeholder="Pilih Profesional">
+                                <option></option>
+                                <option value="profesional 1">Profesional 1</option>
+                                <option value="profesional 2">Profesional 2</option>
                             </select>
                         </div>
-                        <div class="col-md">
-                            <label class="form-label" for="hasil_konsul">Hasil Konsul</label>
+                        {{-- <div class="col-md">
+                            <label class="form-label" for="hasil_konsul">Hasil Konsultasi</label>
                             <input id="hasil_konsul" type="text" class="form-control" name="hasil_konsul"
                                 placeholder="Masukkan Hasil Konsul">
-                        </div>
+                        </div> --}}
                         <div class="col-md">
                             <label class="form-label" for="biaya">Biaya</label>
                             <input id="biaya" type="text" class="form-control" name="biaya"
@@ -125,8 +139,12 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" id="btn-submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('function_js/customers/create.js') }}"></script>
 @endsection

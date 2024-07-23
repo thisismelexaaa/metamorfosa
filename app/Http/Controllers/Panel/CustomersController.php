@@ -32,7 +32,11 @@ class CustomersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+
+
+
+        dd($data);
     }
 
     /**

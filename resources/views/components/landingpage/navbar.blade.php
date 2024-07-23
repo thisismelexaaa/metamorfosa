@@ -28,25 +28,22 @@
 
         @if (Route::has('login'))
             @auth
-                <a href="{{ url('/panel/admin/dashboard') }}"
-                    class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
-                    Dashboard
-                </a>
+                <ul class="js-clone-nav d-none mt-1 d-lg-inline-block site-menu float-right">
+                    <li class="cta-button-outline">
+                        <a href="{{ route('dashboard.index') }}">Dahsboard</a>
+                    </li>
+                </ul>
             @else
                 <ul class="js-clone-nav d-none mt-1 d-lg-inline-block site-menu float-right">
                     <li class="cta-button-outline">
                         <a href="{{ route('login') }}">Sign in</a>
                     </li>
-                    <li class="cta-primary">
+                    {{-- <li class="cta-primary">
                         <a href="{{ route('register') }}">Register</a>
-                    </li>
+                    </li> --}}
                 </ul>
             @endauth
         @endif
-
-
-
-
 
         <a href="#"
             class="burger ml-auto float-right site-menu-toggle js-menu-toggle d-inline-block dark d-lg-none"
