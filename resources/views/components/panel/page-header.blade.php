@@ -117,7 +117,13 @@
                         <li><a href="kanban.html"><i data-feather="file-text"></i><span>Taskboard</span></a>
                         </li>
                         <li><a href="edit-profile.html"><i data-feather="settings"></i><span>Settings</span></a></li>
-                        <li><a href="login.html"><i data-feather="log-in"> </i><span>Log in</span></a>
+                        <li>
+                            <form action="{{ route('logout') }}" method="post">
+                                @csrf
+                                @method('POST')
+                                <button class="dropdown-item"><i data-feather="log-in"> </i><span>Log
+                                        Out</span></button>
+                            </form>
                         </li>
                     </ul>
                 </li>

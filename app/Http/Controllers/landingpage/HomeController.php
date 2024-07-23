@@ -7,18 +7,24 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function __construct()
+    public function index()
     {
-        $this->middleware('auth');
+        if (auth()->check()) {
+            return redirect()->route('dashboard.index');
+        }
+
+        return view('landingpage.home.index');
     }
 
-    public function index()
+    public function admin()
     {
         // check User Login
         $user = auth()->user();
 
-        if($user->role == 'admin'){
-            return 'Oke Admin' ;
+        if ($user && $user->role == 'admin') {
+            return 'Oke Admin';
         }
+
+        return redirect()->route('login'); // Redirect to login page if not admin
     }
 }
