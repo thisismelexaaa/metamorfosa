@@ -11,10 +11,10 @@
         }
     });
 
-    $(".prooduct-details-box .close").on("click", function (e) {
-        var tets = $(this).parent().parent().parent().parent().addClass("d-none");
-        console.log(tets);
-    });
+    // $(".prooduct-details-box .close").on("click", function (e) {
+    //     var tets = $(this).parent().parent().parent().parent().addClass("d-none");
+    //     console.log(tets);
+    // });
 
     if ($(".page-wrapper").hasClass("horizontal-wrapper")) {
         $(".sidebar-list").hover(

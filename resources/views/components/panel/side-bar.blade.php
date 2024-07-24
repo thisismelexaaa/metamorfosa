@@ -30,27 +30,58 @@
                         </div>
                     </li>
                     <li class="sidebar-list">
-                        <a class="sidebar-link sidebar-title {{ request()->routeIs('dashboard.*') ? 'active' : '' }}" href="{{ route('dashboard.index') }}">
+                        <a class="sidebar-link sidebar-title {{ request()->routeIs('dashboard.*') ? 'active' : '' }}"
+                            href="{{ route('dashboard.index') }}">
                             <i class="bi bi-house-door-fill"></i>
                             <span>Dashboard</span>
                         </a>
                     </li>
+                    <li class="my-2 sidebar-list">
+                        <span class="text-secondary">Master</span>
+                    </li>
                     <li class="sidebar-list">
-                        <a class="sidebar-link sidebar-title {{ request()->routeIs('customers.*') ? 'active' : '' }}" href="{{ route('customers.index') }}">
+                        <a class="sidebar-link sidebar-title {{ request()->routeIs('customers.*') ? 'active' : '' }}"
+                            href="{{ route('customers.index') }}">
                             <i class="bi bi-people-fill"></i>
                             <span>Customers</span>
                         </a>
                     </li>
                     <li class="sidebar-list">
-                        <a class="sidebar-link sidebar-title {{ request()->routeIs('schedule.*') ? 'active' : '' }}" href="{{ route('schedule.index') }}">
+                        <a class="sidebar-link sidebar-title {{ request()->routeIs('schedule.*') ? 'active' : '' }}"
+                            href="{{ route('schedule.index') }}">
                             <i class="bi bi-calendar-week-fill"></i>
                             <span>Schedule</span>
                         </a>
                     </li>
                     <li class="sidebar-list">
-                        <a class="sidebar-link sidebar-title {{ request()->routeIs('finance.*') ? 'active' : '' }}" href="{{ route('finance.index') }}">
+                        <a class="sidebar-link sidebar-title {{ request()->routeIs('finance.*') ? 'active' : '' }}"
+                            href="{{ route('finance.index') }}">
                             <i class="bi bi-bank2"></i>
                             <span>Finance</span>
+                        </a>
+                    </li>
+                    <li class="my-2 sidebar-list">
+                        <span class="text-secondary">Settings</span>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title {{ request()->routeIs('layanan.*') ? 'active' : '' }}"
+                            href="{{ route('layanan.index') }}">
+                            <i class="bi bi-card-checklist"></i>
+                            <span>Layanan</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title {{ request()->routeIs('finance.*') ? 'active' : '' }}"
+                            href="{{ route('finance.index') }}">
+                            <i class="bi bi-person-square"></i>
+                            <span>Support Teacher</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title {{ request()->routeIs('finance.*') ? 'active' : '' }}"
+                            href="{{ route('finance.index') }}">
+                            <i class="bi bi-gear-fill"></i>
+                            <span>Configuration</span>
                         </a>
                     </li>
                 </ul>

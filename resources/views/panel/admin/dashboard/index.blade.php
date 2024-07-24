@@ -15,7 +15,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
                             <a class="home-item" href="{{ route('dashboard.index') }}">
-                                <i data-feather="home"></i>
+                                <i class="bi bi-house-door-fill"></i>
                             </a>
                         </li>
                         {{-- <li class="breadcrumb-item active"> Dashboard</li> --}}

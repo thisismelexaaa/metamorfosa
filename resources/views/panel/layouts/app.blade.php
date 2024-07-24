@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,21 +23,10 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{ asset('./assets/panel/css/vendors/font-awesome.css') }}">
-    <!-- ico-font-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('./assets/panel/css/vendors/icofont.css') }}">
     <!-- Themify icon-->
     <link rel="stylesheet" type="text/css" href="{{ asset('./assets/panel/css/vendors/themify.css') }}">
-    <!-- Flag icon-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('./assets/panel/css/vendors/flag-icon.css') }}">
-    <!-- Feather icon-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('./assets/panel/css/vendors/feather-icon.css') }}">
     <!-- Plugins css start-->
     <link rel="stylesheet" type="text/css" href="{{ asset('./assets/panel/css/vendors/scrollbar.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('./assets/panel/css/vendors/animate.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('./assets/panel/css/vendors/date-picker.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('./assets/panel/css/vendors/photoswipe.css') }}">
-    <!-- Plugins css Ends-->
     <!-- Bootstrap css-->
     <link rel="stylesheet" type="text/css" href="{{ asset('./assets/panel/css/vendors/bootstrap.css') }}">
     <!-- App css-->
@@ -53,8 +43,9 @@
 </head>
 
 <body>
+    @include('sweetalert::alert')
     <!-- Loader starts-->
-    <div class="loader-wrapper">
+    <div class="loader-wrapper" id="loader">
         <div class="loader">
             <div class="loader-bar"></div>
             <div class="loader-bar"></div>
@@ -87,9 +78,6 @@
 
     <script src="{{ asset('assets/panel/js/jquery-3.5.1.min.js') }}"></script>
     <script src="{{ asset('assets/panel/js/bootstrap/bootstrap.bundle.min.js') }}"></script>
-    <!-- Feather icon js-->
-    <script src="{{ asset('assets/panel/js/icons/feather-icon/feather.min.js') }}"></script>
-    <script src="{{ asset('assets/panel/js/icons/feather-icon/feather-icon.js') }}"></script>
     <!-- Scrollbar js-->
     <script src="{{ asset('assets/panel/js/scrollbar/simplebar.js') }}"></script>
     <script src="{{ asset('assets/panel/js/scrollbar/custom.js') }}"></script>
