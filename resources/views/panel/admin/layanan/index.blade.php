@@ -28,30 +28,119 @@
         <div class="card">
             <div class="card-body">
                 <div class="d-flex gap-2">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
-                        Tambah Data
+                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
+                        Tambah Layanan
                     </button>
-                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal">
-                        Edit Data
+                    <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
+                        data-bs-target="#editModal">
+                        Edit Layanan
                     </button>
                 </div>
                 <div class="accordion accordion-flush mt-3 border-bottom" id="accordionFlushExample">
                     @foreach ($layanan as $data)
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#flush-collapseOne{{ $data['id'] }}" aria-expanded="false"
-                                    aria-controls="flush-collapseOne{{ $data['id'] }}">
+                                <button class="accordion-button collapsed fw-bold text-capitalize" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#flush-collapseOne{{ $data['id'] }}"
+                                    aria-expanded="false" aria-controls="flush-collapseOne{{ $data['id'] }}">
                                     {{ $data['layanan'] }}
                                 </button>
                             </h2>
                             <div id="flush-collapseOne{{ $data['id'] }}" class="accordion-collapse collapse"
                                 data-bs-parent="#accordionFlushExample">
+                                <div class="d-flex gap-2 py-3 justify-items-end">
+                                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#addModalSubLayanan{{ $data['id'] }}">
+                                        Tambah Sub Layanan
+                                    </button>
+                                </div>
                                 <ul class="list-group list-group-flush">
-                                    @foreach ($data['sub_layanan'] as $item)
-                                        <li class="list-group-item">{{ $item }}</li>
+                                    @foreach ($data->getSubLayanan as $item)
+                                        <li class="list-group-item">
+                                            <span class="d-flex justify-content-between">
+                                                <span>
+                                                    <i class="bi bi-dot"></i> {{ $item->sub_layanan }}
+                                                </span>
+                                                <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
+                                                    data-bs-target="#editModalSublayanan{{ $item->id }}">
+                                                    Edit Sub Layanan
+                                                </button>
+                                            </span>
+                                        </li>
+
+                                        <div class="modal fade" id="editModalSublayanan{{ $item->id }}" tabindex="-1"
+                                            aria-labelledby="editModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="addModalLabel">Edit Sub Layanan
+                                                        </h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <form action="{{ route('layanan.update', $item['id']) }}" method="POST">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <input type="text" name="id_sublayanan" id="id_sublayanan"
+                                                            value="{{ $item['id'] }}" hidden>
+                                                        <input type="text" name="layanan" value="{{ $data['layanan'] }}" hidden>
+                                                        <div class="modal-body">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <label for="layanan" class="form-label">Sub
+                                                                        Layanan</label>
+                                                                    <input type="text" class="form-control"
+                                                                        id="sublayananEdit" name="sub_layanan"
+                                                                        placeholder="Masukkan Nama Sub Layanan"
+                                                                        value="{{ $item['sub_layanan'] }}" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="reset" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-primary">Save
+                                                                changes</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                                     @endforeach
                                 </ul>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="addModalSubLayanan{{ $data['id'] }}" tabindex="-1"
+                            aria-labelledby="addModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="addModalLabel">Tambah Sub Layanan
+                                            {{ $data['layanan'] }}</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <form action="{{ route('layanan.store') }}" method="post">
+                                        @csrf
+                                        <input type="text" name="id_layanan" value="{{ $data['id'] }}" hidden>
+                                        <input type="text" name="layanan" value="{{ $data['layanan'] }}" hidden>
+                                        <div class="modal-body">
+                                            <div class="row gy-2">
+                                                <div class="col-md-12">
+                                                    <label for="layanan" class="form-label">Sub Layanan</label>
+                                                    <input type="text" class="form-control" id="layanan"
+                                                        name="sub_layanan" placeholder="Masukkan Nama Sub Layanan" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="reset" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     @endforeach
@@ -76,12 +165,6 @@
                                 <input type="text" class="form-control" id="layanan" name="layanan"
                                     placeholder="Masukkan Nama Layanan" />
                             </div>
-                            <div class="col-md-12">
-                                <label for="sub_layanan" class="form-label">Sub Layanan</label>
-                                <textarea type="text" class="form-control" id="sub_layanan" name="sub_layanan" placeholder="Masukkan Sub Layanan"></textarea>
-                            </div>
-                            <p>Pisahkan dengan koma untuk menambahkan lebih dari satu sub layanan, contoh: sub layanan 1,
-                                sub layanan 2</p>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -123,13 +206,6 @@
                                 <input type="text" class="form-control" id="layananEdit" name="layanan"
                                     placeholder="Masukkan Nama Layanan" />
                             </div>
-                            <div class="col-md-12">
-                                <label for="sub_layanan" class="form-label">Sub Layanan</label>
-                                <textarea type="text" class="form-control" id="sub_layananEdit" name="sub_layanan"
-                                    placeholder="Masukkan Sub Layanan"></textarea>
-                            </div>
-                            <p>Pisahkan dengan koma untuk menambahkan lebih dari satu sub layanan, contoh: sub layanan 1,
-                                sub layanan 2</p>
                         </div>
                     </div>
                     <div class="modal-footer d-none">
@@ -150,7 +226,6 @@
             const $getLayanan = $('#getLayanan');
             const $rowEdit = $('#rowEdit');
             const $layanan = $('#layananEdit');
-            const $subLayanan = $('#sub_layananEdit');
             const $form = $editModal.find('form');
             const $modalFooter = $editModal.find('.modal-footer');
 
@@ -175,7 +250,6 @@
                         if (data) {
                             $rowEdit.removeClass('d-none');
                             $layanan.val(data.layanan);
-                            $subLayanan.val(data.sub_layanan);
                             $modalFooter.removeClass('d-none');
                             $form.attr('action', update);
                             $form.attr('method', 'POST');

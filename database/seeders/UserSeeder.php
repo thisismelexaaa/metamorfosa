@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
         $admin->email_verified_at = date('Y-m-d H:i:s');
         $admin->password = bcrypt('123123');
         $admin->role = 'admin';
+        $admin->jenis_kelamin = 'computer';
         $admin->save();
     }
 }

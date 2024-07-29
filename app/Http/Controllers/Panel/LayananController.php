@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
 use App\Models\Panel\Settings\Layanan;
+use App\Models\Panel\Settings\SubLayanan;
 use Illuminate\Http\Request;
 
 class LayananController extends Controller
@@ -19,21 +20,10 @@ class LayananController extends Controller
      */
     public function index()
     {
-        $layanan = Layanan::all()->toArray();
+        $layanan = Layanan::all();
+        $sublayanan = SubLayanan::all();
 
-        foreach ($layanan as $key => $value) {
-            $sub_layanan = $value['sub_layanan'];
-
-            // convert to array
-            // $sub_layanan = json_encode($sub_layanan);
-            // explode
-            $sub_layanan = explode(',', $sub_layanan);
-            $layanan[$key]['sub_layanan'] = $sub_layanan;
-            // dd($sub_layanan);
-        }
-
-
-        return view('panel.admin.layanan.index', compact('layanan'));
+        return view('panel.admin.layanan.index', compact('layanan', 'sublayanan'));
     }
 
     /**
@@ -52,18 +42,34 @@ class LayananController extends Controller
         try {
             $data = $request;
 
-            $data->validate([
-                'layanan' => 'required',
-            ]);
+            if ($data->has('id_layanan')) {
+                // dd($request->all());
+                $data->validate([
+                    'layanan' => 'required',
+                    'sub_layanan' => 'required',
+                ]);
 
-            $data = [
-                'layanan' => $data->layanan,
-                'sub_layanan' => $data->sub_layanan,
-            ];
+                $data = [
+                    'id_layanan' => $data->id_layanan,
+                    'layanan' => $data->layanan,
+                    'sub_layanan' => $data->sub_layanan
+                ];
 
-            Layanan::create($data);
+                SubLayanan::create($data);
+                toast('Sub Layanan berhasil di tambahkan!', 'success');
+            } else {
+                $data->validate([
+                    'layanan' => 'required',
+                ]);
 
-            toast('Layanan berhasil di tambahkan!', 'success');
+                $data = [
+                    'layanan' => $data->layanan,
+                ];
+
+                Layanan::create($data);
+                toast('Layanan berhasil di tambahkan!', 'success');
+            }
+
             return redirect()->back();
         } catch (\Exception $e) {
             toast($e->getMessage(), 'error');
@@ -96,18 +102,35 @@ class LayananController extends Controller
     {
         try {
             $data = $request;
+            if ($data->has('id_sublayanan')) {
+                $getData = SubLayanan::find($data->id_sublayanan);
 
-            $data->validate([
-                'layanan' => 'required',
-            ]);
-            $data = [
-                'layanan' => $data->layanan,
-                'sub_layanan' => $data->sub_layanan,
-            ];
+                $data->validate([
+                    'layanan' => 'required',
+                    'sub_layanan' => 'required',
+                ]);
 
-            Layanan::find($id)->update($data);
+                $data = [
+                    'id_layanan' => $getData->id_layanan,
+                    'layanan' => $getData->layanan,
+                    'sub_layanan' => $data->sub_layanan
+                ];
 
-            toast('Layanan berhasil di ubah!', 'success');
+                $getData->update($data);
+                toast('Sub Layanan berhasil di ubah!', 'success');
+            } else {
+                $data->validate([
+                    'layanan' => 'required',
+                ]);
+                $data = [
+                    'layanan' => $data->layanan,
+                    'sub_layanan' => $data->sub_layanan,
+                ];
+
+                Layanan::find($id)->update($data);
+                toast('Layanan berhasil di ubah!', 'success');
+            }
+
             return redirect()->back();
         } catch (\Exception $e) {
             toast($e->getMessage(), 'error');
@@ -123,10 +146,11 @@ class LayananController extends Controller
         //
     }
 
-    public function getLayanan()
-    {
-        // get data
-        $data = Layanan::all();
-        return response()->json($data);
-    }
+    // public function getLayanan($id)
+    // {
+    //     // get data
+    //     $data = Layanan::find($id);
+
+    //     return response()->json($data);
+    // }
 }

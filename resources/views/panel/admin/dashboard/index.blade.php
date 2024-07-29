@@ -33,7 +33,7 @@
                         <div class="media">
                             <div class="media-body">
                                 <div class="greeting-user">
-                                    <h1>Hello, {{ auth()->user()->name }}</h1>
+                                    <h1>Hello, {{ auth()->user()->username }}</h1>
                                     <p>Welcome back, your dashboard is ready!</p>
                                     {{-- <a class="btn btn-outline-white_color" href="blog-single.html">
                                         Get Started

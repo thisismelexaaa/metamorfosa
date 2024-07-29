@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Panel;
 use App\Http\Controllers\Controller;
 use App\Models\Panel\Master\Customer;
 use App\Models\Panel\Settings\Layanan;
+use App\Models\Panel\Settings\SubLayanan;
 use Illuminate\Http\Request;
 
 class CustomersController extends Controller
@@ -107,7 +108,7 @@ class CustomersController extends Controller
      */
     public function show(string $id)
     {
-        //
+
     }
 
     /**
@@ -115,7 +116,7 @@ class CustomersController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        dd($id);
     }
 
     /**
@@ -131,13 +132,20 @@ class CustomersController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            Customer::find($id)->delete();
+            toast('Customer berhasil di hapus!', 'success');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            toast($e->getMessage(), 'error');
+            return redirect()->back();
+        }
     }
 
     public function getLayananById($id)
     {
         // Fetch the Layanan record by its ID
-        $layanan = Layanan::findOrFail($id);
+        $layanan = SubLayanan::findOrFail($id);
 
         $layanan->sub_layanan = explode(',', $layanan->sub_layanan);
 

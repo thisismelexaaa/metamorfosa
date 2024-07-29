@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 text: 'Add Data',
                 className: 'btn btn-primary me-2 mb-2',
                 action: () => {
-                    const customersRouteCreate = "customers/create";
+                    const customersRouteCreate = "account/create";
                     window.location.href = customersRouteCreate;
                 }
             },

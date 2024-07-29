@@ -71,19 +71,19 @@
                         </a>
                     </li>
                     <li class="sidebar-list">
-                        <a class="sidebar-link sidebar-title {{ request()->routeIs('finance.*') ? 'active' : '' }}"
-                            href="{{ route('finance.index') }}">
+                        <a class="sidebar-link sidebar-title {{ request()->routeIs('account.*') ? 'active' : '' }}"
+                            href="{{ route('account.index') }}">
                             <i class="bi bi-person-square"></i>
-                            <span>Support Teacher</span>
+                            <span>Account</span>
                         </a>
                     </li>
-                    <li class="sidebar-list">
+                    {{-- <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title {{ request()->routeIs('finance.*') ? 'active' : '' }}"
                             href="{{ route('finance.index') }}">
                             <i class="bi bi-gear-fill"></i>
                             <span>Configuration</span>
                         </a>
-                    </li>
+                    </li> --}}
                 </ul>
             </div>
             <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>

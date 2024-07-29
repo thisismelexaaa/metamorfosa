@@ -37,11 +37,24 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             let calendarEl = document.getElementById('calendar');
+            let customers = @json($customer);
+            let dataCustomer = customers.map(item => ({
+                id: item.id,
+                title: item.name,
+                start: item.tgl_masuk + 'T00:00:00',
+                end: item.tgl_selesai + 'T23:59:59',
+            }));
+
             let calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
+                timezone: 'local',
                 height: 700,
                 contentHeight: 25,
+                events: dataCustomer,
             });
+
+            console.log(dataCustomer);
+
             calendar.render();
         });
     </script>

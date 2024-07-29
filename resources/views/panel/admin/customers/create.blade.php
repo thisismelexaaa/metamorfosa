@@ -176,7 +176,6 @@
 @endsection
 
 @section('scripts')
-    {{-- <script src="{{ asset('function_js/customers/create.js') }}"></script> --}}
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             $('#col_uang_bayar').hide();

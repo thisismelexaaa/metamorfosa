@@ -3,16 +3,23 @@
 namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
+use App\Models\Panel\Master\Customer;
 use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('panel.admin.schedule.index');
+        $customer = Customer::all();
+
+        return view('panel.admin.schedule.index', compact('customer'));
     }
 
     /**

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\landingpage\HomeController;
+use App\Http\Controllers\Panel\AccountController;
 use App\Http\Controllers\Panel\DashboardController;
 use App\Http\Controllers\Panel\ScheduleController;
 use App\Http\Controllers\Panel\CustomersController;
@@ -31,6 +32,7 @@ Route::middleware('web')->group(function () {
             '/finance' => FinanceController::class,
             '/schedule' => ScheduleController::class,
             '/layanan' => LayananController::class,
+            '/account' => AccountController::class,
         ]);
 
         Route::get('/get-layanan', [LayananController::class, 'getLayanan'])->name('layanan.getLayanan');
