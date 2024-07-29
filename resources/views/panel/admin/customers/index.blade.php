@@ -78,16 +78,14 @@
                                     <td>-</td>
                                     <td class="bg-white text-dark">
                                         <div class="d-flex gap-1">
-                                            <a href="{{ route('customers.show', $item->id) }}"
-                                                class="btn btn-sm btn-warning">
-                                                <i class="bi bi-eye-fill"></i>
+                                            <a href="{{ route('customers.show', $item->id) }}" class="btn btn-primary">
+                                                <i class="bi bi-info-circle-fill"></i>
                                             </a>
-                                            <a href="{{ route('customers.edit', $item->id) }}"
-                                                class="btn btn-sm btn-primary">
+                                            <a href="{{ route('customers.edit', $item->id) }}" class="btn  btn-warning">
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
-                                            <a href="{{ route('customers.destroy', $item->id) }}"
-                                                class="btn btn-sm btn-danger" data-confirm-delete="true">
+                                            <a href="{{ route('customers.destroy', $item->id) }}" class="btn  btn-outline-danger"
+                                                data-confirm-delete="true">
                                                 <i class="bi bi-trash3-fill"></i>
                                             </a>
 

@@ -108,7 +108,8 @@ class CustomersController extends Controller
      */
     public function show(string $id)
     {
-
+        $data = Customer::find($id);
+        return view('panel.admin.customers.show', compact('data'));
     }
 
     /**
@@ -116,7 +117,10 @@ class CustomersController extends Controller
      */
     public function edit(string $id)
     {
-        dd($id);
+        $data = Customer::find($id);
+        $layanan = Layanan::all();
+
+        return view('panel.admin.customers.edit', compact('data', 'layanan'));
     }
 
     /**
@@ -124,7 +128,55 @@ class CustomersController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $data = $request;
+
+            $data->validate([
+                'name' => 'required',
+                'no_tlp' => 'required',
+                'jenis_kelamin' => 'required',
+                'tgl_lahir' => 'required',
+                'alamat' => 'required',
+                'nama_ayah' => 'required',
+                'pekerjaan_ayah' => 'required',
+                'nama_ibu' => 'required',
+                'pekerjaan_ibu' => 'required',
+                'layanan' => 'required',
+                'sub_layanan' => 'required',
+                'support_teacher' => 'required',
+                'tgl_masuk' => 'required',
+                'tgl_selesai' => 'required',
+                'keluhan' => 'required',
+                'status' => 'required',
+            ]);
+
+            $data = [
+                'name' => $data->name,
+                'no_tlp' => $data->no_tlp,
+                'jenis_kelamin' => $data->jenis_kelamin,
+                'tgl_lahir' => $data->tgl_lahir,
+                'alamat' => $data->alamat,
+                'nama_ayah' => $data->nama_ayah,
+                'pekerjaan_ayah' => $data->pekerjaan_ayah,
+                'nama_ibu' => $data->nama_ibu,
+                'pekerjaan_ibu' => $data->pekerjaan_ibu,
+                'layanan' => $data->layanan,
+                'sub_layanan' => $data->sub_layanan,
+                'support_teacher' => $data->support_teacher,
+                'tgl_masuk' => $data->tgl_masuk,
+                'tgl_selesai' => $data->tgl_selesai,
+                'keluhan' => $data->keluhan,
+                'status' => $data->status
+            ];
+
+            Customer::find($id)->update($data);
+
+            toast('Customer berhasil di ubah!', 'success');
+            return redirect()->route('customers.index');
+        } catch (\Exception $e) {
+            toast($e->getMessage(), 'error');
+            return redirect()->back()->withInput();
+        }
     }
 
     /**
