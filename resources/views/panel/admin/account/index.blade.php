@@ -44,11 +44,23 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $user['name'] }}</td>
                                 <td>{{ $user['email'] }}</td>
-                                <td>{{ $user['jenis_kelamin'] }}</td>
-                                <td>{{ $user['role'] }}</td>
+                                <td>{{ $user['jenis_kelamin'] == 1 ? 'Laki-laki' : 'Perempuan' }}</td>
+                                <td>
+                                    @if ($user->role == 1)
+                                        {{ $user->role = 'Admin' }}
+                                    @elseif ($user->role == 2)
+                                        {{ $user->role = 'Support Teacher' }}
+                                    @elseif ($user->role == 3)
+                                        {{ $user->role = 'Staff' }}
+                                    @elseif ($user->role == 4)
+                                        {{ $user->role = 'Receptionist' }}
+                                    @elseif ($user->role == 5)
+                                        {{ $user->role = 'Official' }}
+                                    @endif
+                                </td>
                                 <td>
                                     <div class="d-flex gap-2">
-                                        <a href="#" class="btn btn-sm btn-primary">
+                                        <a href="{{ route('account.edit', $user['id']) }}" class="btn btn-sm btn-primary">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
                                         <a href="#" class="btn btn-sm btn-danger">

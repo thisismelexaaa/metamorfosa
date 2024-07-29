@@ -5,6 +5,16 @@
 @endsection
 
 @section('content')
+    <style>
+        .fc-event {
+            cursor: pointer;
+        }
+
+        .fc-event-dot {
+            background-color: #f0f0f0;
+        }
+    </style>
+
     <div class="container-fluid">
         <div class="page-title">
             <div class="row">
@@ -36,21 +46,40 @@
 @section('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            let calendarEl = document.getElementById('calendar');
-            let customers = @json($customer);
-            let dataCustomer = customers.map(item => ({
+            const calendarEl = document.getElementById('calendar');
+            const customers = @json($customer);
+            const dataCustomer = customers.map(item => ({
                 id: item.id,
                 title: item.name,
                 start: item.tgl_masuk + 'T00:00:00',
                 end: item.tgl_selesai + 'T23:59:59',
+                allDay: item.tgl_masuk === item.tgl_selesai
             }));
 
-            let calendar = new FullCalendar.Calendar(calendarEl, {
+            let title = "Change View";
+
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                locale: 'id',
+                customButtons: {
+                    ChangeView: {
+                        text: title,
+                        click: function() {
+                            if (calendar.view.type === 'listWeek') {
+                                calendar.changeView('dayGridMonth');
+                            } else {
+                                calendar.changeView('listWeek');
+                            }
+                        }
+                    }
+                },
+                headerToolbar: {
+                    left: 'ChangeView',
+                },
                 initialView: 'dayGridMonth',
                 timezone: 'local',
                 height: 700,
                 contentHeight: 25,
-                events: dataCustomer,
+                events: dataCustomer
             });
 
             console.log(dataCustomer);

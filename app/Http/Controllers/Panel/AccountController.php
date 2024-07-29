@@ -41,6 +41,7 @@ class AccountController extends Controller
         try {
             $data = $data->validate([
                 'name' => 'required',
+                'username' => 'required',
                 'email' => 'required',
                 'role' => 'required',
                 'alamat' => 'required',
@@ -49,18 +50,18 @@ class AccountController extends Controller
 
             ]);
 
-            $email = substr($data['email'], 0, strpos($data['email'], '@'));
-            $password = bcrypt($email);
+            $password = bcrypt($data['username']);
 
             $data = [
                 'name' => $data['name'],
+                'username' => $data['username'],
                 'email' => $data['email'],
                 'role' => $data['role'],
                 'alamat' => $data['alamat'],
                 'status' => $data['status'],
                 'jenis_kelamin' => $data['jenis_kelamin'],
                 'password' => $password,
-                'username' => $email,
+                'username' => $data['username'],
                 'email_verified_at' => now(),
                 'updated_at' => now(),
                 'created_at' => now(),
@@ -91,7 +92,11 @@ class AccountController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data = User::find($id);
+
+        $this->DefineId($data);
+
+        return view('panel.admin.account.edit', compact('data'));
     }
 
     /**
@@ -99,7 +104,38 @@ class AccountController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = $request;
+        try {
+            $data = $data->validate([
+                'name' => 'required',
+                'email' => 'required',
+                'role' => 'required',
+                'alamat' => 'required',
+                'status' => 'required',
+                'jenis_kelamin' => 'required',
+
+            ]);
+
+            $data = [
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'role' => $data['role'],
+                'alamat' => $data['alamat'],
+                'status' => $data['status'],
+                'jenis_kelamin' => $data['jenis_kelamin'],
+                'updated_at' => now(),
+            ];
+
+            // dd($data);
+
+            User::where('id', $id)->update($data);
+
+            toast('Akun berhasil di ubah!', 'success');
+            return redirect()->route('account.index');
+        } catch (\Exception $e) {
+            toast($e->getMessage(), 'error');
+            return redirect()->back()->withInput();
+        }
     }
 
     /**
@@ -108,5 +144,35 @@ class AccountController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    private function DefineId($data)
+    {
+        // role
+        if ($data->role == 1) {
+            $data->role = 'Admin';
+        } else if ($data->role == 2) {
+            $data->role = 'Support Teacher';
+        } else if ($data->role == 3) {
+            $data->role = 'Staff';
+        } else if ($data->role == 4) {
+            $data->role = 'Receptionist';
+        } else if ($data->role == 5) {
+            $data->role = 'Official';
+        }
+
+        // status
+        if ($data->status == 1) {
+            $data->status = 'Sudah Menikah';
+        } else if ($data->status == 2) {
+            $data->status = 'Belum Menikah';
+        }
+
+        // jenis_kelamin
+        if ($data->jenis_kelamin == 1) {
+            $data->jenis_kelamin = 'Laki - Laki';
+        } else if ($data->jenis_kelamin == 2) {
+            $data->jenis_kelamin = 'Perempuan';
+        }
     }
 }
