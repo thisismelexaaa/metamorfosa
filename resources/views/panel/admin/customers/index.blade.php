@@ -84,8 +84,8 @@
                                             <a href="{{ route('customers.edit', $item->id) }}" class="btn  btn-warning">
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
-                                            <a href="{{ route('customers.destroy', $item->id) }}" class="btn  btn-outline-danger"
-                                                data-confirm-delete="true">
+                                            <a href="{{ route('customers.destroy', $item->id) }}"
+                                                class="btn  btn-outline-danger" data-confirm-delete="true">
                                                 <i class="bi bi-trash3-fill"></i>
                                             </a>
 

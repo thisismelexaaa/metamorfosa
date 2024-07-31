@@ -1,10 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Count columns in the table
+    // Menghitung jumlah kolom di tabel
     const columns = document.querySelectorAll('.table th').length;
     const totalColumns = columns - 1;
-    console.log(columns, totalColumns);
 
-    // Initialize DataTable
+    // Inisialisasi DataTable
     $('#datatable').DataTable({
         lengthMenu: [
             [5, 10, 15, 20, -1],
@@ -19,21 +18,18 @@ document.addEventListener('DOMContentLoaded', () => {
         scrollCollapse: true,
         scrollX: true,
         pageLength: 5,
-        buttons: [
-            {
+        buttons: [{
                 text: 'Add Data',
                 className: 'btn btn-primary me-2 mb-2',
                 action: () => {
-                    const customersRouteCreate = "customers/create";
-                    window.location.href = customersRouteCreate;
+                    window.location.href = "customers/create";
                 }
             },
             {
                 extend: 'collection',
                 text: 'Export',
                 className: 'btn btn-primary me-2 mb-2',
-                buttons: [
-                    {
+                buttons: [{
                         extend: 'copy',
                         title: `Data customers Metamorfosa, tanggal ${new Date().toLocaleDateString()}`,
                         exportOptions: {
@@ -66,10 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         },
                         orientation: 'landscape',
                         pageSize: 'A4'
-                        // customize: function(doc) {
-                        //     doc.pageMargins = [10, 10, 10,
-                        //     10]; // Optional: Customize page margins
-                        // }
                     },
                     {
                         extend: 'csv',
@@ -83,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     },
                 ]
-            },
-        ],
+            }
+        ]
     });
 });

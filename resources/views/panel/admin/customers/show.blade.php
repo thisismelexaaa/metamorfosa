@@ -34,52 +34,54 @@
         <div class="card">
             <div class="card-body">
                 <h3>Data Diri</h3>
-                <table class="table table-hover table-bordered">
-                    <tr>
-                        <th>{{ __('No Daftar') }}</th>
-                        <td>:</td>
-                        <td>{{ $data->no_daftar }}</td>
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <tr>
+                            <th>{{ __('No Daftar') }}</th>
+                            <td>:</td>
+                            <td>{{ $data->no_daftar }}</td>
 
-                        <th>{{ __('Name') }}</th>
-                        <td>:</td>
-                        <td>{{ $data->name }}</td>
+                            <th>{{ __('Name') }}</th>
+                            <td>:</td>
+                            <td>{{ $data->name }}</td>
 
-                        <th>{{ __('Nomor Telepon') }}</th>
-                        <td>:</td>
-                        <td>{{ $data->no_tlp }}</td>
+                            <th>{{ __('Nomor Telepon') }}</th>
+                            <td>:</td>
+                            <td>{{ $data->no_tlp }}</td>
 
-                        <th>{{ __('Alamat') }}</th>
-                        <td>:</td>
-                        <td>{{ $data->alamat }}</td>
+                            <th>{{ __('Alamat') }}</th>
+                            <td>:</td>
+                            <td>{{ $data->alamat }}</td>
 
-                        <th>{{ __('Tanggal Lahir') }}</th>
-                        <td>:</td>
-                        <td>{{ $data->tgl_lahir }}</td>
-                    </tr>
-                    <tr>
-                        <th>Nama Ayah</th>
-                        <td>:</td>
-                        <td>{{ $data->nama_ayah }}</td>
+                            <th>{{ __('Tanggal Lahir') }}</th>
+                            <td>:</td>
+                            <td>{{ $data->tgl_lahir }}</td>
+                        </tr>
+                        <tr>
+                            <th>Nama Ayah</th>
+                            <td>:</td>
+                            <td>{{ $data->nama_ayah }}</td>
 
-                        <th>Nama Ibu</th>
-                        <td>:</td>
-                        <td>{{ $data->nama_ibu }}</td>
+                            <th>Nama Ibu</th>
+                            <td>:</td>
+                            <td>{{ $data->nama_ibu }}</td>
 
-                        <th>Pekerjaan Ayah</th>
-                        <td>:</td>
-                        <td>{{ $data->pekerjaan_ayah }}</td>
+                            <th>Pekerjaan Ayah</th>
+                            <td>:</td>
+                            <td>{{ $data->pekerjaan_ayah }}</td>
 
-                        <th>Pekerjaan Ibu</th>
-                        <td>:</td>
-                        <td>{{ $data->pekerjaan_ibu }}</td>
+                            <th>Pekerjaan Ibu</th>
+                            <td>:</td>
+                            <td>{{ $data->pekerjaan_ibu }}</td>
 
-                        <th>Layanan</th>
-                        <td>:</td>
-                        <td>{{ $data->alamat }}</td>
+                            <th>Layanan</th>
+                            <td>:</td>
+                            <td>{{ $data->alamat }}</td>
 
 
-                    </tr>
-                </table>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
