@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('id_layanan');
             $table->string('layanan');
             $table->string('sub_layanan');
+            $table->float('harga', 8, 2);
             $table->timestamps();
         });
     }

@@ -47,12 +47,14 @@ class LayananController extends Controller
                 $data->validate([
                     'layanan' => 'required',
                     'sub_layanan' => 'required',
+                    'harga' => 'required',
                 ]);
 
                 $data = [
                     'id_layanan' => $data->id_layanan,
                     'layanan' => $data->layanan,
-                    'sub_layanan' => $data->sub_layanan
+                    'sub_layanan' => $data->sub_layanan,
+                    'harga' => $data->harga
                 ];
 
                 SubLayanan::create($data);
@@ -108,12 +110,14 @@ class LayananController extends Controller
                 $data->validate([
                     'layanan' => 'required',
                     'sub_layanan' => 'required',
+                    'harga' => 'required',
                 ]);
 
                 $data = [
                     'id_layanan' => $getData->id_layanan,
                     'layanan' => $getData->layanan,
-                    'sub_layanan' => $data->sub_layanan
+                    'sub_layanan' => $getData->sub_layanan,
+                    'harga' => $getData->harga
                 ];
 
                 $getData->update($data);

@@ -58,8 +58,8 @@
                                     @foreach ($data->getSubLayanan as $item)
                                         <li class="list-group-item">
                                             <span class="d-flex justify-content-between">
-                                                <span>
-                                                    <i class="bi bi-dot"></i> {{ $item->sub_layanan }}
+                                                <span class="text-capitalize">
+                                                    <i class="bi bi-dot"></i> {{ $item->sub_layanan }} - Rp.{{ number_format($item->harga) }}
                                                 </span>
                                                 <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
                                                     data-bs-target="#editModalSublayanan{{ $item->id }}">
@@ -67,155 +67,20 @@
                                                 </button>
                                             </span>
                                         </li>
-
-                                        <div class="modal fade" id="editModalSublayanan{{ $item->id }}" tabindex="-1"
-                                            aria-labelledby="editModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="addModalLabel">Edit Sub Layanan
-                                                        </h1>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
-                                                    </div>
-                                                    <form action="{{ route('layanan.update', $item['id']) }}" method="POST">
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <input type="text" name="id_sublayanan" id="id_sublayanan"
-                                                            value="{{ $item['id'] }}" hidden>
-                                                        <input type="text" name="layanan" value="{{ $data['layanan'] }}" hidden>
-                                                        <div class="modal-body">
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <label for="layanan" class="form-label">Sub
-                                                                        Layanan</label>
-                                                                    <input type="text" class="form-control"
-                                                                        id="sublayananEdit" name="sub_layanan"
-                                                                        placeholder="Masukkan Nama Sub Layanan"
-                                                                        value="{{ $item['sub_layanan'] }}" />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="reset" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal">Close</button>
-                                                            <button type="submit" class="btn btn-primary">Save
-                                                                changes</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        @include('components.panel.modal.layanan.edit.edit-sublayanan')
                                     @endforeach
                                 </ul>
                             </div>
                         </div>
-
-                        <div class="modal fade" id="addModalSubLayanan{{ $data['id'] }}" tabindex="-1"
-                            aria-labelledby="addModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="addModalLabel">Tambah Sub Layanan
-                                            {{ $data['layanan'] }}</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <form action="{{ route('layanan.store') }}" method="post">
-                                        @csrf
-                                        <input type="text" name="id_layanan" value="{{ $data['id'] }}" hidden>
-                                        <input type="text" name="layanan" value="{{ $data['layanan'] }}" hidden>
-                                        <div class="modal-body">
-                                            <div class="row gy-2">
-                                                <div class="col-md-12">
-                                                    <label for="layanan" class="form-label">Sub Layanan</label>
-                                                    <input type="text" class="form-control" id="layanan"
-                                                        name="sub_layanan" placeholder="Masukkan Nama Sub Layanan" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="reset" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary">Save changes</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                        @include('components.panel.modal.layanan.add.add-sublayanan')
                     @endforeach
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="addModalLabel">Tambah Data Layanan</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="{{ route('layanan.store') }}" method="post">
-                    @csrf
-                    <div class="modal-body">
-                        <div class="row gy-2">
-                            <div class="col-md-12">
-                                <label for="layanan" class="form-label">Layanan</label>
-                                <input type="text" class="form-control" id="layanan" name="layanan"
-                                    placeholder="Masukkan Nama Layanan" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="addModalLabel">Edit Data Layanan</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="">
-                    @csrf
-                    @method('PUT')
-                    <div class="modal-body">
-                        <div class="row gy-2">
-                            <div class="col-md-12">
-                                <label for="layanan" class="form-label">Layanan Yang Ingin Di Ubah</label>
-                                <Select id="getLayanan" class="form-select select2"
-                                    data-placeholder="Pilih Layanan Yang Ingin Di Ubah">
-                                    <option></option>
-                                    @foreach ($layanan as $data)
-                                        <option value="{{ $data['id'] }}">{{ $data['layanan'] }}</option>
-                                    @endforeach
-                                </Select>
-                            </div>
-                        </div>
-
-                        <div class="row gy-2 my-2 d-none" id="rowEdit">
-                            <div class="col-md-12">
-                                <label for="layanan" class="form-label">Layanan</label>
-                                <input type="text" class="form-control" id="layananEdit" name="layanan"
-                                    placeholder="Masukkan Nama Layanan" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer d-none">
-                        <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+    @include('components.panel.modal.layanan.add.add-layanan')
+    @include('components.panel.modal.layanan.edit.edit-layanan')
 @endsection
 
 @section('scripts')
