@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
         scrollX: true,
         pageLength: 5,
         buttons: [{
-                text: 'Add Data',
+                text: 'Tambah Data',
                 className: 'btn btn-primary me-2 mb-2',
                 action: () => {
                     window.location.href = "customers/create";
@@ -27,10 +27,11 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             {
                 extend: 'collection',
-                text: 'Export',
+                text: 'Ekspor ke',
                 className: 'btn btn-primary me-2 mb-2',
                 buttons: [{
                         extend: 'copy',
+                        text: 'Salin',
                         title: `Data customers Metamorfosa, tanggal ${new Date().toLocaleDateString()}`,
                         exportOptions: {
                             columns: [...Array(totalColumns).keys()],

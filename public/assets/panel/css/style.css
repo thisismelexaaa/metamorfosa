@@ -48186,7 +48186,7 @@ body .for-dark {
     -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease;
     white-space: nowrap;
-    overflow: hidden;
+    /* overflow: hidden; */
     text-overflow: ellipsis;
 }
 .page-wrapper.compact-wrapper
