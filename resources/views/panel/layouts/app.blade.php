@@ -69,7 +69,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12 footer-copyright text-center">
-                        <p class="mb-0">Metamorforosa © 2021. All rights reserved. </p>
+                        <p class="mb-0">Metamorfosa © 2024. All rights reserved. </p>
                     </div>
                 </div>
             </div>

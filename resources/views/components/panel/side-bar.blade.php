@@ -33,7 +33,7 @@
                         <a class="sidebar-link sidebar-title {{ request()->routeIs('dashboard.*') ? 'active' : '' }}"
                             href="{{ route('dashboard.index') }}">
                             <i class="bi bi-house-door-fill"></i>
-                            <span>Dashboard</span>
+                            <span>Beranda</span>
                         </a>
                     </li>
                     <li class="my-2 sidebar-list">
@@ -43,25 +43,25 @@
                         <a class="sidebar-link sidebar-title {{ request()->routeIs('customers.*') ? 'active' : '' }}"
                             href="{{ route('customers.index') }}">
                             <i class="bi bi-people-fill"></i>
-                            <span>Customers</span>
+                            <span>Pelanggan</span>
                         </a>
                     </li>
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title {{ request()->routeIs('schedule.*') ? 'active' : '' }}"
                             href="{{ route('schedule.index') }}">
                             <i class="bi bi-calendar-week-fill"></i>
-                            <span>Schedule</span>
+                            <span>Jadwal</span>
                         </a>
                     </li>
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title {{ request()->routeIs('finance.*') ? 'active' : '' }}"
                             href="{{ route('finance.index') }}">
                             <i class="bi bi-bank2"></i>
-                            <span>Finance</span>
+                            <span>Keuangan</span>
                         </a>
                     </li>
                     <li class="my-2 sidebar-list">
-                        <span class="text-secondary">Settings</span>
+                        <span class="text-secondary">Pengaturan</span>
                     </li>
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title {{ request()->routeIs('layanan.*') ? 'active' : '' }}"
@@ -74,7 +74,7 @@
                         <a class="sidebar-link sidebar-title {{ request()->routeIs('account.*') ? 'active' : '' }}"
                             href="{{ route('account.index') }}">
                             <i class="bi bi-person-square"></i>
-                            <span>Account</span>
+                            <span>Akun</span>
                         </a>
                     </li>
                     {{-- <li class="sidebar-list">

@@ -93,9 +93,7 @@
                         </div>
                     </div>
                 </div>
-
                 <hr>
-                {{-- layanan --}}
                 <div class="row">
                     <h3>Data Layanan</h3>
                     <div class="row mb-2">
@@ -105,7 +103,8 @@
                                 data-placeholder="Pilih Jenis Layanan">
                                 <option></option>
                                 @foreach ($layanan as $data)
-                                    <option value="{{ $data['id'] }}">{{ $data['layanan'] }}</option>
+                                    <option value="{{ $data['id'] }}">{{ $data['layanan'] }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -114,8 +113,11 @@
                             <select required class="form-select select2" id="sub_layanan" name="sub_layanan"
                                 data-placeholder="Pilih Jenis Sub Layanan">
                                 <option></option>
-                                @foreach ($layanan as $data)
-                                    <option value="{{ $data['id'] }}">{{ $data['layanan'] }}</option>
+                                @foreach ($layanan as $item)
+                                    @foreach ($item->getSubLayanan as $data)
+                                        <option value="{{ $data['id'] }}">
+                                            {{ $data['sub_layanan'] }}</option>
+                                    @endforeach
                                 @endforeach
                             </select>
                         </div>
@@ -153,9 +155,9 @@
                     </div>
 
                     <div class="row mb-2">
-                        <div class="col-md-6" id="col_uang_bayar">
+                        <div class="col-md" id="col_uang_bayar">
                             <label class="form-label" for="uang_bayar">Uang Pembayaran</label>
-                            <input id="uang_bayar" type="number" class="form-control" name="uang_bayar"
+                            <input id="uang_bayar" type="number" class="form-control" name="total_biaya"
                                 placeholder="Masukkan Uang Bayar">
                         </div>
                     </div>
@@ -196,6 +198,7 @@
 
             // Handling the change event for the 'layanan' select element
             const $layanan = $('#layanan');
+            const $subLayanan = $('#sub_layanan');
 
             $layanan.on('change', function() {
                 const id = $(this).val();
@@ -207,30 +210,37 @@
                         type: 'GET',
                         dataType: 'json',
                         success: function(data) {
-                            if (data) {
+                            if (data.sub_layanan.length > 0) {
                                 $('#col_sub_layanan').removeClass('d-none');
-                                const subLayanan = $('#sub_layanan');
-                                subLayanan.empty(); // Clear previous options
+                                $subLayanan.empty(); // Clear previous options
+
+                                // Add placeholder option
+                                $subLayanan.append(
+                                    $('<option>', {
+                                        value: '',
+                                        text: 'Pilih Sub Layanan'
+                                    })
+                                );
 
                                 data.sub_layanan.forEach(element => {
-                                    subLayanan.append(
+                                    $subLayanan.append(
                                         $('<option>', {
                                             value: element
                                                 .id, // Assuming `id` is the value for options
-                                            text: element.name
+                                            text: element
+                                                .sub_layanan // Assuming `sub_layanan` is the display text
                                         })
                                     );
                                 });
 
-                                subLayanan.select2({
+                                $subLayanan.select2({
+                                    placeholder: 'Pilih Sub Layanan',
                                     theme: "bootstrap-5",
-                                    width: subLayanan.data('width') || (subLayanan
-                                        .hasClass('w-100') ? '100%' : 'style'),
-                                    data: data.sub_layanan
+                                    width: '100%'
                                 });
                             } else {
                                 $('#col_sub_layanan').addClass('d-none');
-                                alert('Data Tidak Ada');
+                                alert('Tidak ada sub layanan yang tersedia untuk layanan ini.');
                             }
                         },
                         error: function(xhr, status, error) {
@@ -243,12 +253,12 @@
 
             $('#status').on('change', function() {
                 const status = $(this).val();
-                if (status === 'Belum Lunas') {
+                if (status === '2') {
                     $('#col_uang_bayar').show();
                 } else {
                     $('#col_uang_bayar').hide();
                 }
-            })
+            });
         });
     </script>
 @endsection

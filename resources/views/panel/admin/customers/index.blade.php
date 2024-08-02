@@ -1,7 +1,7 @@
 @extends('panel.layouts.app')
 
 @section('title')
-    Customers
+    Pelanggan
 @endsection
 
 @section('content')
@@ -18,7 +18,7 @@
                                 <i class="bi bi-house-door-fill"></i>
                             </a>
                         </li>
-                        <li class="breadcrumb-item active">Customers</li>
+                        <li class="breadcrumb-item active">Pelanggan</li>
                     </ol>
                 </div>
             </div>
@@ -36,22 +36,11 @@
                                 <th>No Daftar</th>
                                 <th>Nama Lengkap</th>
                                 <th>No Telepon</th>
-                                <th>Jenis Kelamin</th>
-                                <th>Tanggal Lahir</th>
-                                <th>Alamat</th>
-                                <th>Nama Ayah</th>
-                                <th>Pekerjaan Ayah</th>
-                                <th>Nama Ibu</th>
-                                <th>Pekerjaan Ibu</th>
-                                <th>Layanan</th>
-                                <th>Sub Layanan</th>
-                                <th>Tanggal Masuk</th>
-                                <th>Tanggal Selesai</th>
-                                <th>Durasi</th>
-                                <th>Profesional</th>
-                                <th>Hasil Konsul</th>
                                 <th>Biaya</th>
-                                <th class="bg-white text-dark">Action</th>
+                                <th>Status Bayar</th>
+                                <th>Sub Layanan</th>
+                                <th>Profesional</th>
+                                <th class="bg-white text-dark">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="text-capitalize">
@@ -61,34 +50,39 @@
                                     <td>{{ $item->no_daftar }}</td>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->no_tlp }}</td>
-                                    <td>{{ $item->jenis_kelamin }}</td>
-                                    <td>{{ $item->tgl_lahir }}</td>
-                                    <td>{{ $item->alamat }}</td>
-                                    <td>{{ $item->nama_ayah }}</td>
-                                    <td>{{ $item->pekerjaan_ayah }}</td>
-                                    <td>{{ $item->nama_ibu }}</td>
-                                    <td>{{ $item->pekerjaan_ibu }}</td>
-                                    <td>{{ $item->getLayanan->layanan }}</td>
-                                    <td>{{ $item->sub_layanan }}</td>
-                                    <td>{{ $item->tgl_masuk }}</td>
-                                    <td>{{ $item->tgl_selesai }}</td>
-                                    <td>Durasi</td>
+                                    <td>Rp{{ number_format($item->total_biaya, 0, ',', '.') }}</td>
+                                    <td>
+                                        @if ($item->status == 1)
+                                            <span
+                                                style="background-color: green; color: white; font-weight: bold; padding: 5px 10px; border-radius: 4px;">Lunas</span>
+                                        @elseif ($item->status == 2)
+                                            <span
+                                                style="background-color: red; color: white; font-weight: bold; padding: 5px 10px; border-radius: 4px;">Belum
+                                                Lunas</span>
+                                        @else
+                                            {{ __('Tidak Diketahui') }}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        {{ $item->getSubLayanan ? $item->getSubLayanan->sub_layanan : '-' }}
+                                    </td>
+
                                     <td>{{ $item->support_teacher }}</td>
-                                    <td>-</td>
-                                    <td>-</td>
                                     <td class="bg-white text-dark">
                                         <div class="d-flex gap-1">
-                                            <a href="{{ route('customers.show', $item->id) }}" class="btn btn-primary">
+                                            <a href="{{ route('customers.show', $item->id) }}"
+                                                class="btn btn-primary btn-sm" title="Lihat Detail">
                                                 <i class="bi bi-info-circle-fill"></i>
                                             </a>
-                                            <a href="{{ route('customers.edit', $item->id) }}" class="btn  btn-warning">
+                                            <a href="{{ route('customers.edit', $item->id) }}"
+                                                class="btn btn-warning btn-sm" title="Edit">
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
                                             <a href="{{ route('customers.destroy', $item->id) }}"
-                                                class="btn  btn-outline-danger" data-confirm-delete="true">
+                                                class="btn btn-outline-danger btn-sm" data-confirm-delete="true"
+                                                title="Hapus">
                                                 <i class="bi bi-trash3-fill"></i>
                                             </a>
-
                                         </div>
                                     </td>
                                 </tr>
@@ -103,4 +97,4 @@
 
 @section('scripts')
     <script src="{{ asset('function_js/customers/index.js') }}"></script>
-@overwrite
+@endsection

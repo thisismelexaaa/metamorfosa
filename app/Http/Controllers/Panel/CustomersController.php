@@ -119,8 +119,9 @@ class CustomersController extends Controller
     {
         $data = Customer::find($id);
         $layanan = Layanan::all();
+        $subLayanan = SubLayanan::where('id_layanan', $data->layanan)->get(); // Get sub-layanan based on selected layanan
 
-        return view('panel.admin.customers.edit', compact('data', 'layanan'));
+        return view('panel.admin.customers.edit', compact('data', 'layanan', 'subLayanan'));
     }
 
     /**
@@ -128,53 +129,53 @@ class CustomersController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'no_tlp' => 'required|numeric',
+            'jenis_kelamin' => 'required|string',
+            'tgl_lahir' => 'required|date',
+            'alamat' => 'required|string',
+            'nama_ayah' => 'required|string|max:255',
+            'pekerjaan_ayah' => 'required|string|max:255',
+            'nama_ibu' => 'required|string|max:255',
+            'pekerjaan_ibu' => 'required|string|max:255',
+            'layanan' => 'required|exists:layanan,id',
+            'sub_layanan' => 'required|exists:sub_layanan,id',
+            'support_teacher' => 'required|string',
+            'tgl_masuk' => 'required|date',
+            'tgl_selesai' => 'required|date',
+            'keluhan' => 'required|string',
+            'status' => 'required|in:1,2', // Assuming 1 is Lunas and 2 is Belum Lunas
+            'total_biaya' => 'nullable|numeric'
+        ]);
+
         try {
-            $data = $request;
-
-            $data->validate([
-                'name' => 'required',
-                'no_tlp' => 'required',
-                'jenis_kelamin' => 'required',
-                'tgl_lahir' => 'required',
-                'alamat' => 'required',
-                'nama_ayah' => 'required',
-                'pekerjaan_ayah' => 'required',
-                'nama_ibu' => 'required',
-                'pekerjaan_ibu' => 'required',
-                'layanan' => 'required',
-                'sub_layanan' => 'required',
-                'support_teacher' => 'required',
-                'tgl_masuk' => 'required',
-                'tgl_selesai' => 'required',
-                'keluhan' => 'required',
-                'status' => 'required',
-            ]);
-
             $data = [
-                'name' => $data->name,
-                'no_tlp' => $data->no_tlp,
-                'jenis_kelamin' => $data->jenis_kelamin,
-                'tgl_lahir' => $data->tgl_lahir,
-                'alamat' => $data->alamat,
-                'nama_ayah' => $data->nama_ayah,
-                'pekerjaan_ayah' => $data->pekerjaan_ayah,
-                'nama_ibu' => $data->nama_ibu,
-                'pekerjaan_ibu' => $data->pekerjaan_ibu,
-                'layanan' => $data->layanan,
-                'sub_layanan' => $data->sub_layanan,
-                'support_teacher' => $data->support_teacher,
-                'tgl_masuk' => $data->tgl_masuk,
-                'tgl_selesai' => $data->tgl_selesai,
-                'keluhan' => $data->keluhan,
-                'status' => $data->status
+                'name' => $request->name,
+                'no_tlp' => $request->no_tlp,
+                'jenis_kelamin' => $request->jenis_kelamin,
+                'tgl_lahir' => $request->tgl_lahir,
+                'alamat' => $request->alamat,
+                'nama_ayah' => $request->nama_ayah,
+                'pekerjaan_ayah' => $request->pekerjaan_ayah,
+                'nama_ibu' => $request->nama_ibu,
+                'pekerjaan_ibu' => $request->pekerjaan_ibu,
+                'layanan' => $request->layanan,
+                'sub_layanan' => $request->sub_layanan,
+                'support_teacher' => $request->support_teacher,
+                'tgl_masuk' => $request->tgl_masuk,
+                'tgl_selesai' => $request->tgl_selesai,
+                'keluhan' => $request->keluhan,
+                'status' => $request->status,
+                'total_biaya' => $request->total_biaya
             ];
 
             Customer::find($id)->update($data);
 
-            toast('Customer berhasil di ubah!', 'success');
+            toast('Customer berhasil diubah!', 'success');
             return redirect()->route('customers.index');
         } catch (\Exception $e) {
-            toast($e->getMessage(), 'error');
+            toast('Terjadi kesalahan: ' . $e->getMessage(), 'error');
             return redirect()->back()->withInput();
         }
     }
@@ -196,16 +197,20 @@ class CustomersController extends Controller
 
     public function getLayananById($id)
     {
-        // Fetch the Layanan record by its ID
-        $layanan = SubLayanan::findOrFail($id);
+        // Ambil semua sub layanan yang terkait dengan layanan yang dipilih
+        $subLayanan = SubLayanan::where('id_layanan', $id)->get();
 
-        $layanan->sub_layanan = explode(',', $layanan->sub_layanan);
-
+        // Pastikan data sub layanan diubah menjadi format yang diinginkan
         $data = [
-            'id' => $layanan->id,
-            'layanan' => $layanan->layanan,
-            'sub_layanan' => $layanan->sub_layanan
+            'id' => $id,
+            'sub_layanan' => $subLayanan->map(function ($item) {
+                return [
+                    'id' => $item->id,
+                    'sub_layanan' => $item->sub_layanan // Nama kolom yang sesuai di tabel sub_layanan
+                ];
+            })
         ];
+
         return response()->json($data);
     }
 }
