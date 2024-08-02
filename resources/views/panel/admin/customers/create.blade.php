@@ -126,8 +126,8 @@
                             <select required class="form-select text-capitalize select2" id="support_teacher"
                                 name="support_teacher" data-placeholder="Pilih Support Teacher">
                                 <option></option>
-                                <option value="support_teacher 1">Profesional 1</option>
-                                <option value="support_teacher 2">Profesional 2</option>
+                                <option value="Profesional 1">Profesional 1</option>
+                                <option value="Profesional 2">Profesional 2</option>
                             </select>
                         </div>
                     </div>
