@@ -1,1 +1,6 @@
-/vendor
+node_modules/
+vendor/
+public/storage/
+storage/
+.env
+.env.*.local
