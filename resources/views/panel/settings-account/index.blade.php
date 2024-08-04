@@ -1,7 +1,7 @@
 @extends('panel.layouts.app')
 
 @section('title')
-    Tambah Data Pelanggan
+    Pengaturan Akun
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-12 col-sm-6">
-                    <h3>{{ __('Tambah Data Pelanggan') }}</h3>
+                    <h3>{{ __('Pengaturan Akun') }}</h3>
                 </div>
                 <div class="col-12 col-sm-6">
                     <ol class="breadcrumb">
@@ -18,12 +18,7 @@
                                 <i class="bi bi-house-door-fill"></i>
                             </a>
                         </li>
-                        <li class="breadcrumb-item">
-                            <a class="home-item" href="{{ route('customers.index') }}">
-                                Pelanggan
-                            </a>
-                        </li>
-                        <li class="breadcrumb-item active">Tambah Data Pelanggan</li>
+                        <li class="breadcrumb-item">Pengaturan Akun</li>
                     </ol>
                 </div>
             </div>
@@ -35,7 +30,7 @@
                 @csrf
                 {{-- data diri --}}
                 <div class="row mb-2">
-                    <h3>Data Diri</h3>
+                    <h3>Pengaturan Akun</h3>
                     <div class="row mb-2">
                         <div class="col-md">
                             <label class="form-label" for="nama">Nama Lengkap</label>
@@ -44,8 +39,8 @@
                         </div>
                         <div class="col-md">
                             <label class="form-label" for="no_tlp">Nomor Telepon</label>
-                            <input required id="no_tlp" type="text" inputmode="numeric" class="form-control"
-                                name="no_tlp" placeholder="Masukkan Nomor Telepon" oninput="onlyNumber(this)">
+                            <input required id="no_tlp" type="text" inputmode="numeric" class="form-control" name="no_tlp"
+                                placeholder="Masukkan Nomor Telepon" oninput="onlyNumber(this)">
                         </div>
                         <div class="col-md">
                             <label class="form-label" for="jenis_kelamin">Jenis Kelamin</label>

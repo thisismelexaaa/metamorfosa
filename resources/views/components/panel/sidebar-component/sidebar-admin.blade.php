@@ -64,12 +64,5 @@
                 <span>Akun</span>
             </a>
         </li>
-        <li class="sidebar-list">
-            <a class="sidebar-link sidebar-title {{ request()->routeIs('dashboard.*') ? 'active' : '' }}"
-                href="{{ route('dashboard.index') }}">
-                <i class="bi bi-house-door-fill"></i>
-                <span>Beranda</span>
-            </a>
-        </li>
     </ul>
 </div>

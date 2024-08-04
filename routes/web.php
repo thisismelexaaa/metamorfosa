@@ -9,6 +9,7 @@ use App\Http\Controllers\Panel\CustomersController;
 use App\Http\Controllers\Panel\FinanceController;
 use App\Http\Controllers\Panel\KonsultasiController;
 use App\Http\Controllers\Panel\LayananController;
+use App\Http\Controllers\Panel\SettingAccountController;
 use Illuminate\Support\Facades\Route;
 
 // Public routes
@@ -34,6 +35,7 @@ Route::middleware('web')->group(function () {
             '/schedule' => ScheduleController::class,
             '/layanan' => LayananController::class,
             '/account' => AccountController::class,
+            '/setting-account' => SettingAccountController::class,
         ]);
 
         Route::get('/get-layanan', [LayananController::class, 'getLayanan'])->name('layanan.getLayanan');

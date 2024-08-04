@@ -3,24 +3,19 @@
 namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
-use App\Models\Panel\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class DashboardController extends Controller
+class SettingAccountController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-
-        $customer = Customer::count();
-        return view('panel.dashboard.index', compact('customer'));
+        $user = Auth::user();
+        dd($user);
+        return view('panel.settings-account.index');
     }
 
     /**
