@@ -35,10 +35,10 @@
             <div class="card-body">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <h3 class="mb-4">Data Diri</h3>
-                    <span>No Daftar : <span class="fw-bold fs-5">{{ $data->no_daftar }}</span></span>
+                    <span>No Daftar : <b style="font-size: 20px">{{ $data->no_daftar }}</b></span>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table class="table table-hover table-bordered">
                         <tbody>
                             <tr>
                                 <th>{{ __('Nama') }}</th>
@@ -72,7 +72,9 @@
                     </table>
                 </div>
 
-                {{-- <h3 class="mb-4">Layanan</h3>
+                <hr>
+
+                <h3 class="mb-4">Layanan</h3>
                 <div class="table-responsive">
                     <table class="table table-hover table-bordered">
                         <tbody>
@@ -130,7 +132,7 @@
                             </tr>
                         </tbody>
                     </table>
-                </div> --}}
+                </div>
             </div>
         </div>
     </div>

@@ -20,10 +20,10 @@
                         </li>
                         <li class="breadcrumb-item">
                             <a class="home-item" href="{{ route('customers.index') }}">
-                                Pelanggan
+                                Customers
                             </a>
                         </li>
-                        <li class="breadcrumb-item active">Edit Data Pelanggan</li>
+                        <li class="breadcrumb-item active">Edit Data Customer</li>
                     </ol>
                 </div>
             </div>
@@ -36,7 +36,7 @@
                 @method('PUT')
                 {{-- data diri --}}
                 <div class="row">
-                    <h3>Data Diri</h3>
+                    <h3>Data Diri Customer</h3>
                     <div class="row mb-2">
                         <div class="col-md">
                             <label class="form-label" for="nama">Nama Lengkap</label>
@@ -98,7 +98,105 @@
                         </div>
                     </div>
                 </div>
-                <button type="submit" id="btn-submit" class="btn btn-primary mt-3">Submit</button>
+
+                <hr>
+
+                {{-- layanan --}}
+                <div class="row">
+                    <h3>Data Layanan</h3>
+                    <div class="row mb-2">
+                        <div class="col-md">
+                            <label class="form-label" for="layanan">Layanan</label>
+                            <select required class="form-select select2" id="layanan" name="layanan"
+                                data-placeholder="Pilih Layanan">
+                                <option value="">Pilih Layanan</option>
+                                @foreach ($layanan as $item)
+                                    <option value="{{ $item->id }}"
+                                        {{ old('layanan', $data->layanan) == $item->id ? 'selected' : '' }}>
+                                        {{ $item->layanan }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md d-none" id="col_sub_layanan">
+                            <label class="form-label" for="sub_layanan">Sub Layanan</label>
+                            <select required class="form-select select2" id="sub_layanan" name="sub_layanan"
+                                data-placeholder="Pilih Sub Layanan">
+                                <option value="">Pilih Sub Layanan</option>
+                                @foreach ($subLayanan as $item)
+                                    <option value="{{ $item->id }}"
+                                        {{ old('sub_layanan', $data->sub_layanan) == $item->id ? 'selected' : '' }}>
+                                        {{ $item->sub_layanan }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md">
+                            <label class="form-label" for="support_teacher">Support Teacher</label>
+                            <select required class="form-select text-capitalize select2" id="support_teacher"
+                                name="support_teacher" data-placeholder="Pilih Support Teacher">
+                                <option value="">Pilih Support Teacher</option>
+                                @php
+                                    // Mapping support teacher values to display names
+                                    $supportTeachers = [
+                                        'Profesional 1' => 'Profesional 1',
+                                        'Profesional 2' => 'Profesional 2',
+                                    ];
+                                @endphp
+
+                                @foreach ($supportTeachers as $key => $label)
+                                    <option value="{{ $key }}"
+                                        {{ old('support_teacher', $data->support_teacher) == $key ? 'selected' : '' }}>
+                                        {{ $label }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-md">
+                            <label class="form-label" for="tgl_masuk">Tanggal Masuk</label>
+                            <input required id="tgl_masuk" type="date" class="form-control" name="tgl_masuk"
+                                placeholder="Masukkan Tanggal Masuk" value="{{ old('tgl_masuk', $data->tgl_masuk) }}">
+                        </div>
+                        <div class="col-md">
+                            <label class="form-label" for="tgl_selesai">Tanggal Selesai</label>
+                            <input required id="tgl_selesai" type="date" class="form-control" name="tgl_selesai"
+                                placeholder="Masukkan Tanggal Selesai"
+                                value="{{ old('tgl_selesai', $data->tgl_selesai) }}">
+                        </div>
+                        <div class="col-md">
+                            <label class="form-label" for="status">Status Pembayaran</label>
+                            <select required name="status" id="status" class="form-select select2"
+                                data-placeholder="Pilih Status Pembayaran">
+                                <option value="1" {{ old('status', $data->status) == '1' ? 'selected' : '' }}>Lunas
+                                </option>
+                                <option value="2" {{ old('status', $data->status) == '2' ? 'selected' : '' }}>Belum
+                                    Lunas</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-2" id="col_uang_bayar"
+                        style="{{ old('status', $data->status) == '2' ? '' : 'display:none;' }}">
+                        <div class="col-md">
+                            <label class="form-label" for="uang_bayar">Uang Pembayaran</label>
+                            <input id="uang_bayar" type="number" class="form-control" name="total_biaya"
+                                placeholder="Masukkan Uang Bayar" value="{{ old('total_biaya', $data->total_biaya) }}">
+                        </div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-md">
+                            <label class="form-label" for="keluhan">Keluhan</label>
+                            <textarea required id="keluhan" rows="4" class="form-control" name="keluhan"
+                                placeholder="Masukkan Keluhan">{{ old('keluhan', $data->keluhan) }}</textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" id="btn-submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
     </div>

@@ -20,10 +20,10 @@
                         </li>
                         <li class="breadcrumb-item">
                             <a class="home-item" href="{{ route('customers.index') }}">
-                                Pelanggan
+                                Customers
                             </a>
                         </li>
-                        <li class="breadcrumb-item active">Tambah Data Pelanggan</li>
+                        <li class="breadcrumb-item active">Tambah Data Customer</li>
                     </ol>
                 </div>
             </div>
@@ -35,7 +35,7 @@
                 @csrf
                 {{-- data diri --}}
                 <div class="row mb-2">
-                    <h3>Data Diri</h3>
+                    <h3>Data Diri Customer</h3>
                     <div class="row mb-2">
                         <div class="col-md">
                             <label class="form-label" for="nama">Nama Lengkap</label>
@@ -44,8 +44,8 @@
                         </div>
                         <div class="col-md">
                             <label class="form-label" for="no_tlp">Nomor Telepon</label>
-                            <input required id="no_tlp" type="text" inputmode="numeric" class="form-control"
-                                name="no_tlp" placeholder="Masukkan Nomor Telepon" oninput="onlyNumber(this)">
+                            <input required id="no_tlp" type="text" inputmode="numeric" class="form-control" name="no_tlp"
+                                placeholder="Masukkan Nomor Telepon" oninput="onlyNumber(this)">
                         </div>
                         <div class="col-md">
                             <label class="form-label" for="jenis_kelamin">Jenis Kelamin</label>

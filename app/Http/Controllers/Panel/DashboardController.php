@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
-use App\Models\Panel\Customer;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -18,9 +17,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-
-        $customer = Customer::count();
-        return view('panel.dashboard.index', compact('customer'));
+        return view('panel.dashboard.index');
     }
 
     /**

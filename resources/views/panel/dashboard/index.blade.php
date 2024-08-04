@@ -71,8 +71,8 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
-                            <h6 class="f-w-600">Total Pelanggan</h6>
-                            <h6>{{ $customer }}</h6>
+                            <h6 class="f-w-600">Total Customers</h6>
+                            <h6>50.000</h6>
                         </div>
                     </div>
                 </div>
