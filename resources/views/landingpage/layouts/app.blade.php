@@ -14,14 +14,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="{{ asset('../assets/landingpage/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('../assets/landingpage/css/owl.carousel.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('../assets/landingpage/css/owl.theme.default.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('../assets/landingpage/css/jquery.fancybox.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('../assets/landingpage/fonts/icomoon/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('../assets/landingpage/fonts/flaticon/font/flaticon.css') }}">
-    <link rel="stylesheet" href="{{ asset('../assets/landingpage/css/aos.css') }}">
-    <link rel="stylesheet" href="{{ asset('../assets/landingpage/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/landingpage/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/landingpage/css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/landingpage/css/owl.theme.default.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/landingpage/css/jquery.fancybox.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/landingpage/fonts/icomoon/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/landingpage/fonts/flaticon/font/flaticon.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/landingpage/css/aos.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/landingpage/css/style.css') }}">
 
     <title>{{ env('APP_NAME') }}</title>
 </head>
@@ -772,18 +772,18 @@
         </div>
     </div>
 
-    <script src="{{ asset('../assets/landingpage/js/jquery-3.4.1.min.js') }}"></script>
-    <script src="{{ asset('../assets/landingpage/js/jquery-migrate-3.0.1.min.js') }}"></script>
-    <script src="{{ asset('../assets/landingpage/js/popper.min.js') }}"></script>
-    <script src="{{ asset('../assets/landingpage/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('../assets/landingpage/js/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('../assets/landingpage/js/jquery.easing.1.3.js') }}"></script>
-    <script src="{{ asset('../assets/landingpage/js/jquery.animateNumber.min.js') }}"></script>
-    <script src="{{ asset('../assets/landingpage/js/jquery.waypoints.min.js') }}"></script>
-    <script src="{{ asset('../assets/landingpage/js/jquery.fancybox.min.js') }}"></script>
-    <script src="{{ asset('../assets/landingpage/js/aos.js') }}"></script>
+    <script src="{{ asset('assets/landingpage/js/jquery-3.4.1.min.js') }}"></script>
+    <script src="{{ asset('assets/landingpage/js/jquery-migrate-3.0.1.min.js') }}"></script>
+    <script src="{{ asset('assets/landingpage/js/popper.min.js') }}"></script>
+    <script src="{{ asset('assets/landingpage/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/landingpage/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('assets/landingpage/js/jquery.easing.1.3.js') }}"></script>
+    <script src="{{ asset('assets/landingpage/js/jquery.animateNumber.min.js') }}"></script>
+    <script src="{{ asset('assets/landingpage/js/jquery.waypoints.min.js') }}"></script>
+    <script src="{{ asset('assets/landingpage/js/jquery.fancybox.min.js') }}"></script>
+    <script src="{{ asset('assets/landingpage/js/aos.js') }}"></script>
 
-    <script src="{{ asset('../assets/landingpage/js/custom.js') }}"></script>
+    <script src="{{ asset('assets/landingpage/js/custom.js') }}"></script>
 
 </body>
 
