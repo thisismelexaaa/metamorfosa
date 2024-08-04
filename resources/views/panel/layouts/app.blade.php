@@ -35,7 +35,7 @@
     <!-- Responsive css-->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/panel/css/responsive.css') }}">
     <!-- Bootstrap Icon-->
-    <link rel="stylesheet" href="{{ asset('assets/bootstrap-icons/font/bootstrap-icons.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/bootstrap-icons/font/bootstrap-icons.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/DataTables/datatables.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/select2-4.1.0-rc.0/dist/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/select2-4.1.0-rc.0/dist/css/select2-bootstrap-5-theme.min.css') }}">
