@@ -24,16 +24,7 @@ return new class extends Migration
             $table->string('pekerjaan_ayah');
             $table->string('nama_ibu');
             $table->string('pekerjaan_ibu');
-            $table->string('layanan');
-            $table->string('sub_layanan');
-            $table->string('support_teacher');
-            $table->date('tgl_masuk');
-            $table->date('tgl_selesai');
-            $table->string('keluhan');
             $table->string('status');
-
-            $table->string('hasil_konsul')->nullable();
-            $table->string('total_biaya')->nullable();
             $table->timestamps();
         });
     }

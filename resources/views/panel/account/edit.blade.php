@@ -45,7 +45,7 @@
                         <div class="col-md-4 mb-2">
                             <label class="form-label" for="username">Username</label>
                             <input required id="username" type="text" class="form-control" name="username"
-                                placeholder="Masukkan Username">
+                                placeholder="Masukkan Username" value="{{ $data->username }}">
                         </div>
                         <div class="col-md-4 mb-2">
                             <label class="form-label" for="email">Email</label>

@@ -34,7 +34,7 @@
             <form action="{{ route('customers.store') }}" method="POST">
                 @csrf
                 {{-- data diri --}}
-                <div class="row">
+                <div class="row mb-2">
                     <h3>Data Diri Customer</h3>
                     <div class="row mb-2">
                         <div class="col-md">
@@ -44,8 +44,8 @@
                         </div>
                         <div class="col-md">
                             <label class="form-label" for="no_tlp">Nomor Telepon</label>
-                            <input required id="no_tlp" type="text" class="form-control" name="no_tlp"
-                                placeholder="Masukkan Nomor Telepon">
+                            <input required id="no_tlp" type="text" inputmode="numeric" class="form-control" name="no_tlp"
+                                placeholder="Masukkan Nomor Telepon" oninput="onlyNumber(this)">
                         </div>
                         <div class="col-md">
                             <label class="form-label" for="jenis_kelamin">Jenis Kelamin</label>
@@ -93,8 +93,7 @@
                         </div>
                     </div>
                 </div>
-                <hr>
-                <div class="row">
+                {{-- <div class="row">
                     <h3>Data Layanan</h3>
                     <div class="row mb-2">
                         <div class="col-md">
@@ -169,7 +168,7 @@
                                 placeholder="Masukkan Keluhan"></textarea>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <button type="submit" id="btn-submit" class="btn btn-primary">Submit</button>
             </form>
@@ -178,6 +177,22 @@
 @endsection
 
 @section('scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            $('#jenis_kelamin').select2({ // select 2 initialization
+                theme: "bootstrap-5",
+                minimumResultsForSearch: Infinity,
+            });
+        });
+
+        function onlyNumber(input) { //number only
+            let value = input.value;
+            let numbers = value.replace(/[^0-9]/g, "");
+            input.value = numbers;
+        }
+    </script>
+
+    {{--
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             $('#col_uang_bayar').hide();
@@ -261,4 +276,5 @@
             });
         });
     </script>
+    --}}
 @endsection

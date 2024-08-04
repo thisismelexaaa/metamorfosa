@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
-use App\Models\Panel\Master\Customer;
+use App\Models\Panel\Customer;
 use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
@@ -19,7 +19,7 @@ class ScheduleController extends Controller
     {
         $customer = Customer::all();
 
-        return view('panel.admin.schedule.index', compact('customer'));
+        return view('panel.schedule.index', compact('customer'));
     }
 
     /**

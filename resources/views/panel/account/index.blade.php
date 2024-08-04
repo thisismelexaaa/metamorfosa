@@ -63,7 +63,7 @@
                                         <a href="{{ route('account.edit', $user['id']) }}" class="btn btn-sm btn-primary">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
-                                        <a href="#" class="btn btn-sm btn-danger">
+                                        <a href="{{ route('account.destroy', $user['id']) }}" class="btn btn-sm btn-danger" data-confirm-delete="true">
                                             <i class="bi bi-trash3-fill"></i>
                                         </a>
                                     </div>

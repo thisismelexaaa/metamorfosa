@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('sub_layanan', function (Blueprint $table) {
             $table->id();
             $table->string('id_layanan');
-            $table->string('layanan');
             $table->string('sub_layanan');
             $table->float('harga', 8, 2);
+            $table->string('status')->default(1);
             $table->timestamps();
         });
     }

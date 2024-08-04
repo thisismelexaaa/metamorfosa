@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Models\Panel\Master;
+namespace App\Models\Panel;
 
-use App\Models\Panel\Settings\Layanan;
-use App\Models\Panel\Settings\SubLayanan;
+use App\Models\Panel\Layanan;
+use App\Models\Panel\SubLayanan;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

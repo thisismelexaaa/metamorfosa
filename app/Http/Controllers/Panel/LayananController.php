@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
-use App\Models\Panel\Settings\Layanan;
-use App\Models\Panel\Settings\SubLayanan;
+use App\Models\Panel\Layanan;
+use App\Models\Panel\SubLayanan;
 use Illuminate\Http\Request;
 
 class LayananController extends Controller
@@ -23,7 +23,7 @@ class LayananController extends Controller
         $layanan = Layanan::all();
         $sublayanan = SubLayanan::all();
 
-        return view('panel.admin.layanan.index', compact('layanan', 'sublayanan'));
+        return view('panel.layanan.index', compact('layanan', 'sublayanan'));
     }
 
     /**
@@ -42,8 +42,7 @@ class LayananController extends Controller
         try {
             $data = $request;
 
-            if ($data->has('id_layanan')) {
-                // dd($request->all());
+            if ($data->has('id_layanan')) { // Sub Layanan
                 $data->validate([
                     'layanan' => 'required',
                     'sub_layanan' => 'required',
@@ -59,7 +58,7 @@ class LayananController extends Controller
 
                 SubLayanan::create($data);
                 toast('Sub Layanan berhasil di tambahkan!', 'success');
-            } else {
+            } else { // Layanan
                 $data->validate([
                     'layanan' => 'required',
                 ]);
@@ -104,7 +103,7 @@ class LayananController extends Controller
     {
         try {
             $data = $request;
-            if ($data->has('id_sublayanan')) {
+            if ($data->has('id_sublayanan')) { // Sub Layanan
                 $getData = SubLayanan::find($data->id_sublayanan);
 
                 $data->validate([
@@ -115,14 +114,13 @@ class LayananController extends Controller
 
                 $data = [
                     'id_layanan' => $getData->id_layanan,
-                    'layanan' => $getData->layanan,
                     'sub_layanan' => $getData->sub_layanan,
                     'harga' => $getData->harga
                 ];
 
                 $getData->update($data);
                 toast('Sub Layanan berhasil di ubah!', 'success');
-            } else {
+            } else { // Layanan
                 $data->validate([
                     'layanan' => 'required',
                 ]);

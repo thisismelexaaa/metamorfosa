@@ -20,8 +20,11 @@ class AccountController extends Controller
     {
         $user = User::where('role', '!=', 'admin')->get();
 
+        $title = '';
+        $text = "Apakah anda yakin?";
+        confirmDelete($title, $text);
         // dd($user);
-        return view('panel.admin.account.index', compact('user'));
+        return view('panel.account.index', compact('user'));
     }
 
     /**
@@ -29,7 +32,7 @@ class AccountController extends Controller
      */
     public function create()
     {
-        return view('panel.admin.account.create');
+        return view('panel.account.create');
     }
 
     /**
@@ -96,7 +99,7 @@ class AccountController extends Controller
 
         $this->DefineId($data);
 
-        return view('panel.admin.account.edit', compact('data'));
+        return view('panel.account.edit', compact('data'));
     }
 
     /**
@@ -143,7 +146,9 @@ class AccountController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        User::where('id', $id)->delete();
+        toast('Akun berhasil di hapus!', 'success');
+        return redirect()->route('account.index');
     }
 
     private function DefineId($data)

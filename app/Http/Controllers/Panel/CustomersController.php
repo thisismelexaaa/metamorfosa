@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
-use App\Models\Panel\Master\Customer;
-use App\Models\Panel\Settings\Layanan;
-use App\Models\Panel\Settings\SubLayanan;
+use App\Models\Panel\Customer;
+use App\Models\Panel\Layanan;
+use App\Models\Panel\SubLayanan;
 use Illuminate\Http\Request;
 
 class CustomersController extends Controller
@@ -21,11 +21,11 @@ class CustomersController extends Controller
     {
         $data['customer'] = Customer::all();
 
-        $title = 'Delete User!';
-        $text = "Are you sure you want to delete?";
+        $title = '';
+        $text = "Apakah anda yakin?";
         confirmDelete($title, $text);
 
-        return view('panel.admin.customers.index', compact('data'));
+        return view('panel.customers.index', compact('data'));
     }
 
     /**
@@ -34,7 +34,7 @@ class CustomersController extends Controller
     public function create()
     {
         $layanan = Layanan::all();
-        return view('panel.admin.customers.create', compact('layanan'));
+        return view('panel.customers.create', compact('layanan'));
     }
 
     /**
@@ -57,13 +57,6 @@ class CustomersController extends Controller
                 'pekerjaan_ayah' => 'required',
                 'nama_ibu' => 'required',
                 'pekerjaan_ibu' => 'required',
-                'layanan' => 'required',
-                'sub_layanan' => 'required',
-                'support_teacher' => 'required',
-                'tgl_masuk' => 'required',
-                'tgl_selesai' => 'required',
-                'keluhan' => 'required',
-                'status' => 'required',
             ]);
 
             // generate no daftar with uuid
@@ -80,18 +73,8 @@ class CustomersController extends Controller
                 'pekerjaan_ayah' => $data->pekerjaan_ayah,
                 'nama_ibu' => $data->nama_ibu,
                 'pekerjaan_ibu' => $data->pekerjaan_ibu,
-                'layanan' => $data->layanan,
-                'sub_layanan' => $data->sub_layanan,
-                'support_teacher' => $data->support_teacher,
-                'tgl_masuk' => $data->tgl_masuk,
-                'tgl_selesai' => $data->tgl_selesai,
-                'keluhan' => $data->keluhan,
-                'status' => $data->status,
-                // 'hasil_konsul' => $data->konsul,
-                // 'total_biaya' => $data->total_biaya
+                'status' => 1,
             ];
-
-            // dd($data);
 
             Customer::create($data);
 
@@ -109,7 +92,7 @@ class CustomersController extends Controller
     public function show(string $id)
     {
         $data = Customer::find($id);
-        return view('panel.admin.customers.show', compact('data'));
+        return view('panel.customers.show', compact('data'));
     }
 
     /**
@@ -121,7 +104,7 @@ class CustomersController extends Controller
         $layanan = Layanan::all();
         $subLayanan = SubLayanan::where('id_layanan', $data->layanan)->get(); // Get sub-layanan based on selected layanan
 
-        return view('panel.admin.customers.edit', compact('data', 'layanan', 'subLayanan'));
+        return view('panel.customers.edit', compact('data', 'layanan', 'subLayanan'));
     }
 
     /**
@@ -186,7 +169,15 @@ class CustomersController extends Controller
     public function destroy(string $id)
     {
         try {
-            Customer::find($id)->delete();
+            $customer = Customer::find($id);
+
+            // check auth
+            if ($customer->status == 0) {
+                $customer->update(['status' => 1]);
+            } else {
+                $customer->update(['status' => 0]);
+            }
+
             toast('Customer berhasil di hapus!', 'success');
             return redirect()->back();
         } catch (\Exception $e) {
@@ -195,22 +186,22 @@ class CustomersController extends Controller
         }
     }
 
-    public function getLayananById($id)
-    {
-        // Ambil semua sub layanan yang terkait dengan layanan yang dipilih
-        $subLayanan = SubLayanan::where('id_layanan', $id)->get();
+    // public function getLayananById($id)
+    // {
+    //     // Ambil semua sub layanan yang terkait dengan layanan yang dipilih
+    //     $subLayanan = SubLayanan::where('id_layanan', $id)->get();
 
-        // Pastikan data sub layanan diubah menjadi format yang diinginkan
-        $data = [
-            'id' => $id,
-            'sub_layanan' => $subLayanan->map(function ($item) {
-                return [
-                    'id' => $item->id,
-                    'sub_layanan' => $item->sub_layanan // Nama kolom yang sesuai di tabel sub_layanan
-                ];
-            })
-        ];
+    //     // Pastikan data sub layanan diubah menjadi format yang diinginkan
+    //     $data = [
+    //         'id' => $id,
+    //         'sub_layanan' => $subLayanan->map(function ($item) {
+    //             return [
+    //                 'id' => $item->id,
+    //                 'sub_layanan' => $item->sub_layanan // Nama kolom yang sesuai di tabel sub_layanan
+    //             ];
+    //         })
+    //     ];
 
-        return response()->json($data);
-    }
+    //     return response()->json($data);
+    // }
 }
