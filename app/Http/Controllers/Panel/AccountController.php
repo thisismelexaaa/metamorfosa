@@ -116,7 +116,6 @@ class AccountController extends Controller
                 'alamat' => 'required',
                 'status' => 'required',
                 'jenis_kelamin' => 'required',
-
             ]);
 
             $data = [
@@ -176,7 +175,7 @@ class AccountController extends Controller
         // jenis_kelamin
         if ($data->jenis_kelamin == 1) {
             $data->jenis_kelamin = 'Laki - Laki';
-        } else if ($data->jenis_kelamin == 2) {
+        } else {
             $data->jenis_kelamin = 'Perempuan';
         }
     }

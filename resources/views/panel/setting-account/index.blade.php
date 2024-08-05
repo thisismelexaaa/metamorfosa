@@ -5,6 +5,22 @@
 @endsection
 
 @section('content')
+    <style>
+        .login_oueter {
+            width: 360px;
+            max-width: 100%;
+        }
+
+        .logo_outer {
+            text-align: center;
+        }
+
+        .logo_outer img {
+            width: 120px;
+            margin-bottom: 40px;
+        }
+    </style>
+
     <div class="container-fluid">
         <div class="page-title">
             <div class="row">
@@ -20,33 +36,75 @@
         </div>
     </div>
 
+    {{-- @dd($user) --}}
+
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
-                <div class="row">
-                    <div class="col-md-6 col-sm-2">
-                        <div class="form-group">
-                            <label for="username">Username</label>
-                            <input type="text" class="form-control" id="username" name="username"
-                                value="{{ $user['name'] }}">
+                <form action="{{ route('setting-account.update', $user['id']) }}" method="post">
+                    @csrf
+                    @method('PUT')
+                    <div class="row gy-2">
+                        <div class="col-md-4 col-sm-2">
+                            <div class="form-group">
+                                <label for="name">Nama</label>
+                                <input type="text" class="form-control" id="name" name="name"
+                                    value="{{ $user['name'] }}" placeholder="Masukkan Username">
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-6 col-sm-2">
-                        <div class="form-group">
-                            <label for="password">Password</label>
+                        <div class="col-md-4 col-sm-2">
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" class="form-control" id="username" name="username"
+                                    value="{{ $user['username'] }}" placeholder="Masukkan Username">
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-2">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" name="email"
+                                    value="{{ $user['email'] }}" placeholder="Masukkan Email">
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-2">
+                            <div class="form-group">
+                                <label for="alamat">Alamat</label>
+                                <input type="alamat" class="form-control" id="alamat" name="alamat"
+                                    value="{{ $user['alamat'] }}" placeholder="Masukkan Alamat">
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label class="form-label" for="jenis_kelamin">Jenis Kelamin</label>
+                            <select name="jenis_kelamin" id="jenis_kelamin" class="form-select select2"
+                                data-placeholder="Pilih Jenis Kelamin">
+                                <option selected value="{{ $user['jenis_kelamin'] }}"> {{ $user['jenis_kelamin'] }}
+                                </option>
+                                <option value="1">Laki Laki</option>
+                                <option value="2">Perempuan</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 col-sm-2">
+                            <label for="username">Password</label>
                             <div class="input-group">
-                                <input type="password" class="form-control" id="password" name="password"
-                                    value="{{ Str::limit($user['password'], 10) }}">
+                                {{-- <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <i class="bi bi-lock-fill"></i>
+                                    </span>
+                                </div> --}}
+                                <input name="password" type="password" class="input form-control" id="password"
+                                    aria-label="password" aria-describedby="basic-addon1" autocomplete="new-password"
+                                    placeholder="Masukkan Password Baru" />
                                 <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="button" id="toggle-password">
-                                        Show
-                                    </button>
+                                    <span class="input-group-text" onclick="password_show_hide();">
+                                        <i class="bi bi-eye-fill" id="show_eye"></i>
+                                        <i class="bi bi-eye-slash-fill d-none" id="hide_eye"></i>
+                                    </span>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                </div>
+                    <button type="submit" class="btn btn-primary mt-2">Simpan</button>
+                </form>
             </div>
         </div>
     </div>
@@ -55,17 +113,27 @@
 @section('scripts')
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const togglePasswordButton = document.getElementById('toggle-password');
-            const passwordInput = document.getElementById('password');
-
-            togglePasswordButton.addEventListener('click', function() {
-                // Toggle the input type between password and text
-                const type = passwordInput.type === 'password' ? 'text' : 'password';
-                passwordInput.type = type;
-
-                // Toggle button text
-                this.textContent = type === 'password' ? 'Show' : 'Hide';
+            // select 2 inii
+            $('#jenis_kelamin').select2({ // select 2 initialization
+                theme: "bootstrap-5",
+                minimumResultsForSearch: Infinity,
             });
         });
+
+        function password_show_hide() {
+            var x = document.getElementById("password");
+            var show_eye = document.getElementById("show_eye");
+            var hide_eye = document.getElementById("hide_eye");
+            hide_eye.classList.remove("d-none");
+            if (x.type === "password") {
+                x.type = "text";
+                show_eye.style.display = "none";
+                hide_eye.style.display = "block";
+            } else {
+                x.type = "password";
+                show_eye.style.display = "block";
+                hide_eye.style.display = "none";
+            }
+        }
     </script>
 @endsection

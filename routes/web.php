@@ -21,8 +21,21 @@ Route::middleware('guest')->group(function () {
     Route::post('login', [LoginController::class, 'login']);
 });
 
+// error
+Route::prefix('/error')->group(function () {
+    Route::get('/403', function () {
+        return view('errors.403');
+    })->name('error.403');
+    Route::get('/404', function () {
+        return view('errors.404');
+    })->name('error.404');
+    Route::get('/500', function () {
+        return view('errors.500');
+    })->name('error.500');
+});
+
 // Authenticated routes
-Route::middleware('web')->group(function () {
+Route::middleware('web', 'ModifiedUrl')->group(function () {
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
     // Admin panel routes
@@ -35,7 +48,7 @@ Route::middleware('web')->group(function () {
             '/schedule' => ScheduleController::class,
             '/layanan' => LayananController::class,
             '/account' => AccountController::class,
-            'setting-account' => SettingAccountController::class
+            '/setting-account' => SettingAccountController::class
         ]);
 
         Route::get('/get-layanan', [LayananController::class, 'getLayanan'])->name('layanan.getLayanan');

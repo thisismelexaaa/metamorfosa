@@ -54,30 +54,30 @@
                                         </td>
                                         <td class="bg-white text-dark">
                                             <div class="d-flex gap-1">
-                                                <a href="{{ route('customers.show', $item->id) }}"
+                                                <a href="{{ route('customers.show', encrypt($item->id)) }}"
                                                     class="btn btn-primary btn-sm" title="Lihat Detail">
                                                     <i class="bi bi-info-circle-fill"></i>
                                                 </a>
-                                                <a href="{{ route('customers.edit', $item->id) }}"
+                                                <a href="{{ route('customers.edit', encrypt($item->id)) }}"
                                                     class="btn btn-warning btn-sm" title="Edit">
                                                     <i class="bi bi-pencil-square"></i>
                                                 </a>
                                                 @if (Auth::user()->role == 'admin')
                                                     @if ($item->status == 1)
-                                                        <a href="{{ route('customers.destroy', $item->id) }}"
+                                                        <a href="{{ route('customers.destroy', encrypt($item->id)) }}"
                                                             class="btn btn-outline-danger btn-sm" data-confirm-delete="true"
                                                             title="Hapus">
                                                             <i class="bi bi-trash3-fill"></i>
                                                         </a>
                                                     @else
-                                                        <a href="{{ route('customers.destroy', $item->id) }}"
+                                                        <a href="{{ route('customers.destroy', encrypt($item->id)) }}"
                                                             class="btn btn-success btn-sm" data-confirm-delete="true"
                                                             title="Restore">
                                                             <i class="bi bi-eye-fill"></i>
                                                         </a>
                                                     @endif
                                                 @else
-                                                    <a href="{{ route('customers.destroy', $item->id) }}"
+                                                    <a href="{{ route('customers.destroy', encrypt($item->id)) }}"
                                                         class="btn btn-outline-danger btn-sm" data-confirm-delete="true"
                                                         title="Hapus">
                                                         <i class="bi bi-trash3-fill"></i>
