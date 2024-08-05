@@ -47663,7 +47663,7 @@ body .for-dark {
     div.sidebar-wrapper
     .sidebar-main
     .simplebar-offset {
-    height: calc(100vh - 350px);
+    /* height: calc(100vh - 350px); */
 }
 .page-wrapper.compact-wrapper
     .page-body-wrapper
