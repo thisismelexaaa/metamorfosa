@@ -113,7 +113,7 @@
                         <li>
                             <a href="{{ route('setting-account.index') }}">
                                 <i data-feather="settings"></i>
-                                <span>Settings</span>
+                                <span>Pengaturan Akun</span>
                             </a>
                         </li>
                         <li>

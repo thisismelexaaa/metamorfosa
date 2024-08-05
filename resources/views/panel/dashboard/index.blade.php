@@ -49,41 +49,44 @@
                     </div>
                 </div>
             </div>
-
-            <div class="col-xl-3 col-md-6 dash-xl-50">
-                <div class="card yearly-chart">
-                    <div class="card-header card-no-border pb-0">
-                        <div class="d-flex justify-content-between">
-                            <h6 class="f-w-600">Monthly Income</h6>
-                            <h6 class="pb-2">Rp. 3.500.000</h6>
+            <div class="col-xl-6 col-md-6 dash-xl-50">
+                <div class="row">
+                    <div class="col-xl-6 col-md-6 dash-xl-50">
+                        <div class="card yearly-chart">
+                            <div class="card-header card-no-border pb-0">
+                                <div class="d-flex justify-content-between">
+                                    <h6 class="f-w-600">Monthly Income</h6>
+                                    <h6 class="pb-2">Rp. 3.500.000</h6>
+                                </div>
+                                <h6 class="font-theme-light f-14 m-0">November 2024</h6>
+                            </div>
+                            <div class="card-body pt-0">
+                                <div>
+                                    <div id="yearly-chart"></div>
+                                </div>
+                            </div>
                         </div>
-                        <h6 class="font-theme-light f-14 m-0">November 2024</h6>
                     </div>
-                    <div class="card-body pt-0">
-                        <div>
-                            <div id="yearly-chart"></div>
+
+                    <div class="col-xl-6 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <h6 class="f-w-600">Total Pelanggan</h6>
+                                    <h6>{{ $pelanggan->count() }}</h6>
+                                </div>
+                            </div>
                         </div>
+                        {{-- <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <h6 class="f-w-600">Total Pelanggan</h6>
+                                    <h6>$3,500,000</h6>
+                                </div>
+                            </div>
+                        </div> --}}
                     </div>
                 </div>
-            </div>
-
-            <div class="col-xl-3 col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <h6 class="f-w-600">Total Customers</h6>
-                            <h6>50.000</h6>
-                        </div>
-                    </div>
-                </div>
-                {{-- <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <h6 class="f-w-600">Total Pelanggan</h6>
-                            <h6>$3,500,000</h6>
-                        </div>
-                    </div>
-                </div> --}}
             </div>
         </div>
     </div>
