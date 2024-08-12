@@ -23,7 +23,9 @@ class User extends Authenticatable
         'role',
         'alamat',
         'jenis_kelamin',
-        'username'
+        'username',
+        'status',
+        'bio',
     ];
 
     /**

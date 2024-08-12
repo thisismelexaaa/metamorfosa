@@ -32,6 +32,7 @@
                         <tr>
                             <th>#</th>
                             <th>Nama</th>
+                            <th>Username</th>
                             <th>Email</th>
                             <th>Jenis Kelamin</th>
                             <th>Role</th>
@@ -43,6 +44,7 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $user['name'] }}</td>
+                                <td>{{ $user['username'] }}</td>
                                 <td>{{ $user['email'] }}</td>
                                 <td>{{ $user['jenis_kelamin'] == 1 ? 'Laki-laki' : 'Perempuan' }}</td>
                                 <td>
@@ -56,6 +58,8 @@
                                         {{ $user->role = 'Receptionist' }}
                                     @elseif ($user->role == 5)
                                         {{ $user->role = 'Official' }}
+                                    @else
+                                        {{  $user->role }}
                                     @endif
                                 </td>
                                 <td>

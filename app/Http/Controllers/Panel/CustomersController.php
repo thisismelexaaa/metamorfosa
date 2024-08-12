@@ -110,7 +110,7 @@ class CustomersController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -122,14 +122,14 @@ class CustomersController extends Controller
             'pekerjaan_ayah' => 'required|string|max:255',
             'nama_ibu' => 'required|string|max:255',
             'pekerjaan_ibu' => 'required|string|max:255',
-            'layanan' => 'required|exists:layanan,id',
-            'sub_layanan' => 'required|exists:sub_layanan,id',
-            'support_teacher' => 'required|string',
-            'tgl_masuk' => 'required|date',
-            'tgl_selesai' => 'required|date',
-            'keluhan' => 'required|string',
-            'status' => 'required|in:1,2', // Assuming 1 is Lunas and 2 is Belum Lunas
-            'total_biaya' => 'nullable|numeric'
+            // 'layanan' => 'required|exists:layanan,id',
+            // 'sub_layanan' => 'required|exists:sub_layanan,id',
+            // 'support_teacher' => 'required|string',
+            // 'tgl_masuk' => 'required|date',
+            // 'tgl_selesai' => 'required|date',
+            // 'keluhan' => 'required|string',
+            // 'status' => 'required|in:1,2', // Assuming 1 is Lunas and 2 is Belum Lunas
+            // 'total_biaya' => 'nullable|numeric'
         ]);
 
         try {
@@ -143,14 +143,15 @@ class CustomersController extends Controller
                 'pekerjaan_ayah' => $request->pekerjaan_ayah,
                 'nama_ibu' => $request->nama_ibu,
                 'pekerjaan_ibu' => $request->pekerjaan_ibu,
-                'layanan' => $request->layanan,
-                'sub_layanan' => $request->sub_layanan,
-                'support_teacher' => $request->support_teacher,
-                'tgl_masuk' => $request->tgl_masuk,
-                'tgl_selesai' => $request->tgl_selesai,
-                'keluhan' => $request->keluhan,
-                'status' => $request->status,
-                'total_biaya' => $request->total_biaya
+                'status' => 1,
+                // 'layanan' => $request->layanan,
+                // 'sub_layanan' => $request->sub_layanan,
+                // 'support_teacher' => $request->support_teacher,
+                // 'tgl_masuk' => $request->tgl_masuk,
+                // 'tgl_selesai' => $request->tgl_selesai,
+                // 'keluhan' => $request->keluhan,
+                // 'status' => $request->status,
+                // 'total_biaya' => $request->total_biaya
             ];
 
             Customer::find($id)->update($data);

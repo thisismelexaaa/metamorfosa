@@ -21,8 +21,17 @@
             @can('RoleAdmin')
                 @include('components.panel.sidebar-component.sidebar-admin')
             @endcan
+            @can('RoleSupportTeacher')
+                @include('components.panel.sidebar-component.sidebar-support-teacher')
+            @endcan
             @can('RoleStaff')
                 @include('components.panel.sidebar-component.sidebar-staff')
+            @endcan
+            @can('RoleReceptionist')
+                @include('components.panel.sidebar-component.sidebar-receptionist')
+            @endcan
+            @can('RoleOfficial')
+                @include('components.panel.sidebar-component.sidebar-official')
             @endcan
             <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
         </nav>

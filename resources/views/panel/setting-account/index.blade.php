@@ -36,12 +36,10 @@
         </div>
     </div>
 
-    {{-- @dd($user) --}}
-
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
-                <form action="{{ route('setting-account.update', $user['id']) }}" method="post">
+                <form action="{{ route('setting-account.update', encrypt($user['id'])) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="row gy-2">
@@ -84,13 +82,8 @@
                             </select>
                         </div>
                         <div class="col-md-4 col-sm-2">
-                            <label for="username">Password</label>
+                            <label for="username">Password Baru</label>
                             <div class="input-group">
-                                {{-- <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1">
-                                        <i class="bi bi-lock-fill"></i>
-                                    </span>
-                                </div> --}}
                                 <input name="password" type="password" class="input form-control" id="password"
                                     aria-label="password" aria-describedby="basic-addon1" autocomplete="new-password"
                                     placeholder="Masukkan Password Baru" />
@@ -101,6 +94,10 @@
                                     </span>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-md-4 col-sm2">
+                            <label for="bio">Bio</label>
+                            <textarea name="bio" id="bio" cols="30" rows="10" class="form-control" placeholder="Masukan Bio">{{ $user['bio'] }}</textarea>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary mt-2">Simpan</button>

@@ -20,7 +20,7 @@
                         </div>
                         <div class="col-md-12">
                             <label for="harga" class="form-label">Harga</label>
-                            <input type="text" inputmode="numeric" class="form-control" id="harga" name="harga"
+                            <input type="text" inputmode="numeric" class="form-control hargaEdit" id="harga" name="harga"
                                 placeholder="Masukkan Harga" />
                         </div>
                     </div>

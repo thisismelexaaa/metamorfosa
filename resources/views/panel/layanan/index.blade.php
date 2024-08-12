@@ -59,7 +59,8 @@
                                         <li class="list-group-item">
                                             <span class="d-flex justify-content-between">
                                                 <span class="text-capitalize">
-                                                    <i class="bi bi-dot"></i> {{ $item->sub_layanan }} - Rp.{{ number_format($item->harga) }}
+                                                    <i class="bi bi-dot"></i> {{ $item->sub_layanan }} -
+                                                    Rp.{{ number_format($item->harga) }}
                                                 </span>
                                                 <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
                                                     data-bs-target="#editModalSublayanan{{ $item->id }}">
@@ -93,6 +94,7 @@
             const $layanan = $('#layananEdit');
             const $form = $editModal.find('form');
             const $modalFooter = $editModal.find('.modal-footer');
+            const hargaEdit = $('.hargaEdit');
 
             $select2Elements.select2({
                 dropdownParent: $editModal
@@ -135,6 +137,34 @@
                     }
                 });
             });
+
+            // Format currency function
+            function formatCurrency(value) {
+                const formatter = new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0
+                });
+                return formatter.format(value);
+            }
+
+            // Apply formatting on input change
+            document.querySelectorAll('.hargaEdit').forEach(input => {
+                input.addEventListener('input', function() {
+                    // Remove any non-numeric characters
+                    let value = this.value.replace(/[^\d]/g, '');
+                    if (value) {
+                        this.value = formatCurrency(value);
+                    }
+                });
+
+                // Initial formatting when the page loads
+                let initialValue = input.value.replace(/[^\d]/g, '');
+                if (initialValue) {
+                    input.value = formatCurrency(initialValue);
+                }
+            });
+
         });
     </script>
 @endsection

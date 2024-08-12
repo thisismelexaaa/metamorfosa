@@ -11,14 +11,17 @@ use Illuminate\Support\Facades\Hash;
 
 class SettingAccountController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $user = Auth::user();
-        // dd($user);
-        $this->DefineId($user);
         $user = [
             'id' => $user->id,
             'name' => $user->name,
@@ -27,6 +30,7 @@ class SettingAccountController extends Controller
             'role' => $user->role,
             'alamat' => $user->alamat,
             'jenis_kelamin' => $user->jenis_kelamin,
+            'bio' => $user->bio,
         ];
 
         return view('panel.setting-account.index', compact('user'));
@@ -68,31 +72,22 @@ class SettingAccountController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
         try {
             $user = User::findOrFail($id);
-
-            $validatedData = $request->validate([
-                'name' => 'required|string|max:255',
-                'username' => 'required|string|max:255',
-                'email' => 'required|email|max:255|unique:users,email,' . $id,
-                'alamat' => 'required|string|max:255',
-                'jenis_kelamin' => 'required|string|max:255',
-                'password' => 'nullable|string|min:8|confirmed',
-            ]);
-
             $updateData = [
-                'name' => $validatedData['name'],
-                'username' => $validatedData['username'],
-                'email' => $validatedData['email'],
-                'alamat' => $validatedData['alamat'],
-                'jenis_kelamin' => $validatedData['jenis_kelamin'],
+                'name' => $request['name'],
+                'username' => $request['username'],
+                'email' => $request['email'],
+                'alamat' => $request['alamat'],
+                'jenis_kelamin' => $request['jenis_kelamin'],
+                'bio' => $request->bio,
                 'updated_at' => now(),
             ];
 
-            if (!empty($validatedData['password'])) {
-                $updateData['password'] = Hash::make($validatedData['password']);
+            if (!empty($request['password'])) {
+                $updateData['password'] = Hash::make($request['password']);
             }
 
             $user->update($updateData);

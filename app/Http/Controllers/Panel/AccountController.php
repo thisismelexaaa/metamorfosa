@@ -19,11 +19,9 @@ class AccountController extends Controller
     public function index()
     {
         $user = User::where('role', '!=', 'admin')->get();
-
         $title = '';
         $text = "Apakah anda yakin?";
         confirmDelete($title, $text);
-        // dd($user);
         return view('panel.account.index', compact('user'));
     }
 
@@ -50,7 +48,6 @@ class AccountController extends Controller
                 'alamat' => 'required',
                 'status' => 'required',
                 'jenis_kelamin' => 'required',
-
             ]);
 
             $password = bcrypt($data['username']);
@@ -65,12 +62,9 @@ class AccountController extends Controller
                 'jenis_kelamin' => $data['jenis_kelamin'],
                 'password' => $password,
                 'username' => $data['username'],
-                'email_verified_at' => now(),
                 'updated_at' => now(),
                 'created_at' => now(),
             ];
-
-            // dd($data);
 
             User::create($data);
 
@@ -96,9 +90,6 @@ class AccountController extends Controller
     public function edit(string $id)
     {
         $data = User::find($id);
-
-        $this->DefineId($data);
-
         return view('panel.account.edit', compact('data'));
     }
 
@@ -127,8 +118,6 @@ class AccountController extends Controller
                 'jenis_kelamin' => $data['jenis_kelamin'],
                 'updated_at' => now(),
             ];
-
-            // dd($data);
 
             User::where('id', $id)->update($data);
 

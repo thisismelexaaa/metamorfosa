@@ -20,11 +20,10 @@ class ModifiedUrl
     {
         $route = $request->route();
         $params = $route->parameters();
-
         foreach ($params as $param => $value) {
+            // dd($value);
             try {
                 $decryptedValue = Crypt::decrypt($value);
-
                 $route->setParameter($param, $decryptedValue);
             } catch (Exception $e) {
                 Log::warning("Parameter $param does not appear to be encrypted or decryption failed: " . $e->getMessage());

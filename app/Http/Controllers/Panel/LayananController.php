@@ -43,31 +43,26 @@ class LayananController extends Controller
             $data = $request;
 
             if ($data->has('id_layanan')) { // Sub Layanan
-                $data->validate([
+
+                $validatedData = $data->validate([
                     'layanan' => 'required',
                     'sub_layanan' => 'required',
                     'harga' => 'required',
                 ]);
 
-                $data = [
-                    'id_layanan' => $data->id_layanan,
-                    'layanan' => $data->layanan,
-                    'sub_layanan' => $data->sub_layanan,
-                    'harga' => $data->harga
-                ];
+                // Extract numeric value from 'harga'
+                $validatedData['harga'] = preg_replace('/[^\d]/', '', $validatedData['harga']);
+                $validatedData['id_layanan'] = $data->id_layanan;
 
-                SubLayanan::create($data);
+                SubLayanan::create($validatedData);
                 toast('Sub Layanan berhasil di tambahkan!', 'success');
             } else { // Layanan
-                $data->validate([
+
+                $validatedData = $data->validate([
                     'layanan' => 'required',
                 ]);
 
-                $data = [
-                    'layanan' => $data->layanan,
-                ];
-
-                Layanan::create($data);
+                Layanan::create($validatedData);
                 toast('Layanan berhasil di tambahkan!', 'success');
             }
 
@@ -99,38 +94,36 @@ class LayananController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
         try {
             $data = $request;
-            if ($data->has('id_sublayanan')) { // Sub Layanan
-                $getData = SubLayanan::find($data->id_sublayanan);
 
-                $data->validate([
+            if ($data->has('id_sublayanan')) { // Sub Layanan
+                $subLayanan = SubLayanan::findOrFail($data->id_sublayanan);
+
+                $validatedData = $data->validate([
                     'layanan' => 'required',
                     'sub_layanan' => 'required',
                     'harga' => 'required',
                 ]);
 
-                $data = [
-                    'id_layanan' => $getData->id_layanan,
-                    'sub_layanan' => $getData->sub_layanan,
-                    'harga' => $getData->harga
-                ];
+                // Extract numeric value from 'harga'
+                $validatedData['harga'] = preg_replace('/[^\d]/', '', $validatedData['harga']);
+                $validatedData['id_layanan'] = $subLayanan->id_layanan;
+                $validatedData['sub_layanan'] = $subLayanan->sub_layanan;
 
-                $getData->update($data);
-                toast('Sub Layanan berhasil di ubah!', 'success');
+                $subLayanan->update($validatedData);
+                toast('Sub Layanan berhasil diubah!', 'success');
             } else { // Layanan
-                $data->validate([
+                $layanan = Layanan::findOrFail($data->id); // Pastikan $id didapat dari $data
+
+                $validatedData = $data->validate([
                     'layanan' => 'required',
                 ]);
-                $data = [
-                    'layanan' => $data->layanan,
-                    'sub_layanan' => $data->sub_layanan,
-                ];
 
-                Layanan::find($id)->update($data);
-                toast('Layanan berhasil di ubah!', 'success');
+                $layanan->update($validatedData);
+                toast('Layanan berhasil diubah!', 'success');
             }
 
             return redirect()->back();
