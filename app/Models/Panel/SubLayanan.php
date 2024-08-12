@@ -17,4 +17,9 @@ class SubLayanan extends Model
     {
         return $this->belongsTo(Layanan::class, 'id_layanan');
     }
+
+    public function konsultasi()
+    {
+        return $this->hasMany(Konsultasi::class, 'id_layanan', 'id');
+    }
 }

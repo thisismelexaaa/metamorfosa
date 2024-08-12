@@ -4,6 +4,25 @@
     Konsultasi
 @endsection
 
+<style>
+    .bg-lunas {
+        background-color: green;
+        color: white;
+        font-weight: bold;
+        padding: 5px 10px;
+        border-radius: 4px;
+        text-align: center;
+    }
+
+    .bg-belum-lunas {
+        background-color: red;
+        color: white;
+        font-weight: bold;
+        padding: 5px 10px;
+        border-radius: 4px;
+        text-align: center;
+    }
+</style>
 @section('content')
     <div class="container-fluid">
         <div class="page-title">
@@ -33,30 +52,35 @@
                         <thead>
                             <tr>
                                 <th>#</th>
+                                <th>No Daftar</th>
                                 <th>Nama Pelanggan</th>
-                                <th>Layanan</th>
+                                <th>Layanan/Sub Layanan</th>
                                 <th>Profesional</th>
-                                <th>Keluhan</th>
-                                <th>Hasil Konsultasi</th>
-                                <th>Tanggal Masuk</th>
-                                <th>Tanggal Selesai</th>
+                                <th>Total Harga</th>
+                                <th>Status Bayar</th>
+                                <th>Sisa Bayar</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @for ($i = 0; $i < 10; $i++)
+                            @for ($i = 1; $i <= 5; $i++)
                                 <tr>
                                     <td>{{ $i }}</td>
-                                    <td>John</td>
-                                    <td>Psikologi</td>
+                                    <td>A123</td>
+                                    <td>Joni</td>
+                                    <td>Psikolog/Titari Program</td>
                                     <td>Support Teacher {{ $i }}</td>
-                                    <td>Kurang Bisa Berbicara</td>
-                                    <td>Baik</td>
-                                    <td>01/01/2024</td>
-                                    <td>01/02/2024</td>
+                                    <td>Rp 100.000</td>
+                                    <td>
+                                        <button
+                                            class="btn btn-sm {{ $i % 2 == 0 ? 'btn-success' : 'btn-danger' }} text-white w-100">
+                                            {{ $i % 2 == 0 ? 'Lunas' : 'Belum Lunas' }}
+                                        </button>
+                                    </td>
+                                    <td>Rp 50.000</td>
                                     <td>
                                         <div class="d-flex gap-2">
-                                            <a href="#" class="btn btn-sm btn-primary">
+                                            <a href="" class="btn btn-sm btn-primary">
                                                 <i class="bi bi-info-circle-fill"></i>
                                             </a>
                                             <a href="#" class="btn btn-sm btn-warning">

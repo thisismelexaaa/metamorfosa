@@ -14,13 +14,8 @@ class Customer extends Model
     protected $table = 'customers';
     protected $guarded = [];
 
-    public function getLayanan()
+    public function konsultasi()
     {
-        return $this->belongsTo(Layanan::class, 'layanan');
-    }
-
-    public function getSubLayanan()
-    {
-        return $this->belongsTo(SubLayanan::class, 'sub_layanan');
+        return $this->hasMany(Konsultasi::class, 'id_customer', 'id');
     }
 }

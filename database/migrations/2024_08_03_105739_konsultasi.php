@@ -13,19 +13,21 @@ return new class extends Migration
     {
         Schema::create('konsultasi', function (Blueprint $table) {
             $table->id();
-            $table->string('id_layanan');
-            $table->string('id_customer');
+            $table->unsignedBigInteger('id_customer');
+            $table->unsignedBigInteger('id_layanan');
+            $table->unsignedBigInteger('id_sub_layanan');
             $table->string('profesional');
-            $table->string('keluhan');
-            $table->string('hasil_konsultasi');
-            $table->string('tgl_masuk');
-            $table->string('tgl_selesai');
+            $table->text('keluhan');
+            $table->text('hasil_konsultasi');
+            $table->date('tgl_masuk');
+            $table->date('tgl_selesai')->nullable();
 
-            $table->string('status_bayar');
-            $table->string('sisa_bayar');
-            $table->string('total_bayar');
+            $table->enum('status_bayar', ['1', '2']);
+            $table->decimal('sisa_bayar', 15, 2);
+            $table->decimal('total_harga', 15, 2);
+            $table->integer('dibayar')->nullable();
 
-            $table->string('status');
+            $table->enum('status', ['pending', 'selesai', 'batal']);
             $table->timestamps();
         });
     }
