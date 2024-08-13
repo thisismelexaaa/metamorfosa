@@ -51,11 +51,12 @@
                     <table class="table table-hover" id="datatable">
                         <thead>
                             <tr>
-                                <th>#</th>
-                                <th>No Daftar</th>
+                                <th>No Daftar Pelanggan</th>
+                                <th>Kode Konsultasi</th>
                                 <th>Nama Pelanggan</th>
-                                <th>Layanan/Sub Layanan</th>
-                                <th>Profesional</th>
+                                <th>Layanan</th>
+                                <th>Sub Layanan</th>
+                                <th>Support Teacher</th>
                                 <th>Total Harga</th>
                                 <th>Status Bayar</th>
                                 <th>Sisa Bayar</th>
@@ -63,21 +64,24 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @for ($i = 1; $i <= 5; $i++)
+                            @foreach ($konsultasi as $konsultasi)
                                 <tr>
-                                    <td>{{ $i }}</td>
-                                    <td>A123</td>
-                                    <td>Joni</td>
-                                    <td>Psikolog/Titari Program</td>
-                                    <td>Support Teacher {{ $i }}</td>
-                                    <td>Rp 100.000</td>
+                                    <td>{{ $konsultasi->customer->no_daftar }}</td>
+                                    <td>{{ $konsultasi->kode_konsultasi }}</td>
+                                    <td>{{ $konsultasi->customer->name }}</td>
+                                    <td>{{ $konsultasi->layanan->layanan }}</td>
+                                    <td>{{ $konsultasi->subLayanan->sub_layanan }}</td>
+                                    <td>{{ $konsultasi->supportTeacher->name }}</td>
+                                    <td class="currency" data-value="{{ $konsultasi->total_harga }}">
+                                        {{ $konsultasi->total_harga }}</td>
                                     <td>
-                                        <button
-                                            class="btn btn-sm {{ $i % 2 == 0 ? 'btn-success' : 'btn-danger' }} text-white w-100">
-                                            {{ $i % 2 == 0 ? 'Lunas' : 'Belum Lunas' }}
-                                        </button>
+                                        <span
+                                            class="badge bg-{{ $konsultasi->status_bayar == 1 ? 'success' : 'danger' }} text-white w-100">
+                                            {{ $konsultasi->status_bayar == 1 ? 'Lunas' : 'Belum Lunas' }}
+                                        </span>
                                     </td>
-                                    <td>Rp 50.000</td>
+                                    <td class="currency" data-value="{{ $konsultasi->sisa_bayar }}">
+                                        {{ $konsultasi->sisa_bayar }}</td>
                                     <td>
                                         <div class="d-flex gap-2">
                                             <a href="" class="btn btn-sm btn-primary">
@@ -86,13 +90,20 @@
                                             <a href="#" class="btn btn-sm btn-warning">
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
-                                            <a href="#" class="btn btn-sm btn-danger">
-                                                <i class="bi bi-trash3-fill"></i>
-                                            </a>
+                                            <form id="deleteForm"
+                                                action="{{ route('konsultasi.destroy', encrypt($konsultasi->id)) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button" class="btn btn-sm btn-danger"
+                                                    onclick="deleteData(this)">
+                                                    <i class="bi bi-trash3-fill"></i>
+                                                </button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>
-                            @endfor
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -103,4 +114,5 @@
 
 @section('scripts')
     <script src="{{ asset('function_js/konsultasi/index.js') }}"></script>
+    <script src="{{ asset('function_js/deleteRestoreData/index.js') }}"></script>
 @endsection

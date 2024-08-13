@@ -7,6 +7,7 @@ use App\Models\Panel\Konsultasi;
 use App\Models\Panel\Customer;
 use App\Models\Panel\Layanan;
 use App\Models\Panel\SubLayanan;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class KonsultasiController extends Controller
@@ -27,7 +28,7 @@ class KonsultasiController extends Controller
         $text = "Apakah anda yakin?";
         confirmDelete($title, $text);
 
-        return view('panel.konsultasi.index', compact('data'));
+        return view('panel.konsultasi.index', $data);
     }
 
     /**
@@ -35,9 +36,12 @@ class KonsultasiController extends Controller
      */
     public function create()
     {
-        $customers = Customer::where('status', 1)->get(); // Mengambil data dari tabel 'customers'
-        $layanan = Layanan::all(); // Mengambil data dari tabel 'layanan'
-        return view('panel.konsultasi.create', compact('customers', 'layanan'));
+        $data['customers'] = Customer::where('status', 1)->get(); // Mengambil data dari tabel 'customers'
+        $data['layanan'] = Layanan::all(); // Mengambil data dari tabel 'layanan'
+        $data['support_teacher'] = User::where('role', 2)->get();
+
+        // dd($data);
+        return view('panel.konsultasi.create', $data);
     }
 
     /**
@@ -45,41 +49,52 @@ class KonsultasiController extends Controller
      */
     public function store(Request $request)
     {
+        // Validate the incoming request data
+        $data = $request->validate([
+            'id_customer' => 'required',
+            'id_layanan' => 'required',
+            'id_sub_layanan' => 'required',
+            'id_support_teacher' => 'required',
+            'tgl_masuk' => 'required',
+            'tgl_selesai' => 'nullable',
+            'keluhan' => 'required',
+            'total_harga' => 'required',
+            'status_bayar' => 'required',
+        ]);
 
-        $rules = [
-            'id_customer' => 'required|exists:customers,id',
-            'id_layanan' => 'required|exists:layanan,id',
-            'id_sub_layanan' => 'required|exists:sub_layanan,id',
-            'profesional' => 'required|string',
-            'keluhan' => 'required|string',
-            'hasil_konsultasi' => 'required|string',
-            'tgl_masuk' => 'required|date',
-            'tgl_selesai' => 'nullable|date',
-            'status_bayar' => 'required|in:1,2',
-            'total_harga' => 'required|numeric',
-            'status' => 'required|in:pending,selesai,batal',
-        ];
+        // kode konsultas
+        $data['kode_konsultasi'] = 'ID-' . strtoupper(substr(md5(time()), 0, 6));
 
-        if ($request->input('status_bayar') === '2') {
-            $rules['dibayar'] = 'required|numeric';
-        }
+        // Extract and clean 'dibayar' field to get numeric value
+        $dibayar = preg_replace('/[^\d]/', '', $request->input('dibayar', 0));
+        $dibayar = (int) $dibayar;
 
-        $request->validate($rules);
-
-        $totalHarga = $request->input('total_harga');
-        $dibayar = $request->input('dibayar', 0);
+        // Calculate 'sisa_bayar' based on 'status_bayar'
+        $totalHarga = preg_replace('/[^\d]/', '', $request->input('total_harga', 0));
         $statusBayar = $request->input('status_bayar');
-        $sisaBayar = $statusBayar === '1' ? 0 : ($totalHarga - $dibayar);
+        $sisaBayar = $statusBayar == 1 ? 0 : ($totalHarga - $dibayar);
+
+        // Prepare data for insertion
+        $data = array_merge($data, [
+            'total_harga' => $totalHarga,
+            'dibayar' => $dibayar,
+            'sisa_bayar' => $sisaBayar,
+            'status' => 1
+        ]);
+        // dd($data);
 
         try {
-            Konsultasi::create(array_merge($request->except('dibayar', 'sisa_bayar'), ['sisa_bayar' => $sisaBayar]));
+            // Create a new Konsultasi record
+            Konsultasi::create($data);
             toast('Konsultasi berhasil dibuat!', 'success');
         } catch (\Exception $e) {
             toast('Terjadi kesalahan saat menyimpan data: ' . $e->getMessage(), 'error');
+            dd($e);
         }
 
-        return redirect()->route('panel.konsultasi.index');
+        return redirect()->route('konsultasi.index');
     }
+
 
     /**
      * Display the specified resource.
@@ -144,16 +159,17 @@ class KonsultasiController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Konsultasi $konsultasi)
+    public function destroy($id)
     {
         try {
+            $konsultasi = Konsultasi::find($id);
             $konsultasi->delete();
             toast('Konsultasi berhasil dihapus!', 'success');
         } catch (\Exception $e) {
             toast('Terjadi kesalahan saat menghapus data: ' . $e->getMessage(), 'error');
         }
 
-        return redirect()->route('panel.konsultasi.index');
+        return redirect()->route('konsultasi.index');
     }
 
     /**

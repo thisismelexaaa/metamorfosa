@@ -62,27 +62,30 @@
                                                     class="btn btn-warning btn-sm" title="Edit">
                                                     <i class="bi bi-pencil-square"></i>
                                                 </a>
-                                                @if (Auth::user()->role == 'admin')
-                                                    @if ($item->status == 1)
-                                                        <a href="{{ route('customers.destroy', encrypt($item->id)) }}"
-                                                            class="btn btn-outline-danger btn-sm" data-confirm-delete="true"
-                                                            title="Hapus">
-                                                            <i class="bi bi-trash3-fill"></i>
-                                                        </a>
+                                                <form id="deleteForm"
+                                                    action="{{ route('customers.destroy', encrypt($item->id)) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    @if (Auth::user()->role == 'admin')
+                                                        @if ($item->status == 1)
+                                                            <button onclick="deleteData(this)"
+                                                                class="btn btn-outline-danger btn-sm" title="Hapus">
+                                                                <i class="bi bi-trash3-fill"></i>
+                                                            </button>
+                                                        @else
+                                                            <button onclick="restoreData(this)"
+                                                                class="btn btn-success btn-sm" title="Restore">
+                                                                <i class="bi bi-eye-fill"></i>
+                                                            </button>
+                                                        @endif
                                                     @else
-                                                        <a href="{{ route('customers.destroy', encrypt($item->id)) }}"
-                                                            class="btn btn-success btn-sm" data-confirm-delete="true"
-                                                            title="Restore">
-                                                            <i class="bi bi-eye-fill"></i>
-                                                        </a>
+                                                        <button onclick="deleteData(this)"
+                                                            class="btn btn-outline-danger btn-sm" title="Hapus">
+                                                            <i class="bi bi-trash3-fill"></i>
+                                                        </button>
                                                     @endif
-                                                @else
-                                                    <a href="{{ route('customers.destroy', encrypt($item->id)) }}"
-                                                        class="btn btn-outline-danger btn-sm" data-confirm-delete="true"
-                                                        title="Hapus">
-                                                        <i class="bi bi-trash3-fill"></i>
-                                                    </a>
-                                                @endif
+                                                </form>
                                             </div>
                                         </td>
                                     </tr>
@@ -98,4 +101,5 @@
 
 @section('scripts')
     <script src="{{ asset('function_js/customers/index.js') }}"></script>
+    <script src="{{ asset('function_js/deleteRestoreData/index.js') }}"></script>
 @endsection

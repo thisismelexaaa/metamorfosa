@@ -2,6 +2,7 @@
 
 namespace App\Models\Panel;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -24,5 +25,10 @@ class Konsultasi extends Model
     public function subLayanan()
     {
         return $this->belongsTo(SubLayanan::class, 'id_sub_layanan');
+    }
+
+    public function supportTeacher()
+    {
+        return $this->belongsTo(User::class, 'id_support_teacher');
     }
 }

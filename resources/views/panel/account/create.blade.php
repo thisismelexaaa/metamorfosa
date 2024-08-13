@@ -1,7 +1,7 @@
 @extends('panel.layouts.app')
 
 @section('title')
-    Add Account
+    Tambah Akun
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-12 col-sm-6">
-                    <h3>{{ __('Account') }}</h3>
+                    <h3>{{ __('Tambah Akun') }}</h3>
                 </div>
                 <div class="col-12 col-sm-6">
                     <ol class="breadcrumb">
@@ -20,10 +20,10 @@
                         </li>
                         <li class="breadcrumb-item">
                             <a href="{{ route('account.index') }}">
-                                Account
+                                Akun
                             </a>
                         </li>
-                        <li class="breadcrumb-item active">Create Account</li>
+                        <li class="breadcrumb-item active">Tambah Akun</li>
                     </ol>
                 </div>
             </div>
@@ -81,10 +81,9 @@
                             <label class="form-label" for="role">Role</label>
                             <select name="role" id="role" class="form-select select2" data-placeholder="Pilih Role">
                                 <option></option>
-                                <option value="2">Support Teacher</option>
-                                <option value="3">Staff</option>
-                                <option value="4">Receptionist</option>
-                                <option value="5">Official</option>
+                                @foreach (['2' => 'Support Teacher', '3' => 'Staff', '4' => 'Receptionist', '5' => 'Official'] as $roleId => $roleName)
+                                    <option value="{{ $roleId }}">{{ $roleName }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>

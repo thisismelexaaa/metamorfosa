@@ -1,7 +1,7 @@
 @extends('panel.layouts.app')
 
 @section('title')
-    Account
+    Akun
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-12 col-sm-6">
-                    <h3>{{ __('Account') }}</h3>
+                    <h3>{{ __('Akun') }}</h3>
                 </div>
                 <div class="col-12 col-sm-6">
                     <ol class="breadcrumb">
@@ -18,7 +18,7 @@
                                 <i class="bi bi-house-door-fill"></i>
                             </a>
                         </li>
-                        <li class="breadcrumb-item active">Account</li>
+                        <li class="breadcrumb-item active">Akun</li>
                     </ol>
                 </div>
             </div>
@@ -40,34 +40,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($user as $user)
+                        @foreach ($users as $user)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $user['name'] }}</td>
                                 <td>{{ $user['username'] }}</td>
                                 <td>{{ $user['email'] }}</td>
                                 <td>{{ $user['jenis_kelamin'] == 1 ? 'Laki-laki' : 'Perempuan' }}</td>
-                                <td>
-                                    @if ($user->role == 1)
-                                        {{ $user->role = 'Admin' }}
-                                    @elseif ($user->role == 2)
-                                        {{ $user->role = 'Support Teacher' }}
-                                    @elseif ($user->role == 3)
-                                        {{ $user->role = 'Staff' }}
-                                    @elseif ($user->role == 4)
-                                        {{ $user->role = 'Receptionist' }}
-                                    @elseif ($user->role == 5)
-                                        {{ $user->role = 'Official' }}
-                                    @else
-                                        {{  $user->role }}
-                                    @endif
-                                </td>
+                                <td>{{ $user->role }}</td>
                                 <td>
                                     <div class="d-flex gap-2">
-                                        <a href="{{ route('account.edit', encrypt($user['id'])) }}" class="btn btn-sm btn-primary">
+                                        <a href="{{ route('account.edit', encrypt($user['id'])) }}"
+                                            class="btn btn-sm btn-primary">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
-                                        <a href="{{ route('account.destroy', encrypt($user['id'])) }}" class="btn btn-sm btn-danger" data-confirm-delete="true">
+                                        <a href="{{ route('account.destroy', encrypt($user['id'])) }}"
+                                            class="btn btn-sm btn-danger" data-confirm-delete="true">
                                             <i class="bi bi-trash3-fill"></i>
                                         </a>
                                     </div>

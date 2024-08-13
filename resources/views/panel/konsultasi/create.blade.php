@@ -33,6 +33,7 @@
         <div class="card overflow-hidden p-5">
             <form action="{{ route('konsultasi.store') }}" method="POST">
                 @csrf
+                @method('POST')
                 {{-- Data Konsultasi --}}
                 <div class="row mb-2">
                     <h3>Data Konsultasi</h3>
@@ -68,12 +69,13 @@
 
                     <div class="row mb-2">
                         <div class="col-md">
-                            <label class="form-label" for="profesional">Profesional</label>
-                            <select required id="profesional" name="profesional" class="form-select select2"
-                                data-placeholder="Pilih Profesional">
+                            <label class="form-label" for="id_support_teacher">Support Teacher</label>
+                            <select required id="id_support_teacher" name="id_support_teacher" class="form-select select2"
+                                data-placeholder="Pilih Support Teacher">
                                 <option></option>
-                                <option value="Profesional 1">Profesional 1</option>
-                                <option value="Profesional 2">Profesional 2</option>
+                                @foreach ($support_teacher as $support_teacher)
+                                    <option value="{{ $support_teacher->id }}">{{ $support_teacher->name }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="col-md">
@@ -94,24 +96,24 @@
                             <select required id="status_bayar" name="status_bayar" class="form-select select2"
                                 data-placeholder="Pilih Status Pembayaran">
                                 <option></option>
-                                <option value="lunas">Lunas</option>
-                                <option value="belum_lunas">Belum Lunas</option>
+                                <option value="1">Lunas</option>
+                                <option value="2">Belum Lunas</option>
                             </select>
                         </div>
                         <div class="col-md d-none" id="col_dibayar">
                             <label class="form-label" for="dibayar">Dibayar</label>
-                            <input id="dibayar" type="number" class="form-control" name="dibayar"
+                            <input id="dibayar" type="text" class="form-control" name="dibayar"
                                 placeholder="Masukkan Jumlah Dibayar">
                         </div>
                         <div class="col-md">
                             <label class="form-label" for="total_harga">Total Harga</label>
-                            <input required id="total_harga" type="number" class="form-control" name="total_harga"
-                                placeholder="Masukkan Total Harga">
+                            <input required id="total_harga" type="text" class="form-control" name="total_harga"
+                                placeholder="Total Harga" readonly>
                         </div>
                         <div class="col-md d-none" id="col_sisa_bayar">
                             <label class="form-label" for="sisa_bayar">Sisa Bayar</label>
-                            <input id="sisa_bayar" type="number" class="form-control" name="sisa_bayar"
-                                placeholder="Masukkan Sisa Bayar">
+                            <input id="sisa_bayar" type="text" class="form-control" name="sisa_bayar"
+                                placeholder="Sisa Bayar" readonly>
                         </div>
                     </div>
 
@@ -121,11 +123,11 @@
                             <textarea required id="keluhan" rows="4" class="form-control" name="keluhan"
                                 placeholder="Masukkan Keluhan"></textarea>
                         </div>
-                        <div class="col-md">
+                        {{-- <div class="col-md">
                             <label class="form-label" for="hasil_konsultasi">Hasil Konsultasi</label>
                             <textarea required id="hasil_konsultasi" rows="4" class="form-control" name="hasil_konsultasi"
                                 placeholder="Masukkan Hasil Konsultasi"></textarea>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
 
@@ -138,102 +140,98 @@
 @section('scripts')
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            $('#id_layanan').select2({
-                theme: "bootstrap-5",
-                minimumResultsForSearch: Infinity,
-            });
 
-            $('#id_customer').select2({
-                theme: "bootstrap-5",
-                minimumResultsForSearch: Infinity,
-            });
+            // Initialize select2 elements with common options
+            ['#id_layanan', '#id_customer', '#id_support_teacher', '#status_bayar'].forEach(initializeSelect2);
 
-            $('#profesional').select2({
-                theme: "bootstrap-5",
-                minimumResultsForSearch: Infinity,
-            });
+            function initializeSelect2(selector) {
+                // Define common options
+                const options = {
+                    theme: "bootstrap-5"
+                };
 
-            $('#status_bayar').select2({
-                theme: "bootstrap-5",
-                minimumResultsForSearch: Infinity,
-            });
+                // Conditionally add minimumResultsForSearch option
+                if (selector !== '#id_support_teacher') {
+                    options.minimumResultsForSearch = Infinity;
+                }
 
+                // Apply select2 with the options
+                $(selector).select2(options);
+            }
+
+            // Handle the change event for 'id_layanan'
             $('#id_layanan').on('change', function() {
-                var idLayanan = $(this).val();
+                const idLayanan = $(this).val();
+                const $subLayanan = $('#id_sub_layanan');
+                const $colSubLayanan = $('#col_sub_layanan');
+
                 if (idLayanan) {
-                    var url = `{{ route('getSubLayanan') }}`;
-                    $.ajax({
-                        url: url,
-                        type: 'GET',
-                        data: {
-                            id_layanan: idLayanan
-                        },
-                        dataType: 'json',
-                        success: function(data) {
-                            if (data.length > 0) {
-                                $('#col_sub_layanan').removeClass('d-none');
-                                var $subLayanan = $('#id_sub_layanan');
-                                $subLayanan.empty();
-                                $subLayanan.append($('<option>', {
-                                    value: '',
-                                    text: 'Pilih Sub Layanan'
-                                }));
-                                $.each(data, function(index, item) {
-                                    $subLayanan.append($('<option>', {
-                                        value: item.id,
-                                        text: item.sub_layanan,
-                                        'data-harga': item.harga
-                                    }));
-                                });
-                                $subLayanan.select2({
-                                    theme: "bootstrap-5",
-                                    width: '100%'
-                                });
-                            } else {
-                                $('#col_sub_layanan').addClass('d-none');
-                                $('#id_sub_layanan').empty().append($('<option>', {
-                                    value: '',
-                                    text: 'Pilih Sub Layanan'
-                                }));
-                            }
+                    $.getJSON(`{{ route('getSubLayanan') }}`, {
+                        id_layanan: idLayanan
+                    }, function(data) {
+                        $subLayanan.empty().append('<option value="">Pilih Sub Layanan</option>');
+                        if (data.length) {
+                            $colSubLayanan.removeClass('d-none');
+                            data.forEach(item => {
+                                $subLayanan.append(
+                                    `<option value="${item.id}" data-harga="${item.harga}">${item.sub_layanan}</option>`
+                                );
+                            });
+                            initializeSelect2('#id_sub_layanan');
+                        } else {
+                            $colSubLayanan.addClass('d-none');
                         }
                     });
                 } else {
-                    $('#col_sub_layanan').addClass('d-none');
-                    $('#id_sub_layanan').empty().append($('<option>', {
-                        value: '',
-                        text: 'Pilih Sub Layanan'
-                    }));
+                    $colSubLayanan.addClass('d-none');
+                    $subLayanan.empty().append('<option value="">Pilih Sub Layanan</option>');
                 }
             });
 
+            // Handle currency formatting on input
+            $('#total_harga').on('input', function() {
+                const value = this.value.replace(/[^\d]/g, ''); // Remove non-numeric characters
+                this.value = value ? formatCurrency(value) : '';
+            });
+
+            // Update total price and remaining payment on sub-layanan change
             $('#id_sub_layanan').on('change', function() {
-                var harga = $('#id_sub_layanan option:selected').data('harga');
-                $('#total_harga').val(harga);
+                const harga = $(this).find('option:selected').data('harga');
+                $('#total_harga').val(harga ? formatCurrency(harga) : '');
                 calculateSisaBayar();
             });
 
+            // Handle the change event for payment status
             $('#status_bayar').on('change', function() {
-                var statusBayar = $(this).val();
-                if (statusBayar === 'belum_lunas') {
-                    $('#col_dibayar').removeClass('d-none');
-                    $('#col_sisa_bayar').removeClass('d-none');
-                } else {
-                    $('#col_dibayar').addClass('d-none');
-                    $('#col_sisa_bayar').addClass('d-none');
+                const isBelumLunas = $(this).val() === '2';
+                $('#col_dibayar, #col_sisa_bayar').toggleClass('d-none', !isBelumLunas);
+                if (!isBelumLunas) {
                     $('#sisa_bayar').val(0);
+                    $('#dibayar').val('');
                 }
             });
 
+            // Recalculate remaining payment on dibayar input
             $('#dibayar').on('input', function() {
+                const value = this.value.replace(/[^\d]/g, ''); // Remove non-numeric characters
+                this.value = value ? formatCurrency(value) : '';
                 calculateSisaBayar();
             });
 
+            // Calculate the remaining payment
             function calculateSisaBayar() {
-                var totalHarga = parseFloat($('#total_harga').val()) || 0;
-                var dibayar = parseFloat($('#dibayar').val()) || 0;
-                var sisaBayar = totalHarga - dibayar;
-                $('#sisa_bayar').val(sisaBayar);
+                const totalHarga = parseFloat($('#total_harga').val().replace(/[^\d]/g, '')) || 0;
+                const dibayar = parseFloat($('#dibayar').val().replace(/[^\d]/g, '')) || 0;
+                $('#sisa_bayar').val(formatCurrency(totalHarga - dibayar));
+            }
+
+            // Example formatCurrency function
+            function formatCurrency(value) {
+                return new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0
+                }).format(value);
             }
         });
     </script>

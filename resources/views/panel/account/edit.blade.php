@@ -1,7 +1,7 @@
 @extends('panel.layouts.app')
 
 @section('title')
-    Edit Account
+    Edit Akun
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-12 col-sm-6">
-                    <h3>{{ __('Account') }}</h3>
+                    <h3>{{ __('Akun') }}</h3>
                 </div>
                 <div class="col-12 col-sm-6">
                     <ol class="breadcrumb">
@@ -20,10 +20,10 @@
                         </li>
                         <li class="breadcrumb-item">
                             <a href="{{ route('account.index') }}">
-                                Account
+                                Akun
                             </a>
                         </li>
-                        <li class="breadcrumb-item active">Edit Account</li>
+                        <li class="breadcrumb-item active">Edit Akun</li>
                     </ol>
                 </div>
             </div>
@@ -83,11 +83,12 @@
                         <div class="col-md-3">
                             <label class="form-label" for="role">Role</label>
                             <select name="role" id="role" class="form-select select2" data-placeholder="Pilih Role">
-                                <option selected value="{{ $data->role }}"> {{ $data->role }}</option>
-                                <option value="2">Support Teacher</option>
-                                <option value="3">Staff</option>
-                                <option value="4">Receptionist</option>
-                                <option value="5">Official</option>
+                                <option selected value="{{ $data->role }}">{{ $data->role }}</option>
+                                @foreach (['2' => 'Support Teacher', '3' => 'Staff', '4' => 'Receptionist', '5' => 'Official'] as $roleId => $roleName)
+                                    @if ($roleName != $data->role)
+                                        <option value="{{ $roleId }}">{{ $roleName }}</option>
+                                    @endif
+                                @endforeach
                             </select>
                         </div>
                     </div>

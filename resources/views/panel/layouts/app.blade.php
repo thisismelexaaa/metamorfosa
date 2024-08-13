@@ -89,6 +89,8 @@
     <script src="{{ asset('assets/DataTables/datatables.min.js') }}"></script>
     <script src="{{ asset('assets/fullcalendar-6.1.15/dist/index.global.min.js') }}"></script>
     <script src="{{ asset('assets/select2-4.1.0-rc.0/dist/js/select2.full.min.js') }}"></script>
+    {{-- sweet alert --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     @yield('scripts')
 </body>

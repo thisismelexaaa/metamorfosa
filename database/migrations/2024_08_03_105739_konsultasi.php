@@ -16,9 +16,10 @@ return new class extends Migration
             $table->unsignedBigInteger('id_customer');
             $table->unsignedBigInteger('id_layanan');
             $table->unsignedBigInteger('id_sub_layanan');
-            $table->string('profesional');
+            $table->string('kode_konsultasi');
+            $table->string('id_support_teacher');
             $table->text('keluhan');
-            $table->text('hasil_konsultasi');
+            $table->text('hasil_konsultasi')->nullable();
             $table->date('tgl_masuk');
             $table->date('tgl_selesai')->nullable();
 
@@ -27,7 +28,7 @@ return new class extends Migration
             $table->decimal('total_harga', 15, 2);
             $table->integer('dibayar')->nullable();
 
-            $table->enum('status', ['pending', 'selesai', 'batal']);
+            $table->string('status');
             $table->timestamps();
         });
     }

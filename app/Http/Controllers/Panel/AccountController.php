@@ -18,11 +18,26 @@ class AccountController extends Controller
      */
     public function index()
     {
-        $user = User::where('role', '!=', 'admin')->get();
-        $title = '';
-        $text = "Apakah anda yakin?";
+        // Retrieve all users except those with the 'admin' role
+        $users = User::where('role', '!=', 'admin')->get();
+
+        // Define variables for the delete confirmation prompt
+        $title = 'Delete Confirmation';
+        $text = "Apakah anda yakin ingin menghapus pengguna ini?";
+
+        // Call the confirmDelete function (assuming it's defined elsewhere)
         confirmDelete($title, $text);
-        return view('panel.account.index', compact('user'));
+
+        // Process each user to define role, status, and gender
+        $users->each(function ($user) {
+            $this->DefineId($user);
+        });
+
+        // Debugging output
+        // dd($users);
+
+        // Return the view with the users
+        return view('panel.account.index', compact('users'));
     }
 
     /**
@@ -89,9 +104,22 @@ class AccountController extends Controller
      */
     public function edit(string $id)
     {
+        // Retrieve the user by ID
         $data = User::find($id);
+
+        // Check if the user exists
+        if (!$data) {
+            // Handle the case where the user is not found (optional)
+            abort(404, 'User not found');
+        }
+
+        // Apply the DefineId function to the retrieved user
+        $this->DefineId($data);
+
+        // Return the edit view with the user data
         return view('panel.account.edit', compact('data'));
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -139,33 +167,38 @@ class AccountController extends Controller
         return redirect()->route('account.index');
     }
 
-    private function DefineId($data)
+    private function DefineId($user)
     {
-        // role
-        if ($data->role == 1) {
-            $data->role = 'Admin';
-        } else if ($data->role == 2) {
-            $data->role = 'Support Teacher';
-        } else if ($data->role == 3) {
-            $data->role = 'Staff';
-        } else if ($data->role == 4) {
-            $data->role = 'Receptionist';
-        } else if ($data->role == 5) {
-            $data->role = 'Official';
+        // Define role
+        switch ($user->role) {
+            case 1:
+                $user->role = 'Admin';
+                break;
+            case 2:
+                $user->role = 'Support Teacher';
+                break;
+            case 3:
+                $user->role = 'Staff';
+                break;
+            case 4:
+                $user->role = 'Receptionist';
+                break;
+            case 5:
+                $user->role = 'Official';
+                break;
         }
 
-        // status
-        if ($data->status == 1) {
-            $data->status = 'Sudah Menikah';
-        } else if ($data->status == 2) {
-            $data->status = 'Belum Menikah';
+        // Define marital status
+        switch ($user->status) {
+            case 1:
+                $user->status = 'Sudah Menikah';
+                break;
+            case 2:
+                $user->status = 'Belum Menikah';
+                break;
         }
 
-        // jenis_kelamin
-        if ($data->jenis_kelamin == 1) {
-            $data->jenis_kelamin = 'Laki - Laki';
-        } else {
-            $data->jenis_kelamin = 'Perempuan';
-        }
+        // Define gender
+        $user->jenis_kelamin = ($user->jenis_kelamin == 1) ? 'Laki - Laki' : 'Perempuan';
     }
 }
