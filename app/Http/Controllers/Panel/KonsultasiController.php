@@ -107,47 +107,54 @@ class KonsultasiController extends Controller
         $data['customers'] = Customer::where('status', 1)->get(); // Mengambil data dari tabel 'customers'
         $data['layanan'] = Layanan::all(); // Mengambil data dari tabel 'layanan'
         $data['support_teacher'] = User::where('role', 2)->get();
+        $data['id'] = $id;
         return view('panel.konsultasi.edit', $data);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Konsultasi $konsultasi)
+    public function update(Request $request, $id)
     {
-        $rules = [
-            'id_customer' => 'required|exists:customers,id',
-            'id_layanan' => 'required|exists:layanan,id',
-            'id_sub_layanan' => 'required|exists:sub_layanan,id',
-            'profesional' => 'required|string',
-            'keluhan' => 'required|string',
-            'hasil_konsultasi' => 'required|string',
-            'tgl_masuk' => 'required|date',
-            'tgl_selesai' => 'nullable|date',
-            'status_bayar' => 'required|in:1,2',
-            'total_harga' => 'required|numeric',
-            'status' => 'required|in:pending,selesai,batal',
-        ];
+        // Validate the incoming request data
+        $data = $request->validate([
+            'id_customer' => 'required',
+            'id_layanan' => 'required',
+            'id_sub_layanan' => 'required',
+            'id_support_teacher' => 'required',
+            'tgl_masuk' => 'required',
+            'tgl_selesai' => 'nullable',
+            'keluhan' => 'required',
+            'total_harga' => 'required',
+            'status_bayar' => 'required',
+        ]);
 
-        if ($request->input('status_bayar') === '2') {
-            $rules['dibayar'] = 'required|numeric';
-        }
+        // Extract and clean 'dibayar' field to get numeric value
+        $dibayar = preg_replace('/[^\d]/', '', $request->input('dibayar', 0));
+        $dibayar = (int) $dibayar;
 
-        $request->validate($rules);
-
-        $totalHarga = $request->input('total_harga');
-        $dibayar = $request->input('dibayar', 0);
+        // Calculate 'sisa_bayar' based on 'status_bayar'
+        $totalHarga = preg_replace('/[^\d]/', '', $request->input('total_harga', 0));
         $statusBayar = $request->input('status_bayar');
-        $sisaBayar = $statusBayar === '1' ? 0 : ($totalHarga - $dibayar);
+        $sisaBayar = $statusBayar == 1 ? 0 : ($totalHarga - $dibayar);
+
+        // Prepare data for updating
+        $data = array_merge($data, [
+            'total_harga' => $totalHarga,
+            'dibayar' => $dibayar,
+            'sisa_bayar' => $sisaBayar,
+        ]);
 
         try {
-            $konsultasi->update(array_merge($request->except('dibayar', 'sisa_bayar'), ['sisa_bayar' => $sisaBayar]));
+            // Update the Konsultasi record
+            Konsultasi::find($id)->update($data);
             toast('Konsultasi berhasil diperbarui!', 'success');
         } catch (\Exception $e) {
             toast('Terjadi kesalahan saat memperbarui data: ' . $e->getMessage(), 'error');
+            return redirect()->back()->withInput();
         }
 
-        return redirect()->route('panel.konsultasi.index');
+        return redirect()->route('konsultasi.index');
     }
 
     /**

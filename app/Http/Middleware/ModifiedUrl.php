@@ -21,7 +21,6 @@ class ModifiedUrl
         $route = $request->route();
         $params = $route->parameters();
         foreach ($params as $param => $value) {
-            // dd($value);
             try {
                 $decryptedValue = Crypt::decrypt($value);
                 $route->setParameter($param, $decryptedValue);

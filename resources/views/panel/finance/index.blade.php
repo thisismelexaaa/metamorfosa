@@ -28,42 +28,80 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
-                <table class="table table-hover table-striped table-bordered align-middle" id="datatable">
+                <table class="table table-hover table-striped table-bordered align-middle w-100" id="datatable">
                     <thead>
                         <tr>
-                            <th>#</th>
                             <th>Nama</th>
-                            <th>Tanggal Lahir</th>
-                            <th>Jenis Kelamin</th>
-                            <th>Nama Bapak/Ibu</th>
-                            <th>Tangal Masuk</th>
-                            <th>Durasi</th>
-                            <th>Action</th>
+                            <th>Kode Pelanggan</th>
+                            <th>Kode konsultasi</th>
+                            <th>Layanan</th>
+                            <th>Sub Layanan</th>
+                            <th>Uang Masuk</th>
+                            {{-- <th>Action</th> --}}
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>John</td>
-                            <td>01-01-2000</td>
-                            <td>Laki-laki</td>
-                            <td>Bapak John Doe & Ibu Jane Doe</td>
-                            <td>01-01-2000</td>
-                            <td>1 Bulan</td>
-                            <td>
-                                <div class="d-flex gap-2">
-                                    <a href="#" class="btn btn-sm btn-primary">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-sm btn-danger">
-                                        <i class="bi bi-trash3-fill"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
+                        @foreach ($konsultasi as $key => $item)
+                            <tr>
+                                <td>{{ $item->customer->name }}</td>
+                                <td>{{ $item->customer->no_daftar }}</td>
+                                <td>{{ $item->kode_konsultasi }}</td>
+                                <td>{{ $item->layanan->layanan }}</td>
+                                <td>{{ $item->subLayanan->sub_layanan }}</td>
+                                <td class="currency" data-value="{{ $item->total_harga }}">{{ $item->total_harga }}</td>
+                                {{-- <td>
+                                    <div class="d-flex gap-2">
+                                        <a href="#" class="btn btn-sm btn-primary">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                        <a href="#" class="btn btn-sm btn-danger">
+                                            <i class="bi bi-trash3-fill"></i>
+                                        </a>
+                                    </div>
+                                </td> --}}
+                            </tr>
+                        @endforeach
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <th id="label-total" colspan="5">Total</th>
+                            <th class="currency" data-value="{{ $total }}">{{ $total }}</th>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('function_js/finance/index.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('.currency').each(function() {
+                $(this).text(formatCurrency($(this).data('value')));
+            });
+
+            // Count columns
+            // let totalColumns = document.querySelectorAll('thead tr th').length - 1;
+            // // Get the label-total element
+            // const labelTotal = document.getElementById('label-total');
+
+            // console.log(totalColumns);
+
+            // // Set the colspan attribute if the element exists
+            // if (labelTotal) {
+            //     labelTotal.setAttribute('colspan', totalColumns);
+            // }
+
+            function formatCurrency(value) {
+                const formatter = new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0
+                });
+                return formatter.format(value);
+            }
+        });
+    </script>
 @endsection

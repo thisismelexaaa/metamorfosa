@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
+use App\Models\Panel\Konsultasi;
 use Illuminate\Http\Request;
 
 class FinanceController extends Controller
@@ -16,7 +17,13 @@ class FinanceController extends Controller
      */
     public function index()
     {
-        return view('panel.finance.index');
+        $data['konsultasi'] = Konsultasi::all();
+        // get total harga
+        $data['total_harga'] = Konsultasi::where('total_harga', '>', 0)->get();
+        $data['total'] = $data['total_harga']->sum('total_harga');
+
+        // dd($data);
+        return view('panel.finance.index', $data);
     }
 
     /**

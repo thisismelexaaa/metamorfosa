@@ -23,17 +23,17 @@
                                 Konsultasi
                             </a>
                         </li>
-                        <li class="breadcrumb-item active">Tambah Data Konsultasi</li>
+                        <li class="breadcrumb-item active">Edit Data Konsultasi</li>
                     </ol>
                 </div>
             </div>
         </div>
     </div>
     <div class="container-fluid">
-        <div class="card overflow-hidden p-5">
+        <div class="card overflow-hidden p-5 shadow-sm">
 
-            {{-- @dd($konsultasi->customer) --}}
-            <form action="{{ route('konsultasi.update', encrypt($konsultasi->id)) }}" method="POST">
+            {{-- @dd($konsultasi->id) --}}
+            <form method="POST" action="{{ route('konsultasi.update', encrypt($id)) }}">
                 @csrf
                 @method('PUT')
                 {{-- Data Konsultasi --}}

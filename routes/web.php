@@ -48,12 +48,11 @@ Route::middleware('web', 'ModifiedUrl')->group(function () {
             '/schedule' => ScheduleController::class,
             '/layanan' => LayananController::class,
             '/account' => AccountController::class,
-            '/setting-account' => SettingAccountController::class
+            '/setting-account' => SettingAccountController::class,
         ]);
 
         Route::get('/get-layanan', [LayananController::class, 'getLayanan'])->name('layanan.getLayanan');
         Route::get('/get-layanan/{id}', [CustomersController::class, 'getLayananById'])->name('customer.getLayananById');
-
         Route::get('get-sub-layanan', [KonsultasiController::class, 'getSubLayanan'])->name('getSubLayanan');
     });
 });

@@ -47,10 +47,10 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const calendarEl = document.getElementById('calendar');
-            const customers = @json($customer);
-            const dataCustomer = customers.map(item => ({
+            const dataJson = @json($konsultasi);
+            const data = dataJson.map(item => ({
                 id: item.id,
-                title: item.name,
+                title: item.kode_konsultasi,
                 start: item.tgl_masuk + 'T00:00:00',
                 end: item.tgl_selesai + 'T23:59:59',
                 allDay: item.tgl_masuk === item.tgl_selesai
@@ -79,10 +79,10 @@
                 timezone: 'local',
                 height: 700,
                 contentHeight: 25,
-                events: dataCustomer
+                events: data
             });
 
-            console.log(dataCustomer);
+            console.log(data);
 
             calendar.render();
         });

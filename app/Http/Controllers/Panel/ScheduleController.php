@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
 use App\Models\Panel\Customer;
+use App\Models\Panel\Konsultasi;
 use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
@@ -17,9 +18,9 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        $customer = Customer::all();
+        $data['konsultasi'] = Konsultasi::all();
 
-        return view('panel.schedule.index', compact('customer'));
+        return view('panel.schedule.index', $data);
     }
 
     /**
