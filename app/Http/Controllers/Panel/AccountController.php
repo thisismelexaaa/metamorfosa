@@ -65,7 +65,7 @@ class AccountController extends Controller
                 'jenis_kelamin' => 'required',
             ]);
 
-            $password = bcrypt($data['username']);
+            $password = bcrypt('metamorfosa');
 
             $data = [
                 'name' => $data['name'],
