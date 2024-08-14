@@ -20,10 +20,6 @@ class CustomersController extends Controller
     {
         $data['customer'] = Customer::all();
 
-        $title = '';
-        $text = "Apakah anda yakin?";
-        confirmDelete($title, $text);
-
         return view('panel.customers.index', compact('data'));
     }
 
@@ -132,17 +128,22 @@ class CustomersController extends Controller
     public function destroy(string $id)
     {
         try {
-            $customer = Customer::find($id);
+            $customer = Customer::findOrFail($id);
 
-            // Toggle status between 0 and 1
-            $customer->status = $customer->status == 0 ? 1 : 0;
+            // Toggle status between 1 and 2
+            $customer->status = $customer->status == 1 ? 2 : 1;
             $customer->save();
 
-            toast('Customer berhasil dihapus!', 'success');
-            return redirect()->back();
+            $message = $customer->status == 1
+                ? 'Data berhasil dikembalikan!'
+                : 'Data berhasil dihapus!';
+
+            toast($message, 'success');
+
+            return back();
         } catch (\Exception $e) {
             toast($e->getMessage(), 'error');
-            return redirect()->back();
+            return back();
         }
     }
 }

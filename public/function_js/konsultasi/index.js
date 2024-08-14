@@ -11,13 +11,13 @@ document.addEventListener("DOMContentLoaded", () => {
             [5, 10, 15, 20, "All"],
         ],
         dom: "Blfrtip",
-        // fixedColumns: {
-        //     start: 0,
-        //     end: 1,
-        // },
+        fixedColumns: {
+            start: 0,
+            end: 1,
+        },
         select: true,
-        // scrollCollapse: true,
-        // scrollX: true,
+        scrollCollapse: true,
+        scrollX: true,
         pageLength: 5,
         buttons: [
             {

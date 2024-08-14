@@ -23,11 +23,6 @@ class KonsultasiController extends Controller
     public function index()
     {
         $data['konsultasi'] = Konsultasi::all();
-
-        $title = '';
-        $text = "Apakah anda yakin?";
-        confirmDelete($title, $text);
-
         return view('panel.konsultasi.index', $data);
     }
 
@@ -40,14 +35,13 @@ class KonsultasiController extends Controller
         $data['layanan'] = Layanan::all(); // Mengambil data dari tabel 'layanan'
         $data['support_teacher'] = User::where('role', 2)->get();
 
-        // dd($data);
         return view('panel.konsultasi.create', $data);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Konsultasi $konsultasi)
     {
         // Validate the incoming request data
         $data = $request->validate([
@@ -81,11 +75,10 @@ class KonsultasiController extends Controller
             'sisa_bayar' => $sisaBayar,
             'status' => 1
         ]);
-        // dd($data);
 
         try {
             // Create a new Konsultasi record
-            Konsultasi::create($data);
+            $konsultasi->create($data);
             toast('Konsultasi berhasil dibuat!', 'success');
         } catch (\Exception $e) {
             toast('Terjadi kesalahan saat menyimpan data: ' . $e->getMessage(), 'error');
@@ -99,21 +92,22 @@ class KonsultasiController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        $data = Konsultasi::find($id);
-        return view('panel.konsultasi.show', compact('data'));
+        $data['konsultasi'] = Konsultasi::find($id);
+        return view('panel.konsultasi.show', $data);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Konsultasi $konsultasi)
+    public function edit($id)
     {
-        $customers = Customer::where('status', 1)->get();
-        $layanan = Layanan::all();
-        $subLayanan = SubLayanan::where('id_layanan', $konsultasi->id_layanan)->get();
-        return view('panel.konsultasi.edit', compact('konsultasi', 'customers', 'layanan', 'subLayanan'));
+        $data['konsultasi'] = Konsultasi::find($id);
+        $data['customers'] = Customer::where('status', 1)->get(); // Mengambil data dari tabel 'customers'
+        $data['layanan'] = Layanan::all(); // Mengambil data dari tabel 'layanan'
+        $data['support_teacher'] = User::where('role', 2)->get();
+        return view('panel.konsultasi.edit', $data);
     }
 
     /**
@@ -163,13 +157,21 @@ class KonsultasiController extends Controller
     {
         try {
             $konsultasi = Konsultasi::find($id);
-            $konsultasi->delete();
-            toast('Konsultasi berhasil dihapus!', 'success');
-        } catch (\Exception $e) {
-            toast('Terjadi kesalahan saat menghapus data: ' . $e->getMessage(), 'error');
-        }
 
-        return redirect()->route('konsultasi.index');
+            // Toggle status between 0 and 1
+            $konsultasi->status = $konsultasi->status == 0 ? 1 : 0;
+            $konsultasi->save();
+
+            if ($konsultasi->status == 1) {
+                toast('Data berhasil dikembalikan!', 'success');
+            } else {
+                toast('Data berhasil dihapus!', 'success');
+            }
+            return redirect()->back();
+        } catch (\Exception $e) {
+            toast($e->getMessage(), 'error');
+            return redirect()->back();
+        }
     }
 
     /**

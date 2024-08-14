@@ -47,11 +47,11 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-hover" id="datatable">
+                <div class="table-responsive overflow-auto">
+                    <table class="table nowrap table-striped table-hover align-middle" id="datatable">
                         <thead>
                             <tr>
-                                <th>No Daftar Pelanggan</th>
+                                <th class="text-start">No Daftar Pelanggan</th>
                                 <th>Kode Konsultasi</th>
                                 <th>Nama Pelanggan</th>
                                 <th>Layanan</th>
@@ -60,49 +60,60 @@
                                 <th>Total Harga</th>
                                 <th>Status Bayar</th>
                                 <th>Sisa Bayar</th>
-                                <th>Action</th>
+                                <th class="bg-white text-dark">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($konsultasi as $konsultasi)
-                                <tr>
-                                    <td>{{ $konsultasi->customer->no_daftar }}</td>
-                                    <td>{{ $konsultasi->kode_konsultasi }}</td>
-                                    <td>{{ $konsultasi->customer->name }}</td>
-                                    <td>{{ $konsultasi->layanan->layanan }}</td>
-                                    <td>{{ $konsultasi->subLayanan->sub_layanan }}</td>
-                                    <td>{{ $konsultasi->supportTeacher->name }}</td>
-                                    <td class="currency" data-value="{{ $konsultasi->total_harga }}">
-                                        {{ $konsultasi->total_harga }}</td>
-                                    <td>
-                                        <span
-                                            class="badge bg-{{ $konsultasi->status_bayar == 1 ? 'success' : 'danger' }} text-white w-100">
-                                            {{ $konsultasi->status_bayar == 1 ? 'Lunas' : 'Belum Lunas' }}
-                                        </span>
-                                    </td>
-                                    <td class="currency" data-value="{{ $konsultasi->sisa_bayar }}">
-                                        {{ $konsultasi->sisa_bayar }}</td>
-                                    <td>
-                                        <div class="d-flex gap-2">
-                                            <a href="" class="btn btn-sm btn-primary">
-                                                <i class="bi bi-info-circle-fill"></i>
-                                            </a>
-                                            <a href="#" class="btn btn-sm btn-warning">
-                                                <i class="bi bi-pencil-square"></i>
-                                            </a>
-                                            <form id="deleteForm"
-                                                action="{{ route('konsultasi.destroy', encrypt($konsultasi->id)) }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="button" class="btn btn-sm btn-danger"
-                                                    onclick="deleteData(this)">
-                                                    <i class="bi bi-trash3-fill"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
+                            @foreach ($konsultasi as $item)
+                                @if (Auth::user()->role == 'admin' || $item->status == 1)
+                                    <tr>
+                                        <td class="text-start">{{ $item->customer->no_daftar }}</td>
+                                        <td>{{ $item->kode_konsultasi }}</td>
+                                        <td>{{ $item->customer->name }}</td>
+                                        <td>{{ $item->layanan->layanan }}</td>
+                                        <td>{{ $item->subLayanan->sub_layanan }}</td>
+                                        <td>{{ $item->supportTeacher->name }}</td>
+                                        <td class="currency" data-value="{{ $item->total_harga }}">
+                                            {{ $item->total_harga }}</td>
+                                        <td>
+                                            <span
+                                                class="badge bg-{{ $item->status_bayar == 1 ? 'success' : 'danger' }} text-white w-100">
+                                                {{ $item->status_bayar == 1 ? 'Lunas' : 'Belum Lunas' }}
+                                            </span>
+                                        </td>
+                                        <td class="currency" data-value="{{ $item->sisa_bayar }}">
+                                            {{ $item->sisa_bayar }}</td>
+                                        <td class="bg-white text-dark">
+                                            <div class="d-flex gap-1">
+                                                <form action="{{ route('konsultasi.destroy', encrypt($item->id)) }}"
+                                                    method="POST">
+                                                    <a href="{{ route('konsultasi.show', encrypt($item->id)) }}"
+                                                        class="btn btn-primary btn-sm" title="Lihat Detail">
+                                                        <i class="bi bi-info-circle-fill"></i>
+                                                    </a>
+                                                    <a href="{{ route('konsultasi.edit', encrypt($item->id)) }}"
+                                                        class="btn btn-warning btn-sm" title="Edit">
+                                                        <i class="bi bi-pencil-square"></i>
+                                                    </a>
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    @if (Auth::user()->role == 'admin' && $item->status != 1)
+                                                        <button type="button" onclick="restoreData(this)"
+                                                            class="btn btn-success btn-sm" title="Restore">
+                                                            <i class="bi bi-eye-fill"></i>
+                                                        </button>
+                                                    @else
+                                                        <button type="button" onclick="deleteData(this)"
+                                                            class="btn btn-outline-danger btn-sm" title="Hapus">
+                                                            <i class="bi bi-trash3-fill"></i>
+                                                        </button>
+                                                    @endif
+                                                </form>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                @endif
                             @endforeach
                         </tbody>
                     </table>

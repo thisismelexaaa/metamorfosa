@@ -24,8 +24,8 @@ return new class extends Migration
             $table->date('tgl_selesai')->nullable();
 
             $table->enum('status_bayar', ['1', '2']);
-            $table->decimal('sisa_bayar', 15, 2);
-            $table->decimal('total_harga', 15, 2);
+            $table->integer('sisa_bayar');
+            $table->integer('total_harga');
             $table->integer('dibayar')->nullable();
 
             $table->string('status');
