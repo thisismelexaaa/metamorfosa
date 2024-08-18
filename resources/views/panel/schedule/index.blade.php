@@ -41,6 +41,44 @@
             </div>
         </div>
     </div>
+
+    @foreach ($konsultasi as $item)
+        <div class="modal fade" id="modal{{ $item->id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="labelModal">Detail Konsultasi {{ $item->kode_konsultasi }}</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="dataPelanggan">
+                            <table class="table table-hovered table-striped">
+                                <tr>
+                                    <td>Nama</td>
+                                    <td>:</td>
+                                    <td>{{ $item->customer->name }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Layanan</td>
+                                    <td>:</td>
+                                    <td>{{ $item->layanan->layanan }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Sub Layanan</td>
+                                    <td>:</td>
+                                    <td>{{ $item->subLayanan->sub_layanan }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
 @endsection
 
 @section('scripts')
@@ -53,7 +91,8 @@
                 title: item.kode_konsultasi,
                 start: item.tgl_masuk + 'T00:00:00',
                 end: item.tgl_selesai + 'T23:59:59',
-                allDay: item.tgl_masuk === item.tgl_selesai
+                allDay: item.tgl_masuk === item.tgl_selesai,
+                extendedProps: item
             }));
 
             let title = "Change View";
@@ -74,15 +113,19 @@
                 },
                 headerToolbar: {
                     left: 'ChangeView',
+                    center: 'title',
+                    right: 'today prev,next'
                 },
                 initialView: 'dayGridMonth',
                 timezone: 'local',
                 height: 700,
                 contentHeight: 25,
-                events: data
+                events: data,
+                eventClick: function(info) {
+                    let dataEventId = info.event.id;
+                    $(`#modal${dataEventId}`).modal('show');
+                }
             });
-
-            console.log(data);
 
             calendar.render();
         });

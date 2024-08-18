@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Panel\Customer;
 use App\Models\Panel\Konsultasi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ScheduleController extends Controller
 {
@@ -18,7 +19,18 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        $data['konsultasi'] = Konsultasi::all();
+
+        // check auth
+        $data['auth'] = Auth::user();
+
+        $id_user = $data['auth']->id;
+
+        if ($id_user == 1) {
+            $data['konsultasi'] = Konsultasi::all();
+        } else {
+            $data['konsultasi'] = Konsultasi::where('id_support_teacher', Auth::user()->id)->get();
+        }
+
 
         return view('panel.schedule.index', $data);
     }
