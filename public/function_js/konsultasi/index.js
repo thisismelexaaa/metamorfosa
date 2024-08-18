@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // Count columns in the table
     const columns = document.querySelectorAll(".table th").length;
     const totalColumns = columns - 1;
-    console.log(columns, totalColumns);
 
     // Initialize DataTable
     $("#datatable").DataTable({
@@ -19,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
         scrollCollapse: true,
         scrollX: true,
         pageLength: 5,
+        responsive: true,
         buttons: [
             {
                 text: "Add Data",

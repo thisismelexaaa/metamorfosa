@@ -20,7 +20,7 @@ class CustomersController extends Controller
     {
         $data['customer'] = Customer::all();
 
-        return view('panel.customers.index', compact('data'));
+        return view('panel.customers.index', $data);
     }
 
     /**

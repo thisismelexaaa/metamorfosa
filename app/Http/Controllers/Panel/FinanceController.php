@@ -19,8 +19,7 @@ class FinanceController extends Controller
     {
         $data['konsultasi'] = Konsultasi::all();
         // get total harga
-        $data['total_harga'] = Konsultasi::where('total_harga', '>', 0)->get();
-        $data['total'] = $data['total_harga']->sum('total_harga');
+        $data['total'] = Konsultasi::where('dibayar', '>', 0)->get()->sum('dibayar');
 
         // dd($data);
         return view('panel.finance.index', $data);
@@ -63,7 +62,32 @@ class FinanceController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $konsultasi = Konsultasi::find($id);
+
+        if ($konsultasi->status_bayar == 2) {
+            $sisa_bayar = $konsultasi->sisa_bayar;
+            $total_harga = $konsultasi->total_harga;
+            $dibayar = $konsultasi->dibayar;
+
+            $dibayar = $dibayar + $sisa_bayar;
+            $sisa_bayar = $dibayar - $total_harga;
+
+            $data = [
+                'dibayar' => $dibayar,
+                'total_harga' => $total_harga,
+                'sisa_bayar' => $sisa_bayar,
+                'status_bayar' => 1,
+                'updated_at' => date('Y-m-d H:i:s')
+            ];
+
+            $konsultasi->update($data);
+
+            toast('Konsultasi lunas', 'success');
+            return redirect()->back();
+        } else {
+            toast('Konsultasi sudah lunas', 'error');
+            return redirect()->back();
+        }
     }
 
     /**

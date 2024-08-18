@@ -23,9 +23,11 @@ class ScheduleController extends Controller
         // check auth
         $data['auth'] = Auth::user();
 
-        $id_user = $data['auth']->id;
+        $id_role = $data['auth']->role;
 
-        if ($id_user == 1) {
+        // dd($id_role);
+
+        if ($id_role == 'admin' || $id_role == 4 || $id_role == 5) {
             $data['konsultasi'] = Konsultasi::all();
         } else {
             $data['konsultasi'] = Konsultasi::where('id_support_teacher', Auth::user()->id)->get();

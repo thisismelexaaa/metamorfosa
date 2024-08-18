@@ -29,10 +29,17 @@
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive overflow-auto">
+                    @if (Auth::user()->role == 'admin')
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="showDeletedData">
+                            <label class="form-check-label" id="showDeletedDataLabel" for="showDeletedData">Tampilkan Data
+                                yang di
+                                hapus</label>
+                        </div>
+                    @endif
                     <table class="table nowrap table-striped table-hover align-middle" id="datatable">
                         <thead>
                             <tr>
-                                <th>#</th>
                                 <th>No Daftar</th>
                                 <th>Nama Lengkap</th>
                                 <th>No Telepon</th>
@@ -42,10 +49,9 @@
                             </tr>
                         </thead>
                         <tbody class="text-capitalize">
-                            @foreach ($data['customer'] as $item)
+                            @foreach ($customer as $item)
                                 @if (Auth::user()->role == 'admin' || $item->status == 1)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
+                                    <tr class="{{ $item->status == 1 ? '' : 'd-none tableRow' }}">
                                         <td>{{ $item->no_daftar }}</td>
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->no_tlp }}</td>
@@ -94,4 +100,5 @@
 @section('scripts')
     <script src="{{ asset('function_js/customers/index.js') }}"></script>
     <script src="{{ asset('function_js/deleteRestoreData/index.js') }}"></script>
+    <script src="{{ asset('function_js/showDeleted/index.js') }}"></script>
 @endsection

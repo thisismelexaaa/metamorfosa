@@ -68,6 +68,10 @@ class KonsultasiController extends Controller
         $statusBayar = $request->input('status_bayar');
         $sisaBayar = $statusBayar == 1 ? 0 : ($totalHarga - $dibayar);
 
+        if ($statusBayar == 1) {
+            $dibayar = $totalHarga;
+        }
+
         // Prepare data for insertion
         $data = array_merge($data, [
             'total_harga' => $totalHarga,
@@ -76,8 +80,16 @@ class KonsultasiController extends Controller
             'status' => 1
         ]);
 
+        if ($sisaBayar < 0) {
+            toast('Terjadi kesalahan saat menyimpan data: ', 'error');
+            return redirect()->back();
+        }
+
+        if ($sisaBayar == 0) {
+            $data['status_bayar'] = 1;
+        }
+
         try {
-            // Create a new Konsultasi record
             $konsultasi->create($data);
             toast('Konsultasi berhasil dibuat!', 'success');
         } catch (\Exception $e) {
@@ -166,7 +178,7 @@ class KonsultasiController extends Controller
             $konsultasi = Konsultasi::find($id);
 
             // Toggle status between 0 and 1
-            $konsultasi->status = $konsultasi->status == 0 ? 1 : 0;
+            $konsultasi->status = $konsultasi->status == 1 ? 2 : 1;
             $konsultasi->save();
 
             if ($konsultasi->status == 1) {

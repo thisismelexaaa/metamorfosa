@@ -36,7 +36,12 @@
                             <th>Kode konsultasi</th>
                             <th>Layanan</th>
                             <th>Sub Layanan</th>
+                            <th>Status Bayar</th>
+                            <th>Total Harga</th>
+                            <th>Di Bayar</th>
+                            <th>Sisa Bayar</th>
                             <th>Uang Masuk</th>
+
                             {{-- <th>Action</th> --}}
                         </tr>
                     </thead>
@@ -48,7 +53,24 @@
                                 <td>{{ $item->kode_konsultasi }}</td>
                                 <td>{{ $item->layanan->layanan }}</td>
                                 <td>{{ $item->subLayanan->sub_layanan }}</td>
-                                <td class="currency" data-value="{{ $item->total_harga }}">{{ $item->total_harga }}</td>
+                                <td class="text-center">
+                                    <form action="{{ route('finance.update', encrypt($item->id)) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <button type="button"
+                                            class="btn btn-sm badge bg-{{ $item->status_bayar == 1 ? 'success' : 'danger' }} text-white w-100"
+                                            onclick="updateStatus(this)">
+                                            {{ $item->status_bayar == 1 ? 'Lunas' : 'Belum Lunas' }}
+                                        </button>
+                                    </form>
+                                </td>
+                                <td class="currency" data-value="{{ $item->total_harga }}">
+                                    {{ $item->total_harga }}</td>
+                                <td class="currency" data-value="{{ $item->dibayar }}">
+                                    {{ $item->dibayar }}</td>
+                                <td class="currency" data-value="{{ $item->sisa_bayar }}">
+                                    {{ $item->sisa_bayar }}</td>
+                                <td class="currency" data-value="{{ $item->dibayar }}">{{ $item->dibayar }}</td>
                                 {{-- <td>
                                     <div class="d-flex gap-2">
                                         <a href="#" class="btn btn-sm btn-primary">
@@ -64,7 +86,7 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th id="label-total" colspan="5">Total</th>
+                            <th id="label-total">Total</th>
                             <th class="currency" data-value="{{ $total }}">{{ $total }}</th>
                         </tr>
                     </tfoot>
@@ -82,17 +104,12 @@
                 $(this).text(formatCurrency($(this).data('value')));
             });
 
-            // Count columns
-            // let totalColumns = document.querySelectorAll('thead tr th').length - 1;
-            // // Get the label-total element
-            // const labelTotal = document.getElementById('label-total');
+            let totalColumns = document.querySelectorAll('thead tr th').length - 1;
+            const labelTotal = document.getElementById('label-total');
 
-            // console.log(totalColumns);
-
-            // // Set the colspan attribute if the element exists
-            // if (labelTotal) {
-            //     labelTotal.setAttribute('colspan', totalColumns);
-            // }
+            if (labelTotal) {
+                labelTotal.setAttribute('colspan', totalColumns);
+            }
 
             function formatCurrency(value) {
                 const formatter = new Intl.NumberFormat('id-ID', {
@@ -102,6 +119,25 @@
                 });
                 return formatter.format(value);
             }
+
         });
+        function updateStatus(id) {
+            // form prevent default
+            event.preventDefault();
+            const form = id.closest('form');
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Anda akan mengubah status bayar konsultasi ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Ubah Status!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            })
+        }
     </script>
 @endsection

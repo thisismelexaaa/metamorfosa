@@ -48,6 +48,13 @@
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive overflow-auto">
+                    @if (Auth::user()->role == 'admin')
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="showDeletedData">
+                            <label class="form-check-label" id="showDeletedDataLabel" for="showDeletedData">Tampilkan Data yang di
+                                hapus</label>
+                        </div>
+                    @endif
                     <table class="table nowrap table-striped table-hover align-middle" id="datatable">
                         <thead>
                             <tr>
@@ -57,32 +64,19 @@
                                 <th>Layanan</th>
                                 <th>Sub Layanan</th>
                                 <th>Support Teacher</th>
-                                <th>Total Harga</th>
-                                <th>Status Bayar</th>
-                                <th>Sisa Bayar</th>
                                 <th class="bg-white text-dark">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($konsultasi as $item)
                                 @if (Auth::user()->role == 'admin' || $item->status == 1)
-                                    <tr>
+                                    <tr class="{{ $item->status == 1 ? '' : 'd-none tableRow' }}">
                                         <td class="text-start">{{ $item->customer->no_daftar }}</td>
                                         <td>{{ $item->kode_konsultasi }}</td>
                                         <td>{{ $item->customer->name }}</td>
                                         <td>{{ $item->layanan->layanan }}</td>
                                         <td>{{ $item->subLayanan->sub_layanan }}</td>
                                         <td>{{ $item->supportTeacher->name }}</td>
-                                        <td class="currency" data-value="{{ $item->total_harga }}">
-                                            {{ $item->total_harga }}</td>
-                                        <td>
-                                            <span
-                                                class="badge bg-{{ $item->status_bayar == 1 ? 'success' : 'danger' }} text-white w-100">
-                                                {{ $item->status_bayar == 1 ? 'Lunas' : 'Belum Lunas' }}
-                                            </span>
-                                        </td>
-                                        <td class="currency" data-value="{{ $item->sisa_bayar }}">
-                                            {{ $item->sisa_bayar }}</td>
                                         <td class="bg-white text-dark">
                                             <div class="d-flex gap-1">
                                                 <form action="{{ route('konsultasi.destroy', encrypt($item->id)) }}"
@@ -126,4 +120,5 @@
 @section('scripts')
     <script src="{{ asset('function_js/konsultasi/index.js') }}"></script>
     <script src="{{ asset('function_js/deleteRestoreData/index.js') }}"></script>
+    <script src="{{ asset('function_js/showDeleted/index.js') }}"></script>
 @endsection
