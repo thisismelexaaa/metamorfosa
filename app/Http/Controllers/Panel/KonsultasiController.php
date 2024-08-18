@@ -104,7 +104,7 @@ class KonsultasiController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(String $id)
     {
         $data['konsultasi'] = Konsultasi::find($id);
         return view('panel.konsultasi.show', $data);

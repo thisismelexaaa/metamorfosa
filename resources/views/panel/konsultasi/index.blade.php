@@ -51,7 +51,8 @@
                     @if (Auth::user()->role == 'admin')
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" role="switch" id="showDeletedData">
-                            <label class="form-check-label" id="showDeletedDataLabel" for="showDeletedData">Tampilkan Data yang di
+                            <label class="form-check-label" id="showDeletedDataLabel" for="showDeletedData">Tampilkan Data
+                                yang di
                                 hapus</label>
                         </div>
                     @endif
@@ -81,6 +82,8 @@
                                             <div class="d-flex gap-1">
                                                 <form action="{{ route('konsultasi.destroy', encrypt($item->id)) }}"
                                                     method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
                                                     <a href="{{ route('konsultasi.show', encrypt($item->id)) }}"
                                                         class="btn btn-primary btn-sm" title="Lihat Detail">
                                                         <i class="bi bi-info-circle-fill"></i>
@@ -89,8 +92,6 @@
                                                         class="btn btn-warning btn-sm" title="Edit">
                                                         <i class="bi bi-pencil-square"></i>
                                                     </a>
-                                                    @csrf
-                                                    @method('DELETE')
                                                     @if (Auth::user()->role == 'admin' && $item->status != 1)
                                                         <button type="button" onclick="restoreData(this)"
                                                             class="btn btn-success btn-sm" title="Restore">
