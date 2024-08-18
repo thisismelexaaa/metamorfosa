@@ -37,20 +37,16 @@ class UserSeeder extends Seeder
             ]);
         }
 
-        // Create 2 Staff
-        for ($i = 1; $i <= 2; $i++) {
-            User::create([
-                'name' => "Staff $i",
-                'username' => "staff_$i",
-                'email' => "staff$i@domain.com",
-                'email_verified_at' => now(),
-                'password' => bcrypt('123123'),
-                'role' => '3',
-                'jenis_kelamin' => 'computer',
-            ]);
-        }
+        User::create([
+            'name' => "Staff $i",
+            'username' => "staff_$i",
+            'email' => "staff$i@domain.com",
+            'email_verified_at' => now(),
+            'password' => bcrypt('123123'),
+            'role' => '3',
+            'jenis_kelamin' => 'computer',
+        ]);
 
-        // Create 1 Receptionist
         User::create([
             'name' => 'Receptionist',
             'username' => 'receptionist',
@@ -61,17 +57,14 @@ class UserSeeder extends Seeder
             'jenis_kelamin' => 'computer',
         ]);
 
-        // Create 3 Officials
-        for ($i = 1; $i <= 3; $i++) {
-            User::create([
-                'name' => "Official $i",
-                'username' => "official_$i",
-                'email' => "official$i@domain.com",
-                'email_verified_at' => now(),
-                'password' => bcrypt('123123'),
-                'role' => '5',
-                'jenis_kelamin' => 'computer',
-            ]);
-        }
+        User::create([
+            'name' => "Official $i",
+            'username' => "official_$i",
+            'email' => "official$i@domain.com",
+            'email_verified_at' => now(),
+            'password' => bcrypt('123123'),
+            'role' => '5',
+            'jenis_kelamin' => 'computer',
+        ]);
     }
 }

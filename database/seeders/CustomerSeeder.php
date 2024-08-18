@@ -30,16 +30,6 @@ class CustomerSeeder extends Seeder
                 'nama_ibu' => $faker->name('female'),
                 'pekerjaan_ibu' => $faker->jobTitle,
                 'status' => $faker->randomElement([1, 2]),
-                // 'layanan' => $faker->randomElement([1, 2, 3]), // Sesuaikan dengan ID layanan yang ada di database Anda
-                // 'sub_layanan' => $faker->randomElement([1, 2, 3]), // Sesuaikan dengan ID sub layanan yang ada di database Anda
-                // 'support_teacher' => $faker->randomElement(['support_teacher 1', 'support_teacher 2']),
-                // 'tgl_masuk' => $faker->date(),
-                // 'tgl_selesai' => $faker->date(),
-                // 'status' => $faker->randomElement([1, 2]),
-                // 'total_biaya' => $faker->randomFloat(2, 1000, 1000000), // Nilai uang bayar acak antara 1000 dan 1000000
-                // 'keluhan' => $faker->sentence,
-                // 'created_at' => now(),
-                // 'updated_at' => now(),
             ]);
         }
     }
