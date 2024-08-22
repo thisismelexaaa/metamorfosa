@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
         scrollCollapse: true,
         scrollX: true,
         pageLength: 5,
-        responsive: true,
         buttons: [
             {
                 text: "Tambah Data",

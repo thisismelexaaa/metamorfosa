@@ -49,7 +49,7 @@
                         <tbody>
                             <tr>
                                 <th>{{ __('Nama / No daftar') }}</th>
-                                <td>{{ $konsultasi->customer->name .' / '. $konsultasi->customer->no_daftar }}</td>
+                                <td>{{ $konsultasi->customer->name . ' / ' . $konsultasi->customer->no_daftar }}</td>
                                 <th>{{ __('Layanan') }}</th>
                                 <td>{{ $konsultasi->layanan->layanan }}</td>
                             </tr>
@@ -63,13 +63,13 @@
                                 <th>{{ __('Keluhan') }}</th>
                                 <td>{{ $konsultasi->keluhan }}</td>
                                 <th>{{ __('Tanggal Masuk') }}</th>
-                                <td>{{ $konsultasi->tgl_masuk }}</td>
+                                <td>{{ \Carbon\Carbon::parse($konsultasi->tgl_masuk)->locale('id')->isoFormat('DD MMMM YYYY') }}</td>
                             </tr>
                             <tr>
                                 <th>{{ __('Hasil Konsultasi') }}</th>
                                 <td>{{ $konsultasi->hasil_konsultasi ?? 'Belum Ada / Belum Konsultasi' }}</td>
                                 <th>{{ __('Tanggal Selesai') }}</th>
-                                <td>{{ $konsultasi->tgl_selesai }}</td>
+                                <td>{{ \Carbon\Carbon::parse($konsultasi->tgl_selesai)->locale('id')->isoFormat('DD MMMM YYYY') }}</td>
                             </tr>
                         </tbody>
                     </table>

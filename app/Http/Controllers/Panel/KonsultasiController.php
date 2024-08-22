@@ -32,8 +32,8 @@ class KonsultasiController extends Controller
     public function create()
     {
         $data['customers'] = Customer::where('status', 1)->get(); // Mengambil data dari tabel 'customers'
-        $data['layanan'] = Layanan::all(); // Mengambil data dari tabel 'layanan'
-        $data['support_teacher'] = User::where('role', 2)->get();
+        $data['layanan'] = Layanan::where('status', 1)->get(); // Mengambil data dari tabel 'layanan'
+        $data['support_teacher'] = User::where('role', 2)->where('status', 1)->get();
 
         return view('panel.konsultasi.create', $data);
     }
@@ -117,7 +117,7 @@ class KonsultasiController extends Controller
     {
         $data['konsultasi'] = Konsultasi::find($id);
         $data['customers'] = Customer::where('status', 1)->get(); // Mengambil data dari tabel 'customers'
-        $data['layanan'] = Layanan::all(); // Mengambil data dari tabel 'layanan'
+        $data['layanan'] = Layanan::where('status', 1)->get(); // Mengambil data dari tabel 'layanan'
         $data['support_teacher'] = User::where('role', 2)->get();
         $data['id'] = $id;
         return view('panel.konsultasi.edit', $data);

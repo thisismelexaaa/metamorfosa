@@ -126,7 +126,7 @@
                         </div>
                     </div>
 
-                    <div class="row mb-2">
+                    {{-- <div class="row mb-2">
                         <div class="col-md">
                             <label class="form-label" for="status_bayar">Status Pembayaran</label>
                             <select required id="status_bayar" name="status_bayar" class="form-select select2"
@@ -162,7 +162,7 @@
                             <input id="sisa_bayar" type="text" class="form-control currency" name="sisa_bayar"
                                 placeholder="Sisa Bayar" readonly value="{{ $konsultasi->sisa_bayar }}">
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="row mb-2">
                         <div class="col-md">
@@ -181,12 +181,12 @@
                         <div class="col-md">
                             <label class="form-label" for="hasil_konsultasi">Hasil Konsultasi</label>
                             <textarea required id="hasil_konsultasi" rows="4" class="form-control" name="hasil_konsultasi"
-                                placeholder="Masukkan Hasil Konsultasi"></textarea>
+                                placeholder="Masukkan Hasil Konsultasi">{{ $konsultasi->hasil_konsultasi }}</textarea>
                         </div>
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Simpan</button>
             </form>
         </div>
     </div>
@@ -203,11 +203,6 @@
                 customer: '#id_customer',
                 supportTeacher: '#id_support_teacher',
                 statusBayar: '#status_bayar',
-                totalHarga: '#total_harga',
-                dibayar: '#dibayar',
-                sisaBayar: '#sisa_bayar',
-                colDibayar: '#col_dibayar',
-                colSisaBayar: '#col_sisa_bayar',
                 rubahKeluhan: '#rubahKeluhan',
                 keluhan: '#keluhan',
             };
@@ -218,7 +213,7 @@
             };
 
             // Initialize select2 elements with common options
-            [SELECTORS.layanan, SELECTORS.customer, SELECTORS.supportTeacher, SELECTORS.statusBayar, SELECTORS
+            [SELECTORS.layanan, SELECTORS.customer, SELECTORS.supportTeacher, SELECTORS
                 .subLayanan
             ].forEach(
                 initializeSelect2);
@@ -268,73 +263,6 @@
                     $subLayanan.empty().append('<option value="">Pilih Sub Layanan</option>');
                 }
             });
-
-            // Handle currency formatting on input
-            $(SELECTORS.totalHarga).on('input', handleCurrencyInput);
-            $(SELECTORS.dibayar).on('input', handleCurrencyInput);
-
-            // format total harga
-            const totalharga = $(SELECTORS.totalHarga).val();
-            $(SELECTORS.totalHarga).val(formatCurrency(totalharga));
-
-            function handleCurrencyInput() {
-                const value = this.value.replace(/[^\d]/g, ''); // Remove non-numeric characters
-                this.value = value ? formatCurrency(value) : '';
-                calculateSisaBayar();
-            }
-
-            // Update total price and remaining payment on sub-layanan change
-            $(SELECTORS.subLayanan).on('change', function() {
-                const harga = $(this).find('option:selected').data('harga');
-                $(SELECTORS.totalHarga).val(harga ? formatCurrency(harga) : '');
-                calculateSisaBayar();
-            });
-
-            // Handle the change event for payment status
-            $(SELECTORS.statusBayar).on('change', function() {
-                togglePaymentFields(Number(this.value));
-            });
-
-
-            // Initial toggle based on status
-            togglePaymentFields(Number($(SELECTORS.statusBayar).val()));
-
-            function togglePaymentFields(value) {
-                const isBelumLunas = value === 2;
-                const $colDibayar = $(SELECTORS.colDibayar);
-                const $colSisaBayar = $(SELECTORS.colSisaBayar);
-
-                $colDibayar.toggleClass(CLASSES.dNone, !isBelumLunas);
-                $colSisaBayar.toggleClass(CLASSES.dNone, !isBelumLunas);
-
-                if (isBelumLunas) {
-                    const fields = ['sisaBayar', 'dibayar'];
-                    fields.forEach(field => {
-                        const $field = $(SELECTORS[field]);
-                        $field.val(formatCurrency($field.val()));
-                    });
-                } else {
-                    // Clear fields when status is "Lunas"
-                    $(SELECTORS.sisaBayar).val('');
-                    $(SELECTORS.dibayar).val('');
-                }
-            }
-
-            // Calculate the remaining payment
-            function calculateSisaBayar() {
-                const totalHarga = parseFloat($(SELECTORS.totalHarga).val().replace(/[^\d]/g, '')) || 0;
-                const dibayar = parseFloat($(SELECTORS.dibayar).val().replace(/[^\d]/g, '')) || 0;
-                $(SELECTORS.sisaBayar).val(formatCurrency(totalHarga - dibayar));
-            }
-
-            // Example formatCurrency function
-            function formatCurrency(value) {
-                return new Intl.NumberFormat('id-ID', {
-                    style: 'currency',
-                    currency: 'IDR',
-                    minimumFractionDigits: 0
-                }).format(value);
-            }
 
             $(SELECTORS.rubahKeluhan).on('change', function() {
                 if ($(this).is(':checked')) {

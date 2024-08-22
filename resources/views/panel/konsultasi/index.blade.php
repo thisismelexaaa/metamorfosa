@@ -47,15 +47,15 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
+                @if (Auth::user()->role == 'admin')
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="showDeletedData">
+                        <label class="form-check-label" id="showDeletedDataLabel" for="showDeletedData">Tampilkan Data
+                            yang di
+                            hapus</label>
+                    </div>
+                @endif
                 <div class="table-responsive overflow-auto">
-                    @if (Auth::user()->role == 'admin')
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="showDeletedData">
-                            <label class="form-check-label" id="showDeletedDataLabel" for="showDeletedData">Tampilkan Data
-                                yang di
-                                hapus</label>
-                        </div>
-                    @endif
                     <table class="table nowrap table-striped table-hover align-middle" id="datatable">
                         <thead>
                             <tr>

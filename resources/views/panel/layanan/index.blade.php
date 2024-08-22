@@ -36,44 +36,146 @@
                         Edit Layanan
                     </button>
                 </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h4>Layanan Aktif</h4>
                 <div class="accordion accordion-flush mt-3 border-bottom" id="accordionFlushExample">
                     @foreach ($layanan as $data)
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed fw-bold text-capitalize" type="button"
-                                    data-bs-toggle="collapse" data-bs-target="#flush-collapseOne{{ $data['id'] }}"
-                                    aria-expanded="false" aria-controls="flush-collapseOne{{ $data['id'] }}">
-                                    {{ $data['layanan'] }}
-                                </button>
-                            </h2>
-                            <div id="flush-collapseOne{{ $data['id'] }}" class="accordion-collapse collapse"
-                                data-bs-parent="#accordionFlushExample">
-                                <div class="d-flex gap-2 py-3 justify-items-end">
-                                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#addModalSubLayanan{{ $data['id'] }}">
-                                        Tambah Sub Layanan
+                        @if ($data->status == 1)
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed fw-bold text-capitalize" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#flush-collapseOne{{ $data['id'] }}"
+                                        aria-expanded="false" aria-controls="flush-collapseOne{{ $data['id'] }}">
+                                        {{ $data['layanan'] }}
                                     </button>
+                                </h2>
+                                <div id="flush-collapseOne{{ $data['id'] }}" class="accordion-collapse collapse"
+                                    data-bs-parent="#accordionFlushExample">
+                                    <div class="d-flex gap-2 py-3">
+                                        <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                            data-bs-target="#addModalSubLayanan{{ $data['id'] }}">
+                                            Tambah Sub Layanan
+                                        </button>
+                                        <form action="{{ route('layanan.destroy', encrypt($data['id'])) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <input type="hidden" name="layanan" value="{{ $data['layanan'] }}">
+                                            <button type="submit" class="btn btn-sm btn-danger">Non Aktifkan
+                                                {{ $data['layanan'] }}</button>
+                                        </form>
+                                    </div>
+                                    <ul class="list-group list-group-flush">
+                                        @foreach ($data->getSubLayanan as $item)
+                                            @if ($item->status == 1)
+                                                <li class="list-group-item">
+                                                    <span class="d-flex justify-content-between">
+                                                        <span class="text-capitalize">
+                                                            <i class="bi bi-dot"></i> {{ $item->sub_layanan }} -
+                                                            Rp.{{ number_format($item->harga) }}
+                                                        </span>
+                                                        <div class="d-flex gap-2">
+                                                            <form
+                                                                action="{{ route('layanan.destroy', encrypt($item->id)) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <input type="hidden" name="sub_layanan"
+                                                                    value="{{ $item->id }}">
+                                                                <button type="submit" class="btn btn-sm btn-danger">Non
+                                                                    Aktifkan
+                                                                    {{ $item->sub_layanan }}</button>
+                                                            </form>
+                                                            <button type="button" class="btn btn-sm btn-warning"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#editModalSublayanan{{ $item->id }}">
+                                                                Edit Sub Layanan
+                                                            </button>
+                                                        </div>
+                                                    </span>
+                                                </li>
+                                                @include('components.panel.modal.layanan.edit.edit-sublayanan')
+                                            @endif
+                                        @endforeach
+                                    </ul>
                                 </div>
-                                <ul class="list-group list-group-flush">
-                                    @foreach ($data->getSubLayanan as $item)
-                                        <li class="list-group-item">
-                                            <span class="d-flex justify-content-between">
-                                                <span class="text-capitalize">
-                                                    <i class="bi bi-dot"></i> {{ $item->sub_layanan }} -
-                                                    Rp.{{ number_format($item->harga) }}
-                                                </span>
-                                                <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
-                                                    data-bs-target="#editModalSublayanan{{ $item->id }}">
-                                                    Edit Sub Layanan
-                                                </button>
-                                            </span>
-                                        </li>
-                                        @include('components.panel.modal.layanan.edit.edit-sublayanan')
-                                    @endforeach
-                                </ul>
                             </div>
-                        </div>
-                        @include('components.panel.modal.layanan.add.add-sublayanan')
+                            @include('components.panel.modal.layanan.add.add-sublayanan')
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h4>Layanan Non Aktif</h4>
+                <div class="accordion accordion-flush mt-3 border-bottom" id="accordionFlushExample">
+                    @foreach ($layanan as $data)
+                        @if ($data->status == 2)
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed fw-bold text-capitalize" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#flush-collapseOne{{ $data['id'] }}"
+                                        aria-expanded="false" aria-controls="flush-collapseOne{{ $data['id'] }}">
+                                        {{ $data['layanan'] }}
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseOne{{ $data['id'] }}" class="accordion-collapse collapse"
+                                    data-bs-parent="#accordionFlushExample">
+                                    <div class="d-flex gap-2 py-3">
+                                        <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                            data-bs-target="#addModalSubLayanan{{ $data['id'] }}">
+                                            Tambah Sub Layanan
+                                        </button>
+                                        <form action="{{ route('layanan.destroy', encrypt($data['id'])) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <input type="hidden" name="layanan" value="{{ $data['layanan'] }}">
+                                            <button type="submit" class="btn btn-sm btn-success">Aktifkan
+                                                {{ $data['layanan'] }}</button>
+                                        </form>
+                                    </div>
+                                    <ul class="list-group list-group-flush">
+                                        @foreach ($data->getSubLayanan as $item)
+                                            @if ($item->status == 2)
+                                                <li class="list-group-item">
+                                                    <span class="d-flex justify-content-between">
+                                                        <span class="text-capitalize">
+                                                            <i class="bi bi-dot"></i> {{ $item->sub_layanan }} -
+                                                            Rp.{{ number_format($item->harga) }}
+                                                        </span>
+                                                        <div class="d-flex gap-2">
+                                                            <form
+                                                                action="{{ route('layanan.destroy', encrypt($item->id)) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <input type="hidden" name="sub_layanan"
+                                                                    value="{{ $item->id }}">
+                                                                <button type="submit"
+                                                                    class="btn btn-sm btn-success">Aktifkan
+                                                                    {{ $item->sub_layanan }}</button>
+                                                            </form>
+                                                            <button type="button" class="btn btn-sm btn-warning"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#editModalSublayanan{{ $item->id }}">
+                                                                Edit Sub Layanan
+                                                            </button>
+                                                        </div>
+                                                    </span>
+                                                </li>
+                                                @include('components.panel.modal.layanan.edit.edit-sublayanan')
+                                            @endif
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                            @include('components.panel.modal.layanan.add.add-sublayanan')
+                        @endif
                     @endforeach
                 </div>
             </div>
