@@ -49,8 +49,12 @@
                         @foreach ($konsultasi as $key => $item)
                             <tr>
                                 <td>{{ $item->customer->name }}</td>
-                                <td>{{ $item->customer->no_daftar }}</td>
-                                <td>{{ $item->kode_konsultasi }}</td>
+                                <td><a
+                                        href="{{ route('konsultasi.show', encrypt($item->id)) }}">{{ $item->customer->no_daftar }}</a>
+                                </td>
+                                <td><a target="_blank" rel="noopener noreferrer"
+                                        href="{{ route('konsultasi.show', encrypt($item->id)) }}">{{ $item->kode_konsultasi }}</a>
+                                </td>
                                 <td>{{ $item->layanan->layanan }}</td>
                                 <td>{{ $item->subLayanan->sub_layanan }}</td>
                                 <td class="text-center">
@@ -121,6 +125,7 @@
             }
 
         });
+
         function updateStatus(id) {
             // form prevent default
             event.preventDefault();
