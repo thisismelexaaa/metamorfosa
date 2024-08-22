@@ -33,8 +33,7 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="container-fluid calendar-basic">
+
         <div class="card">
             <div class="card-body">
                 <div id='calendar'></div>
@@ -43,8 +42,8 @@
     </div>
 
     @foreach ($konsultasi as $item)
-        <div class="modal fade" id="modal{{ $item->id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
+        <div class="modal modalDetail{{ $item->id }} fade" id="modal{{ $item->id }}" tabindex="-1"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -70,10 +69,37 @@
                                     <td>{{ $item->subLayanan->sub_layanan }}</td>
                                 </tr>
                             </table>
+                            {{-- checkbox --}}
+                            {{-- @dd(Auth::user()->role == 2 ? 'hidden' : '') --}}
+                            <div {{ Auth::user()->role != 2 ? 'hidden' : '' }}>
+                                <form action="{{ route('konsultasi.update', encrypt($item->id)) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="isKonsul" name="isKonsul"
+                                            {{ $item->hasil_konsultasi != null ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="isKonsul">
+                                            Sudah Melakukan Konsultasi
+                                        </label>
+                                    </div>
+                                    <div class="row {{ $item->hasil_konsultasi == null ? 'd-none' : '' }}"
+                                        id="hasilKonsultasi">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label for="exampleFormControlTextarea1" class="form-label">Catatan / Hasil
+                                                    Konsultasi</label>
+                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Hasil Konsultasi"
+                                                    name="hasil_konsultasi">{{ $item->hasil_konsultasi != null ? $item->hasil_konsultasi : '' }}</textarea>
+                                            </div>
+                                            <button class="btn btn-sm btn-primary mt-2">Submit Hasil Konsultasi</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -84,15 +110,27 @@
 @section('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+
+            let isKonsul = document.getElementById('isKonsul');
+            let hasilKonsultasi = document.getElementById('hasilKonsultasi');
+
+            isKonsul.addEventListener('change', function() {
+                if (isKonsul.checked) {
+                    hasilKonsultasi.classList.remove('d-none');
+                } else {
+                    hasilKonsultasi.classList.add('d-none');
+                }
+            });
+
             const calendarEl = document.getElementById('calendar');
             const dataJson = @json($konsultasi);
             const data = dataJson.map(item => ({
                 id: item.id,
-                title: item.kode_konsultasi,
+                title: item.kode_konsultasi + ' - ' + item.customer.name,
                 start: item.tgl_masuk + 'T00:00:00',
                 end: item.tgl_selesai + 'T23:59:59',
                 allDay: item.tgl_masuk === item.tgl_selesai,
-                extendedProps: item
+                extendedProps: item,
             }));
 
             let title = "Change View";
@@ -122,8 +160,9 @@
                 contentHeight: 25,
                 events: data,
                 eventClick: function(info) {
-                    let dataEventId = info.event.id;
-                    $(`#modal${dataEventId}`).modal('show');
+                    let id = info.event.id;
+                    console.log(id);
+                    $('.modalDetail' + id).modal('show');
                 }
             });
 

@@ -128,6 +128,19 @@ class KonsultasiController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if ($request->has('isKonsul')) {
+            // find id
+            $konsultasi = Konsultasi::find($id);
+            $data = [
+                'hasil_konsultasi' => $request->hasil_konsultasi,
+            ];
+
+            // dd($request->all(), $id, $data);
+            $konsultasi->update([
+                'hasil_konsultasi' => $data['hasil_konsultasi'],
+            ]);
+        }
+
         // Validate the incoming request data
         $data = $request->validate([
             'id_customer' => 'required',
