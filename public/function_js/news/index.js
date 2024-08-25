@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 text: "Tambah Data",
                 className: "btn btn-primary me-2 mb-2",
                 action: () => {
-                    const customersRouteCreate = "berita/create";
+                    const customersRouteCreate = "news/create";
                     window.location.href = customersRouteCreate;
                 },
             },

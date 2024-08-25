@@ -39,6 +39,7 @@
     <link rel="stylesheet" href="{{ asset('assets/DataTables/datatables.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/select2-4.1.0-rc.0/dist/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/select2-4.1.0-rc.0/dist/css/select2-bootstrap-5-theme.min.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -92,6 +93,7 @@
     <script src="{{ asset('assets/select2-4.1.0-rc.0/dist/js/select2.full.min.js') }}"></script>
     {{-- sweet alert --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
 
     @yield('scripts')
 </body>
