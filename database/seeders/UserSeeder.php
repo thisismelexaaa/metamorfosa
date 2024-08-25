@@ -21,6 +21,8 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => bcrypt('123123'),
             'role' => 'admin',
+            'status' => 1,
+            'alamat' => 'Jl. ABC 1234',
             'jenis_kelamin' => 'computer',
         ]);
 
@@ -33,17 +35,21 @@ class UserSeeder extends Seeder
                 'email_verified_at' => now(),
                 'password' => bcrypt('123123'),
                 'role' => '2',
+                'status' => 1,
+                'alamat' => 'Jl. ABC 1234',
                 'jenis_kelamin' => 'computer',
             ]);
         }
 
         User::create([
-            'name' => "Staff $i",
-            'username' => "staff_$i",
-            'email' => "staff$i@domain.com",
+            'name' => "Staff",
+            'username' => "staff",
+            'email' => "staff@domain.com",
             'email_verified_at' => now(),
             'password' => bcrypt('123123'),
             'role' => '3',
+            'status' => 1,
+            'alamat' => 'Jl. ABC 1234',
             'jenis_kelamin' => 'computer',
         ]);
 
@@ -54,16 +60,20 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => bcrypt('123123'),
             'role' => '4',
+            'status' => 1,
+            'alamat' => 'Jl. ABC 1234',
             'jenis_kelamin' => 'computer',
         ]);
 
         User::create([
-            'name' => "Official $i",
-            'username' => "official_$i",
-            'email' => "official$i@domain.com",
+            'name' => "Official",
+            'username' => "official",
+            'email' => "official@domain.com",
             'email_verified_at' => now(),
             'password' => bcrypt('123123'),
             'role' => '5',
+            'status' => 1,
+            'alamat' => 'Jl. ABC 1234',
             'jenis_kelamin' => 'computer',
         ]);
     }
