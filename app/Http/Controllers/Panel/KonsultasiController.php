@@ -141,6 +141,18 @@ class KonsultasiController extends Controller
             ]);
         }
 
+        if ($request->has('isDone')) {
+            // find id
+            $konsultasi = Konsultasi::find($id);
+            $data = [
+                'status' => 3
+            ];
+
+            $konsultasi->update([
+                'status' => $data['status'],
+            ]);
+        }
+
         // Validate the incoming request data
         $data = $request->validate([
             'id_customer' => 'required',

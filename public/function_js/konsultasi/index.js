@@ -18,9 +18,8 @@ document.addEventListener("DOMContentLoaded", () => {
         scrollCollapse: true,
         scrollX: true,
         pageLength: 5,
-        buttons: [
-            {
-                text: "Add Data",
+        buttons: [{
+                text: "Tambah Data",
                 className: "btn btn-primary me-2 mb-2",
                 action: () => {
                     const customersRouteCreate = "konsultasi/create";
@@ -29,11 +28,11 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             {
                 extend: "collection",
-                text: "Export",
+                text: "Ekspor ke",
                 className: "btn btn-primary me-2 mb-2",
-                buttons: [
-                    {
+                buttons: [{
                         extend: "copy",
+                        text: "Salin",
                         title: `Data customers Metamorfosa, tanggal ${new Date().toLocaleDateString()}`,
                         exportOptions: {
                             columns: [...Array(totalColumns).keys()],

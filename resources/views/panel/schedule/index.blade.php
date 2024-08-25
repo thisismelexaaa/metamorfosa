@@ -68,6 +68,11 @@
                                     <td>:</td>
                                     <td>{{ $item->subLayanan->sub_layanan }}</td>
                                 </tr>
+                                <tr>
+                                    <td>Keluhan</td>
+                                    <td>:</td>
+                                    <td>{{ $item->keluhan }}</td>
+                                </tr>
                             </table>
                             {{-- checkbox --}}
                             {{-- @dd(Auth::user()->role == 2 ? 'hidden' : '') --}}
@@ -91,13 +96,23 @@
                                                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Hasil Konsultasi"
                                                     name="hasil_konsultasi">{{ $item->hasil_konsultasi != null ? $item->hasil_konsultasi : '' }}</textarea>
                                             </div>
-                                            <button class="btn btn-sm btn-primary mt-2">Submit Hasil Konsultasi</button>
+                                            <button class="btn btn-sm btn-primary my-2 w-100">Submit Hasil
+                                                Konsultasi</button>
+
                                         </div>
                                     </div>
                                 </form>
                             </div>
                         </div>
                         <div class="modal-footer">
+                            <form action="{{ route('konsultasi.update', encrypt($item->id)) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <button type="button" class="btn btn-success" onclick="updateStatus(this)">
+                                    Konsultasi Selesai
+                                </button>
+                                <input type="hidden" name="isDone">
+                            </form>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
@@ -107,7 +122,7 @@
     @endforeach
 @endsection
 
-@section('scripts')
+{{-- @section('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
 
@@ -161,12 +176,114 @@
                 events: data,
                 eventClick: function(info) {
                     let id = info.event.id;
-                    console.log(id);
-                    $('.modalDetail' + id).modal('show');
-                }
+                    let event = info.event.extendedProps;
+
+                    // Check the status of the event
+                    let button = document.querySelector('.modalDetail' + id);
+
+                    $(button).modal('show');
+                },
+                eventRender: function(info, element) {
+                    let event = info.event.extendedProps;
+                    console.log(event);
+
+                    if (event.status == 3) {
+                        element.css('background-color', '#fffff');
+                    }
+                },
             });
 
             calendar.render();
         });
+    </script>
+@endsection --}}
+
+@section('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // Show/hide consultation result based on checkbox
+            let isKonsul = document.getElementById('isKonsul');
+            let hasilKonsultasi = document.getElementById('hasilKonsultasi');
+
+            isKonsul.addEventListener('change', function() {
+                hasilKonsultasi.classList.toggle('d-none', !isKonsul.checked);
+            });
+
+            // Prepare calendar data
+            const calendarEl = document.getElementById('calendar');
+            const dataJson = @json($konsultasi);
+            const data = dataJson.map(item => ({
+                id: item.id,
+                title: `${item.kode_konsultasi} - ${item.customer.name}`,
+                start: `${item.tgl_masuk}T00:00:00`,
+                end: `${item.tgl_selesai}T23:59:59`,
+                allDay: item.tgl_masuk === item.tgl_selesai,
+                extendedProps: item,
+            }));
+
+            // Custom button title
+            let title = "Change View";
+
+            // Initialize FullCalendar
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                locale: 'id',
+                customButtons: {
+                    ChangeView: {
+                        text: title,
+                        click: function() {
+                            calendar.changeView(calendar.view.type === 'listWeek' ? 'dayGridMonth' :
+                                'listWeek');
+                        }
+                    }
+                },
+                headerToolbar: {
+                    left: 'ChangeView',
+                    center: 'title',
+                    right: 'today prev,next'
+                },
+                initialView: 'dayGridMonth',
+                timezone: 'local',
+                height: 700,
+                contentHeight: 25,
+                events: data,
+                eventClick: function(info) {
+                    let id = info.event.id;
+                    $('.modalDetail' + id).modal('show');
+                },
+                eventDidMount: function(info) {
+                    let event = info.event.extendedProps;
+
+                    if (event.status == 3) {
+                        info.el.style.backgroundColor =
+                            '#28a745'; // Change the background color to green
+                        info.el.style.borderColor = '#28a745'; // Ensure the border color matches
+                    }
+                },
+            });
+
+            calendar.render();
+        });
+
+        function updateStatus(id) {
+            console.log(id);
+
+            // form prevent default
+            event.preventDefault();
+            const form = id.closest('form');
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Anda akan mengubah status bayar konsultasi ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Ubah Status!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            })
+        }
     </script>
 @endsection

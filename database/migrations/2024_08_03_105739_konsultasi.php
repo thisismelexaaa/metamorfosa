@@ -28,7 +28,7 @@ return new class extends Migration
             $table->integer('total_harga');
             $table->integer('dibayar')->nullable();
 
-            $table->string('status');
+            $table->integer('status');
             $table->timestamps();
         });
     }

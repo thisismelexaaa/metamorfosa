@@ -99,8 +99,8 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
-                                    <h6 class="f-w-600">Total Pelanggan</h6>
-                                    <h6>{{ $pelanggan->count() }}</h6>
+                                    <h6 class="f-w-600">Total Pelanggan Aktif</h6>
+                                    <h6>{{ $pelanggan->where('status', '1')->count() }}</h6>
                                 </div>
                             </div>
                         </div>
