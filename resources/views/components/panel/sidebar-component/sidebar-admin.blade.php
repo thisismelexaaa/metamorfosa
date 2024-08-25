@@ -47,6 +47,13 @@
                 <span>Keuangan</span>
             </a>
         </li>
+        <li class="sidebar-list">
+            <a class="sidebar-link sidebar-title {{ request()->routeIs('news.*') ? 'active' : '' }}"
+                href="{{ route('news.index') }}">
+                <i class="bi bi-newspaper"></i>
+                <span>Berita</span>
+            </a>
+        </li>
         <li class="my-2 sidebar-list">
             <span class="text-secondary">Pengaturan</span>
         </li>

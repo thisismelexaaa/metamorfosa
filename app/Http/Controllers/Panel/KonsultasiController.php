@@ -162,8 +162,6 @@ class KonsultasiController extends Controller
             'tgl_masuk' => 'required',
             'tgl_selesai' => 'nullable',
             'keluhan' => 'required',
-            'total_harga' => 'required',
-            'status_bayar' => 'required',
         ]);
 
         // Extract and clean 'dibayar' field to get numeric value

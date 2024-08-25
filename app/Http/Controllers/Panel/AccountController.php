@@ -162,7 +162,13 @@ class AccountController extends Controller
      */
     public function destroy(string $id)
     {
-        User::where('id', $id)->delete();
+        // User::where('id', $id)->delete();
+
+        $user = User::find($id);
+        $user->update([
+            'status' => 0 ? 1 : 0
+        ]);
+
         toast('Akun berhasil di hapus!', 'success');
         return redirect()->route('account.index');
     }

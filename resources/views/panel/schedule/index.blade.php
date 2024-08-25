@@ -41,8 +41,9 @@
         </div>
     </div>
 
-    @foreach ($konsultasi as $item)
-        <div class="modal modalDetail{{ $item->id }} fade" id="modal{{ $item->id }}" tabindex="-1"
+    @foreach ($konsultasi as $key => $item)
+        <?php $key += 1; ?>
+        <div class="modal modalDetail{{ $key }} fade" id="modal{{ $key }}" tabindex="-1"
             aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -73,6 +74,12 @@
                                     <td>:</td>
                                     <td>{{ $item->keluhan }}</td>
                                 </tr>
+
+                                <tr {{ Auth::user()->role != 'admin' ? 'hidden' : '' }}>
+                                    <td>Support Teacher</td>
+                                    <td>:</td>
+                                    <td>{{ $item->supportTeacher->name  }}</td>
+                                </tr>
                             </table>
                             {{-- checkbox --}}
                             {{-- @dd(Auth::user()->role == 2 ? 'hidden' : '') --}}
@@ -81,14 +88,14 @@
                                     @csrf
                                     @method('PUT')
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="isKonsul" name="isKonsul"
-                                            {{ $item->hasil_konsultasi != null ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="isKonsul">
+                                        <input class="form-check-input" type="checkbox" id="isKonsul{{ $key }}"
+                                            name="isKonsul" {{ $item->hasil_konsultasi != null ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="isKonsul{{ $key }}">
                                             Sudah Melakukan Konsultasi
                                         </label>
                                     </div>
                                     <div class="row {{ $item->hasil_konsultasi == null ? 'd-none' : '' }}"
-                                        id="hasilKonsultasi">
+                                        id="hasilKonsultasi{{ $key }}">
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label for="exampleFormControlTextarea1" class="form-label">Catatan / Hasil
@@ -201,15 +208,6 @@
 @section('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-
-            // Show/hide consultation result based on checkbox
-            let isKonsul = document.getElementById('isKonsul');
-            let hasilKonsultasi = document.getElementById('hasilKonsultasi');
-
-            isKonsul.addEventListener('change', function() {
-                hasilKonsultasi.classList.toggle('d-none', !isKonsul.checked);
-            });
-
             // Prepare calendar data
             const calendarEl = document.getElementById('calendar');
             const dataJson = @json($konsultasi);
@@ -249,7 +247,18 @@
                 events: data,
                 eventClick: function(info) {
                     let id = info.event.id;
+
                     $('.modalDetail' + id).modal('show');
+
+                    // Show/hide consultation result based on checkbox
+                    let isKonsul = document.getElementById('isKonsul' + id);
+                    let hasilKonsultasi = document.getElementById(
+                        'hasilKonsultasi' + id);
+
+                    isKonsul.addEventListener('change', function() {
+                        hasilKonsultasi.classList.toggle('d-none', !isKonsul
+                            .checked);
+                    })
                 },
                 eventDidMount: function(info) {
                     let event = info.event.extendedProps;

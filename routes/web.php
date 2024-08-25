@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\landingpage\HomeController;
+use App\Http\Controllers\Panel\NewsController;
 use App\Http\Controllers\Panel\AccountController;
 use App\Http\Controllers\Panel\DashboardController;
 use App\Http\Controllers\Panel\ScheduleController;
@@ -39,7 +40,7 @@ Route::middleware('web', 'ModifiedUrl')->group(function () {
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
     // Admin panel routes
-    Route::prefix('/panel/admin')->group(function () {
+    Route::prefix('/panel')->group(function () {
         Route::resources([
             '/dashboard' => DashboardController::class,
             '/customers' => CustomersController::class,
@@ -49,6 +50,7 @@ Route::middleware('web', 'ModifiedUrl')->group(function () {
             '/layanan' => LayananController::class,
             '/account' => AccountController::class,
             '/setting-account' => SettingAccountController::class,
+            '/news' => NewsController::class
         ]);
 
         Route::get('/get-layanan', [LayananController::class, 'getLayanan'])->name('layanan.getLayanan');

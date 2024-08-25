@@ -138,21 +138,20 @@ class LayananController extends Controller
      */
     public function destroy(string $id, Request $request)
     {
+
+        // dd($request->all(), $id);
         try {
-            if ($request->has('sub_layanan')) {
-                $subLayanan = SubLayanan::findOrFail($id);
-                $subLayanan->status = $subLayanan->status == 1 ? 2 : 1;
-                $subLayanan->save();
-                // $subLayanan->delete();
-                $message = $subLayanan->status == 1 ? 'Data berhasil dikembalikan!' : 'Data berhasil dihapus!';
-            } else {
-                $konsultasi = Layanan::findOrFail($id);
-                $konsultasi->status = $konsultasi->status == 1 ? 2 : 1;
-                $konsultasi->save();
-                // $konsultasi->delete();
-                $message = $konsultasi->status == 1 ? 'Data berhasil dikembalikan!' : 'Data berhasil dihapus!';
+            $konsultasi = Layanan::findOrFail($id);
+            $subLayanan = SubLayanan::where('id_layanan', $konsultasi->id)->get();
+            foreach ($subLayanan as $item) {
+                $item->status = $item->status == 1 ? 2 : 1;
+                $item->save();
             }
 
+            $konsultasi->status = $konsultasi->status == 1 ? 2 : 1;
+            $konsultasi->save();
+            // $konsultasi->delete();
+            $message = $konsultasi->status == 1 ? 'Data berhasil dikembalikan!' : 'Data berhasil dihapus!';
             toast($message, 'success');
             return redirect()->back();
         } catch (\Exception $e) {

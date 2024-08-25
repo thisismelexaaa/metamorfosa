@@ -41,7 +41,6 @@
                             <th>Di Bayar</th>
                             <th>Sisa Bayar</th>
                             <th>Uang Masuk</th>
-
                             {{-- <th>Action</th> --}}
                         </tr>
                     </thead>
@@ -75,25 +74,21 @@
                                 <td class="currency" data-value="{{ $item->sisa_bayar }}">
                                     {{ $item->sisa_bayar }}</td>
                                 <td class="currency" data-value="{{ $item->dibayar }}">{{ $item->dibayar }}</td>
-                                {{-- <td>
-                                    <div class="d-flex gap-2">
-                                        <a href="#" class="btn btn-sm btn-primary">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </a>
-                                        <a href="#" class="btn btn-sm btn-danger">
-                                            <i class="bi bi-trash3-fill"></i>
-                                        </a>
-                                    </div>
-                                </td> --}}
                             </tr>
                         @endforeach
-                    </tbody>
-                    <tfoot>
                         <tr>
-                            <th id="label-total">Total</th>
+                            <th>Total</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
                             <th class="currency" data-value="{{ $total }}">{{ $total }}</th>
                         </tr>
-                    </tfoot>
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -103,29 +98,6 @@
 @section('scripts')
     <script src="{{ asset('function_js/finance/index.js') }}"></script>
     <script>
-        $(document).ready(function() {
-            $('.currency').each(function() {
-                $(this).text(formatCurrency($(this).data('value')));
-            });
-
-            let totalColumns = document.querySelectorAll('thead tr th').length - 1;
-            const labelTotal = document.getElementById('label-total');
-
-            if (labelTotal) {
-                labelTotal.setAttribute('colspan', totalColumns);
-            }
-
-            function formatCurrency(value) {
-                const formatter = new Intl.NumberFormat('id-ID', {
-                    style: 'currency',
-                    currency: 'IDR',
-                    minimumFractionDigits: 0
-                });
-                return formatter.format(value);
-            }
-
-        });
-
         function updateStatus(id) {
             // form prevent default
             event.preventDefault();

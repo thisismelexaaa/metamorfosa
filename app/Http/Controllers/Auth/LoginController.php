@@ -16,7 +16,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/panel/admin/dashboard';
+    protected $redirectTo = '/panel/dashboard';
 
     /**
      * Create a new controller instance.
@@ -37,7 +37,7 @@ class LoginController extends Controller
     protected function sendFailedLoginResponse(Request $request)
     {
         throw ValidationException::withMessages([
-            $this->username() => [trans('auth.failed')],
+            $this->username() => [trans('Login gagal. Silakan cek username dan password.')],
         ]);
     }
 

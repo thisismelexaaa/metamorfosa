@@ -180,7 +180,7 @@
                         </div>
                         <div class="col-md">
                             <label class="form-label" for="hasil_konsultasi">Hasil Konsultasi</label>
-                            <textarea required id="hasil_konsultasi" rows="4" class="form-control" name="hasil_konsultasi"
+                            <textarea id="hasil_konsultasi" rows="4" class="form-control" name="hasil_konsultasi"
                                 placeholder="Masukkan Hasil Konsultasi">{{ $konsultasi->hasil_konsultasi }}</textarea>
                         </div>
                     </div>
