@@ -8,8 +8,8 @@
                     <div class="dots"></div>
                     <div class="row justify-content-center">
                         <div class="col-md-7 text-center mb-5">
-                            <h1 class="heading" data-aos="fade-up" data-aos-delay="0">Selamat Datang di<span
-                                    class="d-block"><a href="/">Metamorfosa</a></span>
+                            <h1 class="heading" data-aos="fade-up" data-aos-delay="0" style="font-size: 3rem;">Selamat Datang
+                                di<span class="d-block"><a href="/">Metamorfosa</a></span>
                             </h1>
                         </div>
                     </div>
@@ -17,15 +17,16 @@
                         <div class="col-lg-4">
                             <div class="intro">
                                 <div class="excerpt"data-aos="fade-up" data-aos-delay="100">
-                                    <span class="caption">Selamat Datang</span>
-                                    <h2 class="font-weight-bold">Di Metamorfosa Community Learning</h2>
-                                    <p>Kami adalah tempat inovatif untuk mencapai pertumbuhan dan perubahan positif dalam
+                                    {{-- <span class="caption">Selamat Datang</span> --}}
+                                    <h2 class="font-weight-bold">Metamorfosa Community Learning!</h2>
+                                    <p>
+                                        Tempat inovatif untuk mencapai pertumbuhan dan perubahan positif dalam
                                         pembelajaran masyarakat.
                                     </p>
                                 </div> <!-- /.excerpt -->
                                 <p data-aos="fade-up" data-aos-delay="200">
-                                    <a href="#features-section" class="btn btn-primary smoothscroll mr-1">Tentang Kami</a>
-                                    <a href="#pricing-section" class="btn btn-outline-primary smoothscroll">Layanan</a>
+                                    <a href="#about-section" class="btn btn-primary smoothscroll mr-1">Tentang Kami</a>
+                                    <a href="#layanan-section" class="btn btn-outline-primary smoothscroll">Layanan</a>
                                 </p>
                             </div>
                         </div> <!-- /.col-lg-5 -->
@@ -41,41 +42,104 @@
         </div> <!-- /.container -->
     </div> <!-- /.untree_co-hero -->
 
-    <div class="untree_co-section" id="features-section">
+    <div class="untree_co-section" id="about-section">
         <div class="container">
-            <div class="row justify-content-between">
-                <div class="col-lg-4">
-                    {{-- <span class="caption" data-aos="fade-up" data-aos-delay="0">Metamorfosa Community Learning </span> --}}
-                    <h3 class="heading mb-4" data-aos="fade-up" data-aos-delay="100">Metamorfosa Community Learning</h3>
-                    <div class="mb-4" data-aos="fade-up" data-aos-delay="200">
-                        <p>
-                            Berkomitmen untuk menciptakan lingkungan belajar kolaboratif yang mengakomodasi setiap individu
-                            mengembangkan potensinya dengan cara yang unik.
-                        </p>
-
-                        {{-- <ul class="list-unstyled ul-check primary">
-                            <li>There live the blind texts</li>
-                            <li>Far far away behind the word</li>
-                        </ul> --}}
-                    </div> <!-- /.mb-4 -->
+            <div class="row mb-5">
+                <div class="col-lg-12 text-center">
+                    <h2 class="heading">Metamorfosa Community Learning </h2>
                 </div>
-                <div class="col-lg-7" data-aos="fade-up" data-aos-delay="400">
-                    <a href="https://vimeo.com/342333493" class="btn-video" data-fancybox>
+            </div>
+            <div class="row justify-content-center">
 
-                        <span class="wrap-icon-play">
-                            <svg class="bi bi-play-fill" width="1em" height="1em" viewBox="0 0 16 16"
-                                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z" />
-                            </svg>
-                        </span>
-                        <img src="{{ asset('../assets/landingpage/images/dashboard.jpg') }}" alt="Image"
-                            class="img-fluid img-shadow">
-                    </a>
-                </div> <!-- /.col-md-4 -->
+                <div class="col-lg-12" data-aos="fade" data-aos-delay="200">
+                    <div class="owl-2-slider owl-carousel">
+                        <div class="item">
+                            <div class="untree_co-testimonial d-flex">
+                                <div class="text-center">
+                                    <blockquote>
+                                        Berkomitmen untuk menciptakan lingkungan belajar kolaboratif yang mengakomodasi
+                                        setiap individu mengembangkan potensinya dengan cara yang unik.
+                                    </blockquote>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <div class="untree_co-testimonial d-flex">
+                                <div class="text-center">
+                                    <blockquote>
+                                        Melalui program kami, peserta belajar dengan bimbingan mentor berpengalaman yang
+                                        memahami kebutuhan dan aspirasi mereka.
+                                    </blockquote>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <div class="untree_co-testimonial d-flex">
+                                <div class="text-center">
+                                    <blockquote>
+                                        Kami mengadakan berbagai kegiatan pengembangan diri yang dirancang untuk
+                                        meningkatkan kreativitas, kolaborasi, serta meningkatkan pemahaman terhadap diri
+                                        sendiri dan lingkungan sekitar.
+                                    </blockquote>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <div class="untree_co-testimonial d-flex">
+                                <div class="text-center">
+                                    <blockquote>
+                                        Kolaborasi adalah inti dari semua yang kami lakukan, memungkinkan pertukaran ide
+                                        yang mendalam dan membantu mewujudkan visi bersama untuk masa depan yang lebih baik.
+                                    </blockquote>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div> <!-- /.row -->
         </div> <!-- /.container -->
     </div> <!-- /.untree_co-section -->
+
+    <div class="untree_co-section" id="about-section">
+        <div class="container">
+
+            <div class="row mb-5">
+                <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
+                    <h2 class="heading">Metamorfosa Community Learning!</h2>
+                </div>
+            </div> <!-- /.row -->
+
+            <div class="row">
+                <div class="col-lg mb-4 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+                    <div class="service horizontal d-flex flex-column">
+                        <div class="service-contents text-center">
+                            <p>Metamorfosa Community Learning berkomitmen untuk menciptakan lingkungan belajar kolaboratif
+                                yang mengakomodasi setiap individu mengembangkan potensinya dengan cara yang unik. Melalui
+                                program kami, peserta belajar dengan bimbingan mentor berpengalaman yang memahami
+                                kebutuhan dan aspirasi mereka. Kami mengadakan berbagai kegiatan pengembangan diri yang
+                                dirancang untuk meningkatkan
+                                kreativitas, kolaborasi, serta meningkatkan pemahaman terhadap diri sendiri dan lingkungan
+                                sekitar. Kolaborasi adalah inti dari semua yang kami lakukan, memungkinkan pertukaran ide
+                                yang
+                                mendalam dan membantu mewujudkan visi bersama untuk masa depan yang lebih baik. Kami bangga
+                                menjadi rumah bagi komunitas yang beragam, di mana setiap suara dihargai dan
+                                dihormati.</p>
+
+                            <p> <b>Bergabunglah dengan kami di Metamorfosa Community Learning</b> dan bersama mengukir
+                                jejak perubahan diri sendiri dan organisasi. Kami yakin bahwa setiap langkah kecil membawa
+                                kita lebih dekat kepada perubahan besar yang akan membawa manfaat bagi banyak orang. Selamat
+                                belajar, berkembang, dan bermetamorfosa bersama kami di Metamorfosa Community Learning!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- /.row -->
+
+    </div>
+    </div>
 
     <div class="untree_co-section">
         <div class="container">
@@ -84,9 +148,6 @@
                 <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
                     {{-- <span class="caption">Features</span> --}}
                     <h2 class="heading">Visi & Misi</h2>
-                    {{-- <p>
-                        Visi kami adalah menjadi pionir dalam revolusi pendidikan, dengan fokus utama pada keterlibatan, inklusivitas, dan transformasi.
-                    </p> --}}
                 </div>
             </div> <!-- /.row -->
 
@@ -148,8 +209,15 @@
         </div> <!-- /.container -->
     </div> <!-- /.untree_co-section -->
 
-    <div class="untree_co-section">
+
+    <div class="untree_co-section" id="team">
         <div class="container">
+            <div class="row mb-5">
+                <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
+                    {{-- <span class="caption">Features</span> --}}
+                    <h2 class="heading">Tim Kami</h2>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-lg-6">
                     <div class="mb-4" data-aos="fade-up" data-aos-delay="300">
@@ -161,7 +229,8 @@
                                             class="img-fluid">
                                     </div>
                                     <div>
-                                        <strong class="d-block font-weight-bold h5 mb-0">Cameron Fisher</strong><span
+                                        <strong class="d-block font-weight-bold h5 mb-0">Citra Sabrina, M.Psi.,
+                                            Psikolog – Psikolog Pendidikan dan Perkembangan Anak </strong><span
                                             class="d-block">Founder Metamorfosa</span>
                                     </div>
 
@@ -186,7 +255,32 @@
                                             class="img-fluid">
                                     </div>
                                     <div>
-                                        <strong class="d-block font-weight-bold h5 mb-0">Cameron Fisher</strong><span
+                                        <strong class="d-block font-weight-bold h5 mb-0">Micki Watulandi, S.E., M.M.,
+                                            C.P.S</strong><span class="d-block">Founder Metamorfosa</span>
+                                    </div>
+
+                                </div>
+                                <blockquote>
+                                    &ldquo;Separated they <span class="highlight">live in Bookmarksgrove right at the
+                                        coast of the Semantics</span>, a large language ocean. A small river named Duden
+                                    flows by their place and supplies it with the necessary regelialia. &rdquo;
+                                </blockquote>
+
+                            </div>
+                        </div> <!-- /.untree_co-testimonial -->
+                    </div> <!-- /.mb-4 -->
+                </div>
+                <div class="col-lg-6">
+                    <div class="mb-4" data-aos="fade-up" data-aos-delay="300">
+                        <div class="untree_co-testimonial d-flex">
+                            <div class="text">
+                                <div class="author d-flex mb-3">
+                                    <div class="pic mr-3">
+                                        <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}" alt="Image"
+                                            class="img-fluid">
+                                    </div>
+                                    <div>
+                                        <strong class="d-block font-weight-bold h5 mb-0">Ervi Amaliyah, S.Pd</strong><span
                                             class="d-block">Founder Metamorfosa</span>
                                     </div>
 
@@ -211,32 +305,7 @@
                                             class="img-fluid">
                                     </div>
                                     <div>
-                                        <strong class="d-block font-weight-bold h5 mb-0">Cameron Fisher</strong><span
-                                            class="d-block">Founder Metamorfosa</span>
-                                    </div>
-
-                                </div>
-                                <blockquote>
-                                    &ldquo;Separated they <span class="highlight">live in Bookmarksgrove right at the
-                                        coast of the Semantics</span>, a large language ocean. A small river named Duden
-                                    flows by their place and supplies it with the necessary regelialia. &rdquo;
-                                </blockquote>
-
-                            </div>
-                        </div> <!-- /.untree_co-testimonial -->
-                    </div> <!-- /.mb-4 -->
-                </div>
-                <div class="col-lg-6">
-                    <div class="mb-4" data-aos="fade-up" data-aos-delay="300">
-                        <div class="untree_co-testimonial d-flex">
-                            <div class="text">
-                                <div class="author d-flex mb-3">
-                                    <div class="pic mr-3">
-                                        <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}" alt="Image"
-                                            class="img-fluid">
-                                    </div>
-                                    <div>
-                                        <strong class="d-block font-weight-bold h5 mb-0">Cameron Fisher</strong><span
+                                        <strong class="d-block font-weight-bold h5 mb-0">Dr. Widya, MKN </strong><span
                                             class="d-block">Founder Metamorfosa</span>
                                     </div>
 
@@ -255,11 +324,11 @@
         </div>
     </div>
 
-    <div class="untree_co-section bg-light">
+    <div class="untree_co-section bg-light" id="aktivitas-section">
         <div class="container">
             <div class="row justify-content-between">
                 <div class="col-12 text-center mb-5" data-aos="fade-up" data-aos-delay="0">
-                    <h2 class="heading">Aktifitas Selanjutnya</h2>
+                    <h2 class="heading">Aktivitas Selanjutnya</h2>
                 </div>
                 <div class="col-lg-5 order-lg-2 js-custom-dots">
                     @for ($i = 1; $i <= 5; $i++)
@@ -345,119 +414,86 @@
         </div> <!-- /.container -->
     </div> <!-- /.untree_co-section -->
 
-    <div class="untree_co-section">
+    <div class="untree_co-section bg-light" id="layanan-section">
         <div class="container">
-
-            <div class="row">
-                <div class="col-12 mb-5" data-aos="fade-up">
-                    {{-- <span class="caption">Aktifitas Kami</span> --}}
-                    <h2 class="heading">Aktifitas Kami</h2>
-                </div>
-
-                {{-- owl carousel --}}
-                <div class="owl-carousel">
-                    @for ($i = 1; $i <= 10; $i++)
-                        <div class="item col-md mb-4 mb-lg-0 col-lg-3" data-aos="fade-up" data-aos-delay="0">
-                            <div class="service">
-                                <div class="service-icon color-1 mb-4">
-                                    <svg class="bi bi-app-indicator" width="1em" height="1em"
-                                        viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd"
-                                            d="M5.5 2A3.5 3.5 0 0 0 2 5.5v5A3.5 3.5 0 0 0 5.5 14h5a3.5 3.5 0 0 0 3.5-3.5V8a.5.5 0 0 1 1 0v2.5a4.5 4.5 0 0 1-4.5 4.5h-5A4.5 4.5 0 0 1 1 10.5v-5A4.5 4.5 0 0 1 5.5 1H8a.5.5 0 0 1 0 1H5.5z" />
-                                        <path d="M16 3a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                                    </svg>
-                                </div> <!-- /.icon -->
-                                <div class="service-contents">
-                                    <h3>Built for Developers</h3>
-                                    <p>Far far away, behind the word mountains, far from the countries Vokalia and
-                                        Consonantia,
-                                        there live the blind texts.</p>
-                                </div> <!-- /.service-contents-->
-                            </div> <!-- /.service -->
-                        </div> <!-- /.item -->
-                    @endfor
-                </div>
-
-            </div> <!-- /.row -->
-        </div> <!-- /.container -->
-    </div> <!-- /.untree_co-section -->
-
-    <div class="untree_co-section bg-light" id="pricing-section">
-        <div class="container">
-
             <div class="row pricing-title">
                 <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
-                    <span class="caption">Plans</span>
-                    <h2 class="heading">Pricing</h2>
-                    <p>Pricing for everyone. Choose your plan now!</p>
+                    <h2 class="heading">Layanan Kami</h2>
+                    <div>
+                        <a href="#" class="js-custom-prev-v3 cusotm-slider-nav custom-prev"><span><svg
+                                    class="bi bi-arrow-left" width="1em" height="1em" viewBox="0 0 16 16"
+                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M5.854 4.646a.5.5 0 0 1 0 .708L3.207 8l2.647 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 0 1 .708 0z" />
+                                    <path fill-rule="evenodd"
+                                        d="M2.5 8a.5.5 0 0 1 .5-.5h10.5a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                                </svg></span></a>
+                        <a href="#" class="js-custom-next-v3 cusotm-slider-nav custom-next"><span>
+                                <svg class="bi bi-arrow-right" width="1em" height="1em" viewBox="0 0 16 16"
+                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M10.146 4.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L12.793 8l-2.647-2.646a.5.5 0 0 1 0-.708z" />
+                                    <path fill-rule="evenodd"
+                                        d="M2 8a.5.5 0 0 1 .5-.5H13a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 8z" />
+                                </svg></span>
+                        </a>
+                    </div>
                 </div>
             </div> <!-- /.row -->
 
             <div class="row justify-content-center">
                 <div class="col-lg-10">
-                    <div class="row">
-                        <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
-                            <div class="pricing">
+                    <div class="owl-3-slider owl-carousel">
+                        @foreach ($layanan as $layananItem)
+                            <div class="item">
+                                <div class="pricing active" data-aos="fade-up" data-aos-delay="100">
+                                    <div class="body">
+                                        <div class="price">
+                                            <span class="d-block plan mb-4">{{ $layananItem->layanan }}</span>
+                                        </div>
+                                        <ul class="list-unstyled ul-check primary mb-5">
+                                            @foreach ($sublayanan->where('id_layanan', $layananItem->id) as $subLayananItem)
+                                                <li>{{ $subLayananItem->sub_layanan }}</li>
+                                            @endforeach
+                                        </ul>
+                                        <p class="text-center mb-0"><a href="#" class="btn btn-outline-primary">Get
+                                                Started</a></p>
+                                    </div>
+                                </div> <!-- /.pricing -->
+                            </div>
+                        @endforeach
+
+                        <div class="item">
+                            <div class="pricing active" data-aos="fade-up" data-aos-delay="100">
                                 <div class="body">
                                     <div class="price">
-                                        <span class="price"><sup>$</sup><span>0</span></span>
-                                        <span class="d-block plan mb-4">Free</span>
+                                        <span class="d-block plan mb-4">Layanan 6</span>
                                     </div>
                                     <ul class="list-unstyled ul-check primary mb-5">
-                                        <li>There live the blind texts</li>
-                                        <li>Far far away behind the word</li>
-                                        <li>Far from the countries Vokalia and Consonantia</li>
+                                        <li>Sub Layanan 1</li>
+                                        <li>Sub Layanan 2</li>
+                                        <li>Sub Layanan 3</li>
+                                        <li>Sub Layanan 4</li>
+                                        <li>Sub Layanan 5</li>
+                                        <li>Sub Layanan 6</li>
+                                        <li>Sub Layanan 6</li>
+                                        <li>Sub Layanan 6</li>
+                                        <li>Sub Layanan 6</li>
                                     </ul>
                                     <p class="text-center mb-0"><a href="#" class="btn btn-outline-primary">Get
                                             Started</a></p>
                                 </div>
                             </div> <!-- /.pricing -->
-                        </div> <!-- /.col-lg-4 -->
-
-                        <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
-                            <div class="pricing active">
-                                <div class="body">
-                                    <div class="price">
-                                        <span class="price"><sup>$</sup><span>19.99</span></span>
-                                        <span class="d-block plan mb-4">Standard</span>
-                                    </div>
-                                    <ul class="list-unstyled ul-check primary mb-5">
-                                        <li>There live the blind texts</li>
-                                        <li>Far far away behind the word</li>
-                                        <li>Far from the countries Vokalia and Consonantia</li>
-                                    </ul>
-                                    <p class="text-center mb-0"><a href="#" class="btn btn-primary">Get
-                                            Started</a></p>
-                                </div>
-                            </div> <!-- /.pricing -->
-
-                        </div> <!-- /.col-lg-4 -->
-
-                        <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
-                            <div class="pricing">
-
-                                <div class="body">
-                                    <div class="price">
-                                        <span class="price"><sup>$</sup><span>79.99</span></span>
-                                        <span class="d-block plan mb-4">Premium</span>
-                                    </div>
-                                    <ul class="list-unstyled ul-check primary mb-5">
-                                        <li>There live the blind texts</li>
-                                        <li>Far far away behind the word</li>
-                                        <li>Far from the countries Vokalia and Consonantia</li>
-                                    </ul>
-                                    <p class="text-center mb-0"><a href="#" class="btn btn-outline-primary">Get
-                                            Started</a></p>
-                                </div>
-                            </div> <!-- /.pricing -->
-                        </div> <!-- /.col-lg-4 -->
-                    </div> <!-- /.row -->
-                </div> <!-- /.col-lg-8 -->
+                        </div>
+                    </div>
+                </div> <!-- /.col-lg-10 -->
             </div> <!-- /.row -->
         </div> <!-- /.container -->
     </div> <!-- /.untree_co-section -->
 
-    <div class="untree_co-section" id="testimonials-section">
+
+
+    <div class="untree_co-section" id="klien-section">
         <div class="container">
             <div class="row mb-5">
                 <div class="col-lg-12 text-center">
@@ -483,6 +519,7 @@
                                 </svg></span>
                         </a>
                     </div>
+
                 </div>
             </div>
             <div class="row justify-content-center">
@@ -491,7 +528,6 @@
                     <div class="owl-2-slider owl-carousel">
                         <div class="item">
                             <div class="untree_co-testimonial d-flex">
-
                                 <div class="text">
                                     <blockquote>
                                         &ldquo;Separated they <span class="highlight">live in Bookmarksgrove right at
@@ -541,7 +577,6 @@
 
                         <div class="item">
                             <div class="untree_co-testimonial d-flex">
-
                                 <div class="text">
                                     <blockquote>
                                         &ldquo;Separated they <span class="highlight">live in Bookmarksgrove right at
@@ -757,7 +792,7 @@
         </div>
     </div>
 
-    <div class="untree_co-section" id="contact-section">
+    {{-- <div class="untree_co-section" id="contact-section">
         <div class="container">
             <div class="row mb-5" data-aos="fade-up" data-aos-delay="0">
                 <div class="col-12 text-center">
@@ -821,5 +856,5 @@
                 </div> <!-- /.col-lg-4 -->
             </div> <!-- /.row -->
         </div> <!-- /.container -->
-    </div> <!-- /.untree_co-section bg-light -->
+    </div> <!-- /.untree_co-section bg-light --> --}}
 @endsection
