@@ -4,9 +4,14 @@
     <div class="row">
         <div class="col-lg-4">
             <div class="widget">
-                <h3>About Launch<span class="text-primary">.</span> </h3>
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
-                    there live the blind texts.</p>
+                <h3>Tentang Metamorfosa<span class="text-primary">.</span> </h3>
+                <p>Kami adalah tempat inovatif untuk mencapai pertumbuhan dan perubahan positif dalam pembelajaran
+                    masyarakat. Metamorfosa Community Learning berkomitmen untuk menciptakan lingkungan belajar
+                    kolaboratif yang mengakomodasi setiap individu mengembangkan potensinya dengan cara yang unik.</p>
+                <p>
+                    Bergabunglah dengan kami di Metamorfosa Community Learning dan bersama mengukir jejak perubahan diri
+                    sendiri dan organisasi.
+                </p>
             </div> <!-- /.widget -->
             <div class="widget">
                 <h3>Follow Us</h3>
@@ -67,9 +72,7 @@
             <p class="copyright">Copyright &copy;
                 <script>
                     document.write(new Date().getFullYear());
-                </script>. All Rights Reserved. &mdash; Designed with love by <a
-                    href="https://untree.co">Untree.co</a>
-                <!-- License information: https://untree.co/license/ -->
+                </script>. All Rights Reserved.
             </p>
         </div>
     </div>

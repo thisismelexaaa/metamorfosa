@@ -3,8 +3,8 @@
         <a href="index.html" class="logo m-0 float-left">{{ env('APP_NAME') }}<span class="text-primary">.</span></a>
 
         <ul class="js-clone-nav d-none d-lg-inline-block site-menu float-left">
-            <li class="active"><a href="#home-section" class="nav-link">Home</a></li>
-            <li class="has-children">
+            <li class="active"><a href="#home-section" class="nav-link">Beranda</a></li>
+            {{-- <li class="has-children">
                 <a href="#" class="nav-link">Dropdown</a>
                 <ul class="dropdown">
                     <li><a href="#testimonials-section" class="nav-link">Testimonials</a></li>
@@ -19,11 +19,11 @@
                     </li>
                     <li><a href="#" class="nav-link">Menu Three</a></li>
                 </ul>
-            </li>
-            <li><a href="#features-section" class="nav-link">Features</a></li>
-            <li><a href="#pricing-section" class="nav-link">Pricing</a></li>
-            <li><a href="#about-section" class="nav-link">About</a></li>
-            <li><a href="#contact-section" class="nav-link">Contact</a></li>
+            </li> --}}
+            <li><a href="#about-section" class="nav-link">Tentang</a></li>
+            <li><a href="#aktivitas-section" class="nav-link">Aktivitas</a></li>
+            <li><a href="#layanan-section" class="nav-link">Layanan</a></li>
+            <li><a href="#klien-section" class="nav-link">Klien</a></li>
         </ul>
 
         @if (Route::has('login'))
