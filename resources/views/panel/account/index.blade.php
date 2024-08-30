@@ -27,14 +27,6 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
-                @if (Auth::user()->role == 'admin')
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" role="switch" id="showDeletedData">
-                        <label class="form-check-label" id="showDeletedDataLabel" for="showDeletedData">Tampilkan Data
-                            yang di
-                            hapus</label>
-                    </div>
-                @endif
                 <table class="table nowrap table-striped table-hover align-middle" id="datatable">
                     <thead>
                         <tr>
@@ -49,7 +41,7 @@
                     </thead>
                     <tbody>
                         @foreach ($users as $user)
-                            <tr class="{{ $user->status == 1 ? '' : 'd-none tableRow' }}">
+                            <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $user['name'] }}</td>
                                 <td>{{ $user['username'] }}</td>
@@ -70,17 +62,10 @@
                                         <form action="{{ route('account.destroy', encrypt($user['id'])) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            @if (Auth::user()->role == 'admin' && $user->status == 0)
-                                                <button type="button" onclick="restoreData(this)"
-                                                    class="btn btn-success btn-sm" title="Restore">
-                                                    <i class="bi bi-eye-fill"></i>
-                                                </button>
-                                            @else
-                                                <button type="button" onclick="deleteData(this)"
-                                                    class="btn btn-outline-danger btn-sm" title="Hapus">
-                                                    <i class="bi bi-trash3-fill"></i>
-                                                </button>
-                                            @endif
+                                            <button type="button" onclick="deleteData(this)"
+                                                class="btn btn-outline-danger btn-sm" title="Hapus">
+                                                <i class="bi bi-trash3-fill"></i>
+                                            </button>
                                         </form>
                                     </div>
                                 </td>

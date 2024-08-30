@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('judul');
             $table->string('image');
-            $table->string('slug');
             $table->string('author');
             $table->string('category');
             $table->string('status');

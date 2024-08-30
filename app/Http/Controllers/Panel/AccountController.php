@@ -165,9 +165,8 @@ class AccountController extends Controller
         // User::where('id', $id)->delete();
 
         $user = User::find($id);
-        $user->update([
-            'status' => 0 ? 1 : 0
-        ]);
+        // delete
+        $user->delete();
 
         toast('Akun berhasil di hapus!', 'success');
         return redirect()->route('account.index');
