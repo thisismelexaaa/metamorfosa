@@ -1,6 +1,125 @@
 @extends('landingpage.layouts.app')
 
 @section('home')
+    <style>
+        .card {
+            border-radius: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .card .pic {
+            width: 120px;
+            height: 120px;
+            overflow: hidden;
+            border-radius: 50%;
+            border: 3px solid #f1f1f1;
+        }
+
+        .card .text {
+            margin-top: 15px;
+        }
+
+        .blockquote {
+            font-style: italic;
+            color: #666;
+            border-left: 5px solid #ddd;
+            padding-left: 10px;
+        }
+
+        .blockquote p {
+            margin-bottom: 0;
+        }
+
+        /* News Feed */
+        .news-feed {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .news-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .news-item:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .news-image {
+            width: 150px;
+            height: auto;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .news-content {
+            flex: 1;
+        }
+
+        .news-date {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 10px;
+        }
+
+        .news-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .news-description {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        /* Detail View */
+        .detail-view {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+        }
+
+        #detail-image {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+    </style>
+
     <div class="untree_co-hero pb-0" id="home-section">
         <div class="container">
             <div class="row">
@@ -209,211 +328,324 @@
         </div> <!-- /.container -->
     </div> <!-- /.untree_co-section -->
 
-
+    {{-- TIM KAMI SECTION --}}
     <div class="untree_co-section" id="team">
         <div class="container">
             <div class="row mb-5">
                 <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
-                    {{-- <span class="caption">Features</span> --}}
                     <h2 class="heading">Tim Kami</h2>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="mb-4" data-aos="fade-up" data-aos-delay="300">
-                        <div class="untree_co-testimonial d-flex">
-                            <div class="text">
-                                <div class="author d-flex mb-3">
-                                    <div class="pic mr-3">
-                                        <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}" alt="Image"
-                                            class="img-fluid">
-                                    </div>
-                                    <div>
-                                        <strong class="d-block font-weight-bold h5 mb-0">Citra Sabrina, M.Psi.,
-                                            Psikolog – Psikolog Pendidikan dan Perkembangan Anak </strong><span
-                                            class="d-block">Founder Metamorfosa</span>
-                                    </div>
 
-                                </div>
-                                <blockquote>
-                                    &ldquo;Separated they <span class="highlight">live in Bookmarksgrove right at the
-                                        coast of the Semantics</span>, a large language ocean. A small river named Duden
-                                    flows by their place and supplies it with the necessary regelialia. &rdquo;
-                                </blockquote>
-
-                            </div>
-                        </div> <!-- /.untree_co-testimonial -->
-                    </div> <!-- /.mb-4 -->
+            <!-- Founder Section -->
+            <div class="row mb-5">
+                <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
+                    <h3 class="subheading">Founder</h3>
                 </div>
-                <div class="col-lg-6">
-                    <div class="mb-4" data-aos="fade-up" data-aos-delay="300">
-                        <div class="untree_co-testimonial d-flex">
-                            <div class="text">
-                                <div class="author d-flex mb-3">
-                                    <div class="pic mr-3">
-                                        <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}" alt="Image"
-                                            class="img-fluid">
-                                    </div>
-                                    <div>
-                                        <strong class="d-block font-weight-bold h5 mb-0">Micki Watulandi, S.E., M.M.,
-                                            C.P.S</strong><span class="d-block">Founder Metamorfosa</span>
-                                    </div>
-
-                                </div>
-                                <blockquote>
-                                    &ldquo;Separated they <span class="highlight">live in Bookmarksgrove right at the
-                                        coast of the Semantics</span>, a large language ocean. A small river named Duden
-                                    flows by their place and supplies it with the necessary regelialia. &rdquo;
-                                </blockquote>
-
+                <div class="col-lg-12">
+                    <div class="mb-4 text-center" data-aos="fade-up" data-aos-delay="300">
+                        <div class="untree_co-testimonial d-flex flex-column align-items-center">
+                            <div class="pic mb-3">
+                                <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}" alt="Image"
+                                    class="img-fluid" style="max-width: 150px; border-radius: 50%;">
                             </div>
-                        </div> <!-- /.untree_co-testimonial -->
-                    </div> <!-- /.mb-4 -->
+                            <div class="text">
+                                <strong class="d-block font-weight-bold h5 mb-1">Citra Sabrina, M.Psi., Psikolog</strong>
+                                <span class="d-block mb-3">Founder Metamorfosa</span>
+                                <blockquote class="text-center">
+                                    &ldquo;Separated they <span class="highlight">live in Bookmarksgrove right at the coast
+                                        of the Semantics</span>, a large language ocean. A small river named Duden flows by
+                                    their place and supplies it with the necessary regelialia. &rdquo;
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-lg-6">
-                    <div class="mb-4" data-aos="fade-up" data-aos-delay="300">
-                        <div class="untree_co-testimonial d-flex">
-                            <div class="text">
-                                <div class="author d-flex mb-3">
-                                    <div class="pic mr-3">
-                                        <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}" alt="Image"
-                                            class="img-fluid">
-                                    </div>
-                                    <div>
-                                        <strong class="d-block font-weight-bold h5 mb-0">Ervi Amaliyah, S.Pd</strong><span
-                                            class="d-block">Founder Metamorfosa</span>
-                                    </div>
+            </div>
 
-                                </div>
-                                <blockquote>
-                                    &ldquo;Separated they <span class="highlight">live in Bookmarksgrove right at the
-                                        coast of the Semantics</span>, a large language ocean. A small river named Duden
-                                    flows by their place and supplies it with the necessary regelialia. &rdquo;
-                                </blockquote>
-
-                            </div>
-                        </div> <!-- /.untree_co-testimonial -->
-                    </div> <!-- /.mb-4 -->
+            <!-- Co-Founders Section -->
+            <div class="row mb-5">
+                <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
+                    <h3 class="subheading">Co-Founder</h3>
                 </div>
-                <div class="col-lg-6">
-                    <div class="mb-4" data-aos="fade-up" data-aos-delay="300">
-                        <div class="untree_co-testimonial d-flex">
-                            <div class="text">
-                                <div class="author d-flex mb-3">
-                                    <div class="pic mr-3">
-                                        <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}" alt="Image"
-                                            class="img-fluid">
-                                    </div>
-                                    <div>
-                                        <strong class="d-block font-weight-bold h5 mb-0">Dr. Widya, MKN </strong><span
-                                            class="d-block">Founder Metamorfosa</span>
-                                    </div>
-
-                                </div>
-                                <blockquote>
-                                    &ldquo;Separated they <span class="highlight">live in Bookmarksgrove right at the
-                                        coast of the Semantics</span>, a large language ocean. A small river named Duden
-                                    flows by their place and supplies it with the necessary regelialia. &rdquo;
-                                </blockquote>
-
+                <div class="col-lg-4">
+                    <div class="mb-4 text-center" data-aos="fade-up" data-aos-delay="300">
+                        <div class="untree_co-testimonial d-flex flex-column align-items-center">
+                            <div class="pic mb-3">
+                                <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}" alt="Image"
+                                    class="img-fluid" style="max-width: 150px; border-radius: 50%;">
                             </div>
-                        </div> <!-- /.untree_co-testimonial -->
-                    </div> <!-- /.mb-4 -->
+                            <div class="text">
+                                <strong class="d-block font-weight-bold h5 mb-1">Micki Watulandi, S.E., M.M.,
+                                    C.P.S</strong>
+                                <span class="d-block mb-3">Co-Founder Metamorfosa</span>
+                                <blockquote class="text-center">
+                                    &ldquo;Separated they <span class="highlight">live in Bookmarksgrove right at the coast
+                                        of the Semantics</span>, a large language ocean. A small river named Duden flows by
+                                    their place and supplies it with the necessary regelialia. &rdquo;
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="mb-4 text-center" data-aos="fade-up" data-aos-delay="300">
+                        <div class="untree_co-testimonial d-flex flex-column align-items-center">
+                            <div class="pic mb-3">
+                                <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}" alt="Image"
+                                    class="img-fluid" style="max-width: 150px; border-radius: 50%;">
+                            </div>
+                            <div class="text">
+                                <strong class="d-block font-weight-bold h5 mb-1">Ervi Amaliyah, S.Pd</strong>
+                                <span class="d-block mb-3">Co-Founder Metamorfosa</span>
+                                <blockquote class="text-center">
+                                    &ldquo;Separated they <span class="highlight">live in Bookmarksgrove right at the coast
+                                        of the Semantics</span>, a large language ocean. A small river named Duden flows by
+                                    their place and supplies it with the necessary regelialia. &rdquo;
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="mb-4 text-center" data-aos="fade-up" data-aos-delay="300">
+                        <div class="untree_co-testimonial d-flex flex-column align-items-center">
+                            <div class="pic mb-3">
+                                <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}" alt="Image"
+                                    class="img-fluid" style="max-width: 150px; border-radius: 50%;">
+                            </div>
+                            <div class="text">
+                                <strong class="d-block font-weight-bold h5 mb-1">Dr. Widya, MKN</strong>
+                                <span class="d-block mb-3">Co-Founder Metamorfosa</span>
+                                <blockquote class="text-center">
+                                    &ldquo;Separated they <span class="highlight">live in Bookmarksgrove right at the coast
+                                        of the Semantics</span>, a large language ocean. A small river named Duden flows by
+                                    their place and supplies it with the necessary regelialia. &rdquo;
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Support Teachers Section -->
+            <div class="row mb-5">
+                <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
+                    <h3 class="subheading">Support Teachers</h3>
+                </div>
+                <div class="col-lg-12">
+                    <div class="owl-3-slider owl-carousel" data-aos="fade-up">
+                        <!-- Support Teacher Item 1 -->
+                        <div class="item">
+                            <div class="card text-center border-0 shadow-md">
+                                <div class="card-body">
+                                    <div class="pic mb-3 mx-auto">
+                                        <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}" alt="Image"
+                                            class="img-fluid" style="max-width: 120px; border-radius: 50%;">
+                                    </div>
+                                    <div class="text">
+                                        <strong class="d-block font-weight-bold h5 mb-1">Micki Watulandi, S.E., M.M.,
+                                            C.P.S</strong>
+                                        <span class="d-block mb-3 text-muted">Support Teacher</span>
+                                        <blockquote class="blockquote">
+                                            <p class="mb-0">"Separated they live in Bookmarksgrove right at the coast of
+                                                the Semantics, a large language ocean."</p>
+                                        </blockquote>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Support Teacher Item 2 -->
+                        <div class="item">
+                            <div class="card text-center border-0 shadow-md">
+                                <div class="card-body">
+                                    <div class="pic mb-3 mx-auto">
+                                        <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}" alt="Image"
+                                            class="img-fluid" style="max-width: 120px; border-radius: 50%;">
+                                    </div>
+                                    <div class="text">
+                                        <strong class="d-block font-weight-bold h5 mb-1">Ervi Amaliyah, S.Pd</strong>
+                                        <span class="d-block mb-3 text-muted">Support Teacher</span>
+                                        <blockquote class="blockquote">
+                                            <p class="mb-0">"Separated they live in Bookmarksgrove right at the coast of
+                                                the Semantics, a large language ocean."</p>
+                                        </blockquote>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Support Teacher Item 3 -->
+                        <div class="item">
+                            <div class="card text-center border-0 shadow-md">
+                                <div class="card-body">
+                                    <div class="pic mb-3 mx-auto">
+                                        <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}" alt="Image"
+                                            class="img-fluid" style="max-width: 120px; border-radius: 50%;">
+                                    </div>
+                                    <div class="text">
+                                        <strong class="d-block font-weight-bold h5 mb-1">Dr. Widya, MKN</strong>
+                                        <span class="d-block mb-3 text-muted">Support Teacher</span>
+                                        <blockquote class="blockquote">
+                                            <p class="mb-0">"Separated they live in Bookmarksgrove right at the coast of
+                                                the Semantics, a large language ocean."</p>
+                                        </blockquote>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    {{-- TIM 2 --}}
+    <div class="untree_co-section" id="team">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
+                    <h2 class="heading">Tim Kami</h2>
+                </div>
+            </div>
+
+            <!-- Founder and Co-Founders Section -->
+            <div class="row mb-5">
+                <!-- Founder -->
+                <div class="col-lg-6 mb-4">
+                    <div class="text-center" data-aos="fade-up" data-aos-delay="300">
+                        <h3 class="subheading">Founder</h3>
+                        <div class="untree_co-testimonial d-flex flex-column align-items-center">
+                            <div class="pic mb-3">
+                                <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}" alt="Image"
+                                    class="img-fluid" style="max-width: 150px; border-radius: 50%;">
+                            </div>
+                            <div class="text">
+                                <strong class="d-block font-weight-bold h5 mb-1">Citra Sabrina, M.Psi., Psikolog</strong>
+                                <span class="d-block mb-3">Founder Metamorfosa</span>
+                                <blockquote class="text-center">
+                                    &ldquo;Separated they <span class="highlight">live in Bookmarksgrove right at the coast
+                                        of the Semantics</span>, a large language ocean. A small river named Duden flows by
+                                    their place and supplies it with the necessary regelialia. &rdquo;
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Co-Founders -->
+                <div class="col-lg-6">
+                    <div class="text-center" data-aos="fade-up" data-aos-delay="300">
+                        <h3 class="subheading">Co-Founder</h3>
+                        <div class="row">
+                            <div class="col-md-4 mb-4">
+                                <div class="untree_co-testimonial d-flex flex-column align-items-center">
+                                    <div class="pic mb-3">
+                                        <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}" alt="Image"
+                                            class="img-fluid" style="max-width: 150px; border-radius: 50%;">
+                                    </div>
+                                    <div class="text">
+                                        <strong class="d-block font-weight-bold h5 mb-1">Micki Watulandi, S.E., M.M.,
+                                            C.P.S</strong>
+                                        <span class="d-block mb-3">Co-Founder Metamorfosa</span>
+                                        <blockquote class="text-center">
+                                            &ldquo;Separated they <span class="highlight">live in Bookmarksgrove right at
+                                                the coast
+                                                of the Semantics</span>, a large language ocean. A small river named Duden
+                                            flows by
+                                            their place and supplies it with the necessary regelialia. &rdquo;
+                                        </blockquote>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-4">
+                                <div class="untree_co-testimonial d-flex flex-column align-items-center">
+                                    <div class="pic mb-3">
+                                        <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}"
+                                            alt="Image" class="img-fluid"
+                                            style="max-width: 150px; border-radius: 50%;">
+                                    </div>
+                                    <div class="text">
+                                        <strong class="d-block font-weight-bold h5 mb-1">Ervi Amaliyah, S.Pd</strong>
+                                        <span class="d-block mb-3">Co-Founder Metamorfosa</span>
+                                        <blockquote class="text-center">
+                                            &ldquo;Separated they <span class="highlight">live in Bookmarksgrove right at
+                                                the coast
+                                                of the Semantics</span>, a large language ocean. A small river named Duden
+                                            flows by
+                                            their place and supplies it with the necessary regelialia. &rdquo;
+                                        </blockquote>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 mb-4">
+                                <div class="untree_co-testimonial d-flex flex-column align-items-center">
+                                    <div class="pic mb-3">
+                                        <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}"
+                                            alt="Image" class="img-fluid"
+                                            style="max-width: 150px; border-radius: 50%;">
+                                    </div>
+                                    <div class="text">
+                                        <strong class="d-block font-weight-bold h5 mb-1">Dr. Widya, MKN</strong>
+                                        <span class="d-block mb-3">Co-Founder Metamorfosa</span>
+                                        <blockquote class="text-center">
+                                            &ldquo;Separated they <span class="highlight">live in Bookmarksgrove right at
+                                                the coast
+                                                of the Semantics</span>, a large language ocean. A small river named Duden
+                                            flows by
+                                            their place and supplies it with the necessary regelialia. &rdquo;
+                                        </blockquote>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Support Teachers Section -->
+            <div class="row mb-5">
+                <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
+                    <h3 class="subheading">Support Teachers</h3>
+                </div>
+                <div class="col-lg-12">
+                    <div class="owl-3-slider owl-carousel" data-aos="fade-up">
+                        <!-- Support Teacher Items -->
+                        <div class="item">
+                            <div class="card text-center border-0 shadow-md">
+                                <div class="card-body">
+                                    <div class="pic mb-3 mx-auto">
+                                        <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}"
+                                            alt="Image" class="img-fluid"
+                                            style="max-width: 120px; border-radius: 50%;">
+                                    </div>
+                                    <div class="text">
+                                        <strong class="d-block font-weight-bold h5 mb-1">Micki Watulandi, S.E., M.M.,
+                                            C.P.S</strong>
+                                        <span class="d-block mb-3 text-muted">Support Teacher</span>
+                                        <blockquote class="blockquote">
+                                            <p class="mb-0">"Separated they live in Bookmarksgrove right at the coast of
+                                                the Semantics, a large language ocean."</p>
+                                        </blockquote>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Additional Support Teacher Items... -->
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="untree_co-section bg-light" id="aktivitas-section">
-        <div class="container">
-            <div class="row justify-content-between">
-                <div class="col-12 text-center mb-5" data-aos="fade-up" data-aos-delay="0">
-                    <h2 class="heading">Aktivitas Selanjutnya</h2>
-                </div>
-                <div class="col-lg-5 order-lg-2 js-custom-dots">
-                    @for ($i = 1; $i <= 5; $i++)
-                        <a href="#" class="service link horizontal d-flex active" data-aos="fade-left"
-                            data-aos-delay="0">
-                            <div class="service-icon color-1 mb-4">
-                                <svg class="bi bi-app-indicator" width="1em" height="1em" viewBox="0 0 16 16"
-                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd"
-                                        d="M5.5 2A3.5 3.5 0 0 0 2 5.5v5A3.5 3.5 0 0 0 5.5 14h5a3.5 3.5 0 0 0 3.5-3.5V8a.5.5 0 0 1 1 0v2.5a4.5 4.5 0 0 1-4.5 4.5h-5A4.5 4.5 0 0 1 1 10.5v-5A4.5 4.5 0 0 1 5.5 1H8a.5.5 0 0 1 0 1H5.5z" />
-                                    <path d="M16 3a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                                </svg>
-                            </div> <!-- /.icon -->
-                            <div class="service-contents">
-                                <h3>Built for Developers</h3>
-                                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.
-                                </p>
-                            </div> <!-- /.service-contents-->
-                        </a> <!-- /.service -->
-                    @endfor
-                    {{-- <a href="#" class="service link horizontal d-flex" data-aos="fade-left" data-aos-delay="100">
-                        <div class="service-icon color-2 mb-4">
-                            <svg class="bi bi-arrow-repeat" width="1em" height="1em" viewBox="0 0 16 16"
-                                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M2.854 7.146a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L2.5 8.207l1.646 1.647a.5.5 0 0 0 .708-.708l-2-2zm13-1a.5.5 0 0 0-.708 0L13.5 7.793l-1.646-1.647a.5.5 0 0 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0 0-.708z" />
-                                <path fill-rule="evenodd"
-                                    d="M8 3a4.995 4.995 0 0 0-4.192 2.273.5.5 0 0 1-.837-.546A6 6 0 0 1 14 8a.5.5 0 0 1-1.001 0 5 5 0 0 0-5-5zM2.5 7.5A.5.5 0 0 1 3 8a5 5 0 0 0 9.192 2.727.5.5 0 1 1 .837.546A6 6 0 0 1 2 8a.5.5 0 0 1 .501-.5z" />
-                            </svg>
-                        </div> <!-- /.icon -->
-                        <div class="service-contents">
-                            <h3>Modern Design</h3>
-                            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.
-                            </p>
-                        </div> <!-- /.service-contents-->
-                    </a> <!-- /.service -->
-
-
-                    <a href="#" class="service link horizontal d-flex" data-aos="fade-left" data-aos-delay="200">
-                        <div class="service-icon color-3 mb-4">
-                            <svg class="bi bi-briefcase" width="1em" height="1em" viewBox="0 0 16 16"
-                                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M0 12.5A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-6h-1v6a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-6H0v6z" />
-                                <path fill-rule="evenodd"
-                                    d="M0 4.5A1.5 1.5 0 0 1 1.5 3h13A1.5 1.5 0 0 1 16 4.5v2.384l-7.614 2.03a1.5 1.5 0 0 1-.772 0L0 6.884V4.5zM1.5 4a.5.5 0 0 0-.5.5v1.616l6.871 1.832a.5.5 0 0 0 .258 0L15 6.116V4.5a.5.5 0 0 0-.5-.5h-13zM5 2.5A1.5 1.5 0 0 1 6.5 1h3A1.5 1.5 0 0 1 11 2.5V3h-1v-.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5V3H5v-.5z" />
-                            </svg>
-                        </div> <!-- /.icon -->
-                        <div class="service-contents">
-                            <h3>Build Stunning Websites</h3>
-                            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.
-                            </p>
-                        </div> <!-- /.service-contents-->
-                    </a> <!-- /.service --> --}}
-
-
-                </div>
-                <div class="col-lg-7">
-                    <div class="img-shadow w-75 mx-auto">
-                        <div class="owl-single no-dots owl-carousel">
-                            <div class="item">
-                                <span class="number">1/3</span>
-                                <img src="{{ asset('../assets/landingpage/images/poster_metamorfosa.jpg') }}"
-                                    alt="Image" class="img-fluid">
-                            </div>
-                            {{-- <div class="item">
-                                <span class="number">2/3</span>
-                                <img src="{{ asset('../assets/landingpage/images/dashboard.jpg') }}" alt="Image"
-                                    class="img-fluid">
-                            </div>
-                            <div class="item">
-                                <span class="number">3/3</span>
-                                <img src="{{ asset('../assets/landingpage/images/dashboard.jpg') }}" alt="Image"
-                                    class="img-fluid">
-                            </div> --}}
-
-                        </div>
-
-                    </div>
-
-                </div> <!-- /.col-md-4 -->
-            </div> <!-- /.row -->
-        </div> <!-- /.container -->
-    </div> <!-- /.untree_co-section -->
-
+    {{-- LAYANAN KAMI --}}
     <div class="untree_co-section bg-light" id="layanan-section">
         <div class="container">
             <div class="row pricing-title">
@@ -489,8 +721,48 @@
                 </div> <!-- /.col-lg-10 -->
             </div> <!-- /.row -->
         </div> <!-- /.container -->
-    </div> <!-- /.untree_co-section -->
+    </div>
 
+    {{-- AKTIVITAS SELANJUTNYA --}}
+    <div class="untree_co-section bg-light" id="aktivitas-section">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-12 text-center mb-5" data-aos="fade-up" data-aos-delay="0">
+                    <h2 class="heading">Aktivitas Selanjutnya</h2>
+                </div>
+                <div class="col-lg-7">
+                    <div class="news-feed">
+                        @for ($i = 1; $i <= 5; $i++)
+                            <div class="news-item" data-id="{{ $i }}" data-aos="fade-up"
+                                data-aos-delay="{{ $i * 100 }}">
+                                <img src="{{ asset('../assets/landingpage/images/dashboard.jpg') }}"
+                                    alt="Thumbnail Aktivitas {{ $i }}" class="news-image">
+                                <div class="news-content">
+                                    <div class="news-date">25 Aug 2024</div>
+                                    <h3 class="news-title">Aktivitas {{ $i }}</h3>
+                                    <p class="news-description">Far far away, behind the word mountains, far from the
+                                        countries Vokalia and Consonantia.</p>
+                                    <a href="#" class="btn btn-primary view-details"
+                                        data-id="{{ $i }}">Baca Selengkapnya</a>
+                                </div>
+                            </div>
+                        @endfor
+                    </div>
+                </div>
+
+                <!-- Right Side: Detail View -->
+                <div class="col-lg-5">
+                    <div class="detail-view">
+                        <img src="" alt="Detail Image" id="detail-image" class="img-fluid">
+                        <h3 id="detail-title">Aktivitas Mendatang</h3>
+                        <p id="detail-description">Klik tombol "Baca Selengkapnya" pada aktivitas di sebelah kiri untuk
+                            melihat detail.</p>
+                    </div>
+                </div>
+
+            </div> <!-- /.row -->
+        </div> <!-- /.container -->
+    </div>
 
 
     <div class="untree_co-section" id="klien-section">
@@ -857,4 +1129,61 @@
             </div> <!-- /.row -->
         </div> <!-- /.container -->
     </div> <!-- /.untree_co-section bg-light --> --}}
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const details = {
+                1: {
+                    title: 'Aktivitas 1',
+                    description: 'Detail deskripsi untuk aktivitas 1.',
+                    image: '{{ asset('../assets/landingpage/images/poster_metamorfosa.jpg') }}'
+                },
+                2: {
+                    title: 'Aktivitas 2',
+                    description: 'Detail deskripsi untuk aktivitas 2.',
+                    image: '{{ asset('../assets/landingpage/images/dashboard.jpg') }}'
+                },
+                3: {
+                    title: 'Aktivitas 3',
+                    description: 'Detail deskripsi untuk aktivitas 3.',
+                    image: '{{ asset('../assets/landingpage/images/dashboard.jpg') }}'
+                },
+                // Add more details as needed
+            };
+
+            // Example upcoming activity, adjust according to actual data
+            const upcomingActivityId = 1; // Replace with logic to get the nearest upcoming activity
+            const detailView = document.querySelector('.detail-view');
+            const detailTitle = document.getElementById('detail-title');
+            const detailDescription = document.getElementById('detail-description');
+            const detailImage = document.getElementById('detail-image');
+
+            function showDetail(id) {
+                const detail = details[id];
+                if (detail) {
+                    detailTitle.textContent = detail.title;
+                    detailDescription.textContent = detail.description;
+                    detailImage.src = detail.image;
+                    detailImage.style.display = 'block'; // Show image when detail is selected
+                }
+            }
+
+            function setInitialDetail() {
+                if (upcomingActivityId in details) {
+                    showDetail(upcomingActivityId);
+                }
+            }
+
+            setInitialDetail();
+
+            document.querySelectorAll('.view-details').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    const id = event.target.getAttribute('data-id');
+                    showDetail(id);
+                });
+            });
+        });
+    </script>
 @endsection
