@@ -33,9 +33,6 @@ class AccountController extends Controller
             $this->DefineId($user);
         });
 
-        // Debugging output
-        // dd($users);
-
         // Return the view with the users
         return view('panel.account.index', compact('users'));
     }
@@ -53,35 +50,31 @@ class AccountController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request;
         try {
-            $data = $data->validate([
+            $data = $request->validate([
                 'name' => 'required',
-                'username' => 'required',
-                'email' => 'required',
+                'username' => 'required|unique:users,username',
+                'email' => 'required|email|unique:users,email',
                 'role' => 'required',
                 'alamat' => 'required',
                 'status' => 'required',
                 'jenis_kelamin' => 'required',
+                'gambar' => 'required|mimes:jpg,jpeg,png|max:2048', // Validate image
             ]);
 
-            $password = bcrypt('metamorfosa');
+            // Handle file upload
+            if ($request->hasFile('gambar')) {
+                $file = $request->file('gambar');
+                $nama_file = time() . "_" . $file->getClientOriginalName();
+                $file->move(public_path('assets/panel/profile_images'), $nama_file);
+                $data['gambar'] = $nama_file; // Save the file name in the data array
+            }
 
-            $data = [
-                'name' => $data['name'],
-                'username' => $data['username'],
-                'email' => $data['email'],
-                'role' => $data['role'],
-                'alamat' => $data['alamat'],
-                'status' => $data['status'],
-                'jenis_kelamin' => $data['jenis_kelamin'],
-                'password' => $password,
-                'username' => $data['username'],
-                'updated_at' => now(),
-                'created_at' => now(),
-            ];
+            $data['password'] = bcrypt('metamorfosa');
+            $data['created_at'] = now();
+            $data['updated_at'] = now();
 
-            User::create($data);
+            User::create($data); // Store the validated data including 'gambar' field
 
             toast('Akun berhasil di tambahkan!', 'success');
             return redirect()->route('account.index');
@@ -91,12 +84,13 @@ class AccountController extends Controller
         }
     }
 
+
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        //
+        // This method is intentionally left empty for now.
     }
 
     /**
@@ -120,34 +114,43 @@ class AccountController extends Controller
         return view('panel.account.edit', compact('data'));
     }
 
-
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        $data = $request;
         try {
-            $data = $data->validate([
+            $data = $request->validate([
                 'name' => 'required',
-                'email' => 'required',
+                'email' => 'required|email|unique:users,email,' . $id,
                 'role' => 'required',
                 'alamat' => 'required',
                 'status' => 'required',
                 'jenis_kelamin' => 'required',
+                'gambar' => 'sometimes|mimes:jpg,jpeg,png|max:2048', // Image is optional
             ]);
 
-            $data = [
-                'name' => $data['name'],
-                'email' => $data['email'],
-                'role' => $data['role'],
-                'alamat' => $data['alamat'],
-                'status' => $data['status'],
-                'jenis_kelamin' => $data['jenis_kelamin'],
-                'updated_at' => now(),
-            ];
+            $user = User::find($id);
 
-            User::where('id', $id)->update($data);
+            // Handle file upload
+            if ($request->hasFile('gambar')) {
+                // Delete the old image if it exists
+                if ($user->gambar) {
+                    $gambar_lama = public_path('assets/panel/profile_images/' . $user->gambar);
+                    if (file_exists($gambar_lama)) {
+                        unlink($gambar_lama);
+                    }
+                }
+
+                // Upload the new image
+                $file = $request->file('gambar');
+                $nama_file = time() . "_" . $file->getClientOriginalName();
+                $file->move(public_path('assets/panel/profile_images'), $nama_file);
+                $data['gambar'] = $nama_file; // Save the new file name in the data array
+            }
+
+            $data['updated_at'] = now();
+            $user->update($data); // Update the user with the new data including 'gambar'
 
             toast('Akun berhasil di ubah!', 'success');
             return redirect()->route('account.index');
@@ -157,46 +160,54 @@ class AccountController extends Controller
         }
     }
 
+
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        User::where('id', $id)->delete();
-        toast('Akun berhasil di hapus!', 'success');
+        $user = User::find($id);
+
+        if ($user) {
+            // Delete the user's profile image if it exists
+            if ($user->gambar) {
+                $gambar_path = public_path('assets/panel/profile_images/' . $user->gambar);
+                if (file_exists($gambar_path)) {
+                    unlink($gambar_path);
+                }
+            }
+
+            $user->delete();
+            toast('Akun berhasil di hapus!', 'success');
+        } else {
+            toast('Akun tidak ditemukan!', 'error');
+        }
+
         return redirect()->route('account.index');
     }
 
+    /**
+     * Define role, marital status, and gender for display purposes.
+     */
     private function DefineId($user)
     {
         // Define role
-        switch ($user->role) {
-            case 1:
-                $user->role = 'Admin';
-                break;
-            case 2:
-                $user->role = 'Support Teacher';
-                break;
-            case 3:
-                $user->role = 'Staff';
-                break;
-            case 4:
-                $user->role = 'Receptionist';
-                break;
-            case 5:
-                $user->role = 'Official';
-                break;
-        }
+        $roles = [
+            1 => 'Admin',
+            2 => 'Support Teacher',
+            3 => 'Staff',
+            4 => 'Receptionist',
+            5 => 'Official',
+        ];
+        $user->role = $roles[$user->role] ?? 'Unknown Role';
 
         // Define marital status
-        switch ($user->status) {
-            case 1:
-                $user->status = 'Sudah Menikah';
-                break;
-            case 2:
-                $user->status = 'Belum Menikah';
-                break;
-        }
+        $statuses = [
+            1 => 'Sudah Menikah',
+            2 => 'Belum Menikah',
+        ];
+        $user->status = $statuses[$user->status] ?? 'Unknown Status';
 
         // Define gender
         $user->jenis_kelamin = ($user->jenis_kelamin == 1) ? 'Laki - Laki' : 'Perempuan';

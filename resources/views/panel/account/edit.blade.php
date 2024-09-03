@@ -36,65 +36,80 @@
                     enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
+
                     <h3>Data Diri</h3>
                     <div class="row mb-2">
                         <div class="col-md-4 mb-2">
                             <label class="form-label" for="nama">Nama Lengkap</label>
                             <input required id="nama" type="text" class="form-control" name="name"
-                                placeholder="Masukkan Nama Lengkap" value="{{ $data->name }}">
+                                placeholder="Masukkan Nama Lengkap" value="{{ old('name', $data->name) }}">
                         </div>
                         <div class="col-md-4 mb-2">
                             <label class="form-label" for="username">Username</label>
                             <input required id="username" type="text" class="form-control" name="username"
-                                placeholder="Masukkan Username" value="{{ $data->username }}">
+                                placeholder="Masukkan Username" value="{{ old('username', $data->username) }}">
                         </div>
                         <div class="col-md-4 mb-2">
                             <label class="form-label" for="email">Email</label>
                             <input required id="email" type="email" class="form-control" name="email"
-                                placeholder="Masukkan Email" value="{{ $data->email }}">
+                                placeholder="Masukkan Email" value="{{ old('email', $data->email) }}">
                         </div>
                         <div class="col-md-4 mb-2">
                             <label class="form-label" for="alamat">Alamat Lengkap</label>
                             <input type="text" name="alamat" id="alamat" class="form-control"
-                                placeholder="Masukkan Alamat" value="{{ $data->alamat }}">
+                                placeholder="Masukkan Alamat" value="{{ old('alamat', $data->alamat) }}">
                         </div>
                         <div class="col-md-4 mb-2">
                             <label class="form-label" for="jenis_kelamin">Jenis Kelamin</label>
                             <select name="jenis_kelamin" id="jenis_kelamin" class="form-select select2"
                                 data-placeholder="Pilih Jenis Kelamin">
-                                <option selected value="{{ $data->jenis_kelamin }}"> {{ $data->jenis_kelamin }}
+                                <option value="1" {{ $data->jenis_kelamin == 'Laki Laki' ? 'selected' : '' }}>Laki Laki
                                 </option>
-                                <option value="1">Laki Laki</option>
-                                <option value="2">Perempuan</option>
+                                <option value="2" {{ $data->jenis_kelamin == 'Perempuan' ? 'selected' : '' }}>Perempuan
+                                </option>
                             </select>
                         </div>
                         <div class="col-md-4 mb-2">
                             <label class="form-label" for="status">Status</label>
                             <select name="status" id="status" class="form-select select2"
                                 data-placeholder="Pilih Status">
-                                <option selected value="{{ $data->status }}"> {{ $data->status }}</option>
-                                <option value="1">Sudah Menikah</option>
-                                <option value="2">Belum Menikah</option>
+                                <option value="1" {{ $data->status == 'Sudah Menikah' ? 'selected' : '' }}>Sudah
+                                    Menikah</option>
+                                <option value="2" {{ $data->status == 'Belum Menikah' ? 'selected' : '' }}>Belum
+                                    Menikah</option>
                             </select>
                         </div>
+
+                        <!-- Image Upload Section -->
+                        <div class="col-md mb-2">
+                            <label class="form-label" for="gambar">Profile Image</label>
+                            <input type="file" name="gambar" id="gambar" class="form-control"
+                                accept="image/png, image/jpeg">
+                            @if ($data->gambar)
+                                <img src="{{ asset('assets/panel/profile_images/' . $data->gambar) }}" alt="Profile Image"
+                                    class="mt-2" width="100">
+                            @endif
+                        </div>
                     </div>
+
                     <h3>Account Setting</h3>
                     <div class="row mb-2">
                         <div class="col-md-3">
                             <label class="form-label" for="role">Role</label>
                             <select name="role" id="role" class="form-select select2" data-placeholder="Pilih Role">
-                                <option selected value="{{ $data->role }}">{{ $data->role }}</option>
                                 @foreach (['2' => 'Support Teacher', '3' => 'Staff', '4' => 'Receptionist', '5' => 'Official'] as $roleId => $roleName)
-                                    @if ($roleName != $data->role)
-                                        <option value="{{ $roleId }}">{{ $roleName }}</option>
-                                    @endif
+                                    <option value="{{ $roleId }}" {{ $data->role == $roleId ? 'selected' : '' }}>
+                                        {{ $roleName }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
+
                     <p class="text-danger">Notes: *Password awal adalah username</p>
                     <button class="btn btn-sm btn-primary" type="submit">Submit Data</button>
                 </form>
+
             </div>
         </div>
     </div>
