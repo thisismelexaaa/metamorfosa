@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('status')->nullable();
             $table->string('alamat')->nullable();
             $table->string('bio')->nullable();
+            $table->string('gambar')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

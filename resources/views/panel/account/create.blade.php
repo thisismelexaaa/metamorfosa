@@ -75,6 +75,15 @@
                             </select>
                         </div>
                     </div>
+
+                    <div class="row mb-2">
+                        <div class="col-md mb-2">
+                            <label class="form-label" for="gambar">Profile Image (PNG, JPG)</label>
+                            <input type="file" name="gambar" id="gambar" class="form-control"
+                                accept=".jpg,.jpeg,.png">
+                        </div>
+                    </div>
+
                     <h3>Account Setting</h3>
                     <div class="row mb-2">
                         <div class="col-md-3">
@@ -90,6 +99,7 @@
                     <p class="text-danger">Notes: *Password awal adalah username</p>
                     <button class="btn btn-sm btn-primary" type="submit">Submit Data</button>
                 </form>
+
             </div>
         </div>
     </div>
