@@ -87,6 +87,16 @@
                             <input id="tgl_selesai" type="date" class="form-control" name="tgl_selesai"
                                 placeholder="Masukkan Tanggal Selesai">
                         </div>
+                        <div class="col-md">
+                            <label class="form-label" for="jam_mulai">Mulai Sesi</label>
+                            <div class="d-flex gap-3">
+                                <input required id="jam_mulai" type="time" class="form-control" name="jam_mulai"
+                                    placeholder="Masukkan Tanggal Masuk">
+                                <span class="my-auto">s/d</span>
+                                <input required id="jam_selesai" type="time" class="form-control" name="jam_selesai"
+                                    placeholder="Masukkan Tanggal Masuk">
+                            </div>
+                        </div>
                     </div>
 
                     <div class="row mb-2">

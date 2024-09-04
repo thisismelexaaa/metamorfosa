@@ -64,9 +64,9 @@
     <script src="{{ asset('assets/landingpage/js/jquery.waypoints.min.js') }}"></script>
     <script src="{{ asset('assets/landingpage/js/jquery.fancybox.min.js') }}"></script>
     <script src="{{ asset('assets/landingpage/js/aos.js') }}"></script>
-
     <script src="{{ asset('assets/landingpage/js/custom.js') }}"></script>
 
+    @yield('scripts')
 </body>
 
 </html>

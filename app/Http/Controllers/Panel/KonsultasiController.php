@@ -54,6 +54,8 @@ class KonsultasiController extends Controller
             'keluhan' => 'required',
             'total_harga' => 'required',
             'status_bayar' => 'required',
+            'jam_mulai' => 'required',
+            'jam_selesai' => 'required',
         ]);
 
         // kode konsultas
@@ -161,6 +163,8 @@ class KonsultasiController extends Controller
             'id_support_teacher' => 'required',
             'tgl_masuk' => 'required',
             'tgl_selesai' => 'nullable',
+            'jam_mulai' => 'required',
+            'jam_selesai' => 'required',
             'keluhan' => 'required',
         ]);
 

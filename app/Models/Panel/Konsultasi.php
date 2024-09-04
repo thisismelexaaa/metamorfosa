@@ -31,4 +31,9 @@ class Konsultasi extends Model
     {
         return $this->belongsTo(User::class, 'id_support_teacher');
     }
+
+    public function hasilKonsultasi()
+    {
+        return $this->hasMany(HasilKonsultasi::class, 'id_konsultasi');
+    }
 }

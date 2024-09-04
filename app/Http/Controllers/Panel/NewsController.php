@@ -64,18 +64,27 @@ class NewsController extends Controller
         // Check if the request has a file named 'image'
         if ($request->hasFile('image')) {
             // Get the original name of the uploaded file
-            $fileName = $request->file('image')->getClientOriginalName();
+            $originalFile = $request->file('image');
+            $originalFileName = $originalFile->getClientOriginalName();
 
-            // Optionally, you can sanitize the file name to avoid any issues with special characters
+            // Get the file extension
+            $fileExtension = $originalFile->getClientOriginalExtension();
+
+            // Hash the original file name
+            $hashedFileName = hash('sha256', $originalFileName);
+
+            // Combine the hashed name with the original file extension
+            $fileName = $hashedFileName . '.' . $fileExtension;
+
+            // Optionally, sanitize the file name to avoid issues with special characters
             $fileName = str_replace(' ', '_', $fileName);
 
-            // Move the file to the public folder with its original name
-            $request->file('image')->move(public_path('assets/image/news'), $fileName);
+            // Move the file to the public folder with the new name
+            $originalFile->move(public_path('assets/image/news'), $fileName);
 
             // Save the file name in the 'image' column
             $data['image'] = $fileName;
         }
-
 
         // Dump the validated data and prepared data for debugging
         // dd($request->all(), $data);
@@ -141,16 +150,24 @@ class NewsController extends Controller
                 unlink(public_path('assets/image/news/' . $news->image));
             }
 
-            // Get the original file name
-            $fileName = $request->file('image')->getClientOriginalName();
+            // Get the original file name and extension
+            $originalFile = $request->file('image');
+            $originalFileName = pathinfo($originalFile->getClientOriginalName(), PATHINFO_FILENAME);
+            $fileExtension = $originalFile->getClientOriginalExtension();
 
-            // Optionally, you can sanitize the file name to avoid any issues with special characters
+            // Hash the original file name
+            $hashedFileName = hash('sha256', $originalFileName);
+
+            // Combine the hashed name with the original file extension
+            $fileName = $hashedFileName . '.' . $fileExtension;
+
+            // Optionally, sanitize the file name to avoid any issues with special characters
             $fileName = str_replace(' ', '_', $fileName);
 
-            // Move the file to the public folder with its original name
-            $request->file('image')->move(public_path('assets/image/news'), $fileName);
+            // Move the file to the public folder with the new name
+            $originalFile->move(public_path('assets/image/news'), $fileName);
 
-            // Save the file name in the 'image' column
+            // Save the new file name in the 'image' column
             $data['image'] = $fileName;
         }
 

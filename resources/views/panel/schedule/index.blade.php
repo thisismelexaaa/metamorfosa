@@ -13,6 +13,14 @@
         .fc-event-dot {
             background-color: #f0f0f0;
         }
+
+        .fc-list-event-time {
+            display: none;
+        }
+
+        .fc-event-time {
+            font-weight: bold;
+        }
     </style>
 
     <div class="container-fluid">
@@ -45,7 +53,7 @@
         <?php $key += 1; ?>
         <div class="modal modalDetail{{ $key }} fade" id="modal{{ $key }}" tabindex="-1"
             aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="labelModal">Detail Konsultasi {{ $item->kode_konsultasi }}</h1>
@@ -58,16 +66,30 @@
                                     <td>Nama</td>
                                     <td>:</td>
                                     <td>{{ $item->customer->name }}</td>
+                                    <td>Tanggal Masuk</td>
+                                    <td>:</td>
+                                    <td>{{ \Carbon\Carbon::parse($item->tgl_masuk, 'Asia/Jakarta')->locale('id')->isoFormat('DD MMMM YYYY') }}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Layanan</td>
                                     <td>:</td>
                                     <td>{{ $item->layanan->layanan }}</td>
+                                    <td>Tanggal Selesai</td>
+                                    <td>:</td>
+                                    <td>{{ \Carbon\Carbon::parse($item->tgl_selesai, 'Asia/Jakarta')->locale('id')->isoFormat('DD MMMM YYYY') }}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Sub Layanan</td>
                                     <td>:</td>
                                     <td>{{ $item->subLayanan->sub_layanan }}</td>
+                                    <td>Sesi</td>
+                                    <td>:</td>
+                                    <td>{{ \Carbon\Carbon::parse($item->jam_mulai, 'Asia/Jakarta')->locale('id')->isoFormat('HH:mm') }}
+                                        WIB s/d
+                                        {{ \Carbon\Carbon::parse($item->jam_selesai, 'Asia/Jakarta')->locale('id')->isoFormat('HH:mm') }}
+                                        WIB</td>
                                 </tr>
                                 <tr>
                                     <td>Keluhan</td>
@@ -78,15 +100,23 @@
                                 <tr {{ Auth::user()->role != 'admin' ? 'hidden' : '' }}>
                                     <td>Support Teacher</td>
                                     <td>:</td>
-                                    <td>{{ $item->supportTeacher->name  }}</td>
+                                    <td>{{ $item->supportTeacher->name }}</td>
                                 </tr>
                             </table>
                             {{-- checkbox --}}
                             {{-- @dd(Auth::user()->role == 2 ? 'hidden' : '') --}}
                             <div {{ Auth::user()->role != 2 ? 'hidden' : '' }}>
-                                <form action="{{ route('konsultasi.update', encrypt($item->id)) }}" method="POST">
+                                <form action="{{ route('schedule.store') }}" method="POST">
                                     @csrf
-                                    @method('PUT')
+                                    @method('POST')
+                                    @php
+
+                                        // Calculate duration in days
+                                        $tgl_masuk = \Carbon\Carbon::parse($item->tgl_masuk)->day;
+                                        $tgl_selesai = \Carbon\Carbon::parse($item->tgl_selesai)->day;
+                                        $durasi = $tgl_selesai - $tgl_masuk;
+                                        // dd($tgl_masuk, $tgl_selesai, $durasi);
+                                    @endphp
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="isKonsul{{ $key }}"
                                             name="isKonsul" {{ $item->hasil_konsultasi != null ? 'checked' : '' }}>
@@ -94,32 +124,70 @@
                                             Sudah Melakukan Konsultasi
                                         </label>
                                     </div>
+
                                     <div class="row {{ $item->hasil_konsultasi == null ? 'd-none' : '' }}"
                                         id="hasilKonsultasi{{ $key }}">
-                                        <div class="col-12">
-                                            <div class="form-group">
-                                                <label for="exampleFormControlTextarea1" class="form-label">Catatan / Hasil
-                                                    Konsultasi</label>
-                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Hasil Konsultasi"
-                                                    name="hasil_konsultasi">{{ $item->hasil_konsultasi != null ? $item->hasil_konsultasi : '' }}</textarea>
-                                            </div>
-                                            <button class="btn btn-sm btn-primary my-2 w-100">Submit Hasil
-                                                Konsultasi</button>
+                                        <input type="hidden" name="id_konsultasi" value="{{ $item->id }}">
+                                        <input type="hidden" name="id_layanan" value="{{ $item->id_layanan }}">
+                                        <input type="hidden" name="id_sub_layanan" value="{{ $item->id_sub_layanan }}">
+                                        <input type="hidden" name="id_user" value="{{ Auth::user()->id }}">
 
+                                        <div class="col-12" style="height: 200px; overflow-y: auto">
+                                            {{-- Initial Form Group --}}
+                                            <div class="form-group {{ $item->hasil_konsultasi != null ? 'd-none' : '' }}">
+                                                <label for="hasilKonsultasi1" class="form-label">
+                                                    Catatan / Hasil Konsultasi Hari Ke-1
+                                                </label>
+                                                <textarea class="form-control" id="hasilKonsultasi1" rows="3" placeholder="Hasil Konsultasi"
+                                                    name="hasil_konsultasi[]" {{ $item->hasil_konsultasi != null ? 'disabled' : '' }}></textarea>
+                                            </div>
+
+                                            {{-- Iterating through existing consultation results --}}
+                                            @foreach ($item->hasilKonsultasi as $hasil)
+                                                <div
+                                                    class="form-group {{ $item->hasil_konsultasi != null ? 'd-none' : '' }}">
+                                                    <label for="hasilKonsultasi" class="form-label">
+                                                        Catatan / Hasil Konsultasi Hari Ke-{{ $hasil->hari }}
+                                                    </label>
+                                                    <textarea class="form-control" id="hasilKonsultasi" rows="3" placeholder="Hasil Konsultasi"
+                                                        name="hasil_konsultasi[]" {{ $item->hasil_konsultasi != null ? 'disabled' : '' }}></textarea>
+                                                </div>
+
+                                                {{-- Additional form group if this is the last entry and there are more days --}}
+                                                @if ($loop->last && $hasil->hari <= $durasi)
+                                                    <div class="form-group">
+                                                        <label for="additionalHasilKonsultasi" class="form-label">
+                                                            Catatan / Hasil Konsultasi Hari Ke-{{ $hasil->hari + 1 }}
+                                                        </label>
+                                                        <textarea class="form-control" id="additionalHasilKonsultasi" rows="3" placeholder="Hasil Konsultasi"
+                                                            name="hasil_konsultasi[]"></textarea>
+                                                    </div>
+                                                    <button class="btn btn-sm btn-primary my-2 w-100">Submit Hasil
+                                                        Konsultasi</button>
+                                                @endif
+                                            @endforeach
+
+                                            {{-- Submit button for initial consultation results --}}
+                                            <button
+                                                class="btn btn-sm btn-primary my-2 w-100 {{ $item->hasil_konsultasi != null ? 'd-none' : '' }}">
+                                                Submit Hasil Konsultasi
+                                            </button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <form action="{{ route('konsultasi.update', encrypt($item->id)) }}" method="POST">
-                                @csrf
-                                @method('PUT')
-                                <button type="button" class="btn btn-success" onclick="updateStatus(this)">
-                                    Konsultasi Selesai
-                                </button>
-                                <input type="hidden" name="isDone">
-                            </form>
+                            @if (Auth::user()->role == 2)
+                                <form action="{{ route('konsultasi.update', encrypt($item->id)) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <button type="button" class="btn btn-success" onclick="updateStatus(this)">
+                                        Konsultasi Selesai
+                                    </button>
+                                    <input type="hidden" name="isDone">
+                                </form>
+                            @endif
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
@@ -208,30 +276,35 @@
 @section('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Prepare calendar data
             const calendarEl = document.getElementById('calendar');
             const dataJson = @json($konsultasi);
-            const data = dataJson.map(item => ({
-                id: item.id,
-                title: `${item.kode_konsultasi} - ${item.customer.name}`,
-                start: `${item.tgl_masuk}T00:00:00`,
-                end: `${item.tgl_selesai}T23:59:59`,
-                allDay: item.tgl_masuk === item.tgl_selesai,
-                extendedProps: item,
-            }));
 
-            // Custom button title
-            let title = "Change View";
+            // Map data to FullCalendar events
+            const events = dataJson.map(item => {
+                const startDateTime = `${item.tgl_masuk}T${item.jam_mulai}`;
+                const endDateTime = item.jam_selesai ? `${item.tgl_selesai}T${item.jam_selesai}` :
+                    startDateTime;
+
+                return {
+                    id: item.id,
+                    title: `${item.kode_konsultasi} - ${item.customer.name}`,
+                    start: startDateTime,
+                    end: endDateTime,
+                    allDay: false, // Time-based events
+                    extendedProps: item,
+                };
+            });
 
             // Initialize FullCalendar
             const calendar = new FullCalendar.Calendar(calendarEl, {
                 locale: 'id',
                 customButtons: {
                     ChangeView: {
-                        text: title,
+                        text: "Change View",
                         click: function() {
-                            calendar.changeView(calendar.view.type === 'listWeek' ? 'dayGridMonth' :
-                                'listWeek');
+                            const newView = calendar.view.type === 'listWeek' ? 'dayGridMonth' :
+                                'listWeek';
+                            calendar.changeView(newView);
                         }
                     }
                 },
@@ -240,37 +313,54 @@
                     center: 'title',
                     right: 'today prev,next'
                 },
-                initialView: 'dayGridMonth',
+                initialView: 'listWeek', // Default view
                 timezone: 'local',
-                height: 700,
-                contentHeight: 25,
-                events: data,
-                eventClick: function(info) {
-                    let id = info.event.id;
+                height: 'auto',
+                events: events,
 
-                    $('.modalDetail' + id).modal('show');
+                // Custom event rendering to show times
+                eventContent: function(arg) {
+                    const {
+                        extendedProps
+                    } = arg.event;
+                    const startTime = extendedProps.jam_mulai;
+                    const endTime = extendedProps.jam_selesai;
+                    const title = `${extendedProps.kode_konsultasi} - ${extendedProps.customer.name}`;
 
-                    // Show/hide consultation result based on checkbox
-                    let isKonsul = document.getElementById('isKonsul' + id);
-                    let hasilKonsultasi = document.getElementById(
-                        'hasilKonsultasi' + id);
-
-                    isKonsul.addEventListener('change', function() {
-                        hasilKonsultasi.classList.toggle('d-none', !isKonsul
-                            .checked);
-                    })
+                    return {
+                        html: `
+                            <div class="fc-event-time">${startTime} - ${endTime}</div>
+                            <div class="fc-event-title">${title}</div>
+                        `
+                    };
                 },
-                eventDidMount: function(info) {
-                    let event = info.event.extendedProps;
 
-                    if (event.status == 3) {
-                        info.el.style.backgroundColor =
-                            '#28a745'; // Change the background color to green
-                        info.el.style.borderColor = '#28a745'; // Ensure the border color matches
+                eventClick: function(info) {
+                    const id = info.event.id;
+                    $(`.modalDetail${id}`).modal('show');
+
+                    const isKonsul = document.getElementById(`isKonsul${id}`);
+                    const hasilKonsultasi = document.getElementById(`hasilKonsultasi${id}`);
+
+                    if (isKonsul) {
+                        isKonsul.addEventListener('change', function() {
+                            hasilKonsultasi.classList.toggle('d-none', !isKonsul.checked);
+                        });
                     }
                 },
+
+                eventDidMount: function(info) {
+                    const {
+                        extendedProps
+                    } = info.event;
+                    if (extendedProps.status === 3) {
+                        info.el.style.backgroundColor = '#28a745';
+                        info.el.style.borderColor = '#28a745';
+                    }
+                }
             });
 
+            // Render the calendar
             calendar.render();
         });
 

@@ -61,7 +61,7 @@
                                         @csrf
                                         @method('PUT')
                                         <button type="button"
-                                            class="btn btn-sm badge bg-{{ $item->status_bayar == 1 ? 'success' : 'danger' }} text-white w-100"
+                                            class="btn btn-sm badge bg-{{ $item->status_bayar == 1 ? 'success' : 'danger' }} text-white w-100 btn-lunas"
                                             onclick="updateStatus(this)">
                                             {{ $item->status_bayar == 1 ? 'Lunas' : 'Belum Lunas' }}
                                         </button>
@@ -116,5 +116,47 @@
                 }
             })
         }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // Arrays for months
+            const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September",
+                "Oktober", "November", "Desember"
+            ];
+
+            // Retrieve period data from Blade template
+            let periodeBulan = "{{ $periode['bulan'] }}"; // Assuming bulan is a month name
+            let periodeTahun = parseInt("{{ $periode['tahun'] }}"); // Ensure tahun is an integer
+
+            // Append months to the select element with id 'bulan'
+            const $bulanSelect = $('#bulan');
+            $bulanSelect.empty(); // Clear existing options if any
+            months.forEach((month, index) => {
+                $bulanSelect.append(new Option(month, index + 1));
+            });
+
+            // Get the current year and month
+            const currentYear = new Date().getFullYear();
+            const currentMonth = new Date().getMonth() + 1;
+
+            // Append years to the select element with id 'tahun' with a range of current year - 5 to current year + 5
+            const $tahunSelect = $('#tahun');
+            $tahunSelect.empty(); // Clear existing options if any
+            for (let i = currentYear - 5; i <= currentYear + 5; i++) {
+                $tahunSelect.append(new Option(i, i));
+            }
+
+            // Set the selected month and year if period data is available
+            $bulanSelect.val(periodeBulan).trigger('change');
+            $tahunSelect.val(periodeTahun || currentYear).trigger('change');
+
+            // Check if the selected year and month are current values
+            if ($tahunSelect.val() == currentYear && $bulanSelect.val() == currentMonth) {
+                // remove attribute disabled
+                $('.btn-lunas').removeClass('disabled');
+            } else {
+                // btn-lunas remove on click
+                $('.btn-lunas').addClass('disabled');
+            }
+        });
     </script>
 @endsection
