@@ -57,6 +57,7 @@ class ScheduleController extends Controller
             'id_sub_layanan' => 'required',
             'id_layanan' => 'required',
             'id_user' => 'required',
+            'id_customer' => 'required',
             'hasil_konsultasi' => 'required',
         ]);
 
@@ -68,12 +69,16 @@ class ScheduleController extends Controller
             'id_sub_layanan' => $data['id_sub_layanan'],
             'id_layanan' => $data['id_layanan'],
             'id_user' => $data['id_user'],
+            'id_customer' => $data['id_customer'],
             'hasil' => $data['hasil_konsultasi'],
         ];
 
         $cek = HasilKonsultasi::where('id_konsultasi', $data['id_konsultasi'])
         ->latest()
         ->first();
+
+        // cek jika tanggal sama
+        $dateNow = date('Y-m-d');
 
         if ($cek) {
             $hari = $cek->hari + 1;

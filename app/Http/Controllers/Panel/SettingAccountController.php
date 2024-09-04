@@ -22,6 +22,9 @@ class SettingAccountController extends Controller
     public function index()
     {
         $user = Auth::user();
+
+        $this->DefineId($user);
+
         $user = [
             'id' => $user->id,
             'name' => $user->name,
@@ -31,6 +34,7 @@ class SettingAccountController extends Controller
             'alamat' => $user->alamat,
             'jenis_kelamin' => $user->jenis_kelamin,
             'bio' => $user->bio,
+            'gambar' => $user->gambar
         ];
 
         return view('panel.setting-account.index', compact('user'));
@@ -86,13 +90,30 @@ class SettingAccountController extends Controller
                 'updated_at' => now(),
             ];
 
+            if ($request->hasFile('gambar')) {
+                // Delete the old image if it exists
+                if ($user->gambar) {
+                    $gambar_lama = public_path('assets/panel/profile_images/' . $user->gambar);
+                    if (file_exists($gambar_lama)) {
+                        unlink($gambar_lama);
+                    }
+                }
+
+                // Upload the new image
+                $file = $request->file('gambar');
+                $nama_file = time() . "_" . $file->getClientOriginalName();
+                $file->move(public_path('assets/panel/profile_images'), $nama_file);
+                $updateData['gambar'] = $nama_file; // Save the new file name in the data array
+            }
+
             if (!empty($request['password'])) {
                 $updateData['password'] = Hash::make($request['password']);
             }
 
+            // dd($updateData);
             $user->update($updateData);
 
-            toast('User berhasil diubah!', 'success');
+            toast('Data berhasil diubah!', 'success');
             return redirect()->back();
         } catch (\Exception $e) {
             toast('User gagal diubah! Silakan coba lagi.', 'error');
@@ -110,12 +131,6 @@ class SettingAccountController extends Controller
 
     private function DefineId($user)
     {
-        // dd($user);
-        // jenis_kelamin
-        if ($user['jenis_kelamin'] == 1) {
-            $user['jenis_kelamin'] = 'Laki - Laki';
-        } else {
-            $user['jenis_kelamin'] = 'Perempuan';
-        }
+        $user['jenis_kelamin'] = ($user['jenis_kelamin'] === 1) ? 'Laki - Laki' : 'Perempuan';
     }
 }

@@ -46,6 +46,23 @@
             <div class="card-body">
                 <div id='calendar'></div>
             </div>
+
+            <div class="card-footer">
+                <table>
+                    <tr>
+                        <td>Keterangan</td>
+                        <td>:</td>
+                        <td>
+                            <div class="badge badge-success">Sudah Konsultasi</div>
+                        </td>
+                        <td>
+                            <div class="badge badge-warning">Sedang Konsultasi</div>
+                        </td>
+                        <td>
+                            <div class="badge badge-primary">Akan Konsultasi</div>
+                        </td>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -96,7 +113,6 @@
                                     <td>:</td>
                                     <td>{{ $item->keluhan }}</td>
                                 </tr>
-
                                 <tr {{ Auth::user()->role != 'admin' ? 'hidden' : '' }}>
                                     <td>Support Teacher</td>
                                     <td>:</td>
@@ -110,7 +126,6 @@
                                     @csrf
                                     @method('POST')
                                     @php
-
                                         // Calculate duration in days
                                         $tgl_masuk = \Carbon\Carbon::parse($item->tgl_masuk)->day;
                                         $tgl_selesai = \Carbon\Carbon::parse($item->tgl_selesai)->day;
@@ -131,7 +146,7 @@
                                         <input type="hidden" name="id_layanan" value="{{ $item->id_layanan }}">
                                         <input type="hidden" name="id_sub_layanan" value="{{ $item->id_sub_layanan }}">
                                         <input type="hidden" name="id_user" value="{{ Auth::user()->id }}">
-
+                                        <input type="hidden" name="id_customer" value="{{ $item->id_customer }}">
                                         <div class="col-12" style="height: 200px; overflow-y: auto">
                                             {{-- Initial Form Group --}}
                                             <div class="form-group {{ $item->hasil_konsultasi != null ? 'd-none' : '' }}">
@@ -168,10 +183,10 @@
                                             @endforeach
 
                                             {{-- Submit button for initial consultation results --}}
-                                            <button
+                                            {{-- <button
                                                 class="btn btn-sm btn-primary my-2 w-100 {{ $item->hasil_konsultasi != null ? 'd-none' : '' }}">
                                                 Submit Hasil Konsultasi
-                                            </button>
+                                            </button> --}}
                                         </div>
                                     </div>
                                 </form>
@@ -348,16 +363,47 @@
                         });
                     }
                 },
-
                 eventDidMount: function(info) {
                     const {
                         extendedProps
                     } = info.event;
+
+                    // Kondisi berdasarkan status
                     if (extendedProps.status === 3) {
-                        info.el.style.backgroundColor = '#28a745';
-                        info.el.style.borderColor = '#28a745';
+                        info.el.style.backgroundColor = '#7dc006';
+                        info.el.style.borderColor = '#7dc006';
+                    }
+
+                    let dateEventStart = info.event.start; // Tanggal mulai acara
+                    let dateEventEnd = info.event.end; // Tanggal akhir acara
+                    let dateNow = new Date(); // Tanggal sekarang
+
+                    // Pastikan tanggal tidak null atau undefined
+                    if (dateEventStart && dateEventEnd) {
+                        // Hilangkan komponen waktu (jam, menit, detik) untuk membandingkan hanya tanggal
+                        dateEventStart = new Date(dateEventStart.toDateString());
+                        dateEventEnd = new Date(dateEventEnd.toDateString());
+                        dateNow = new Date(dateNow.toDateString());
+
+                        // Perbandingan berdasarkan waktu
+                        if (dateNow.getTime() > dateEventEnd.getTime()) {
+                            // Hijau jika acara sudah selesai
+                            info.el.style.backgroundColor = '#7dc006';
+                            info.el.style.borderColor = '#7dc006';
+                        } else if (dateNow.getTime() === dateEventStart.getTime()) {
+                            // Kuning jika acara sedang berlangsung (tanggal mulai == tanggal sekarang)
+                            info.el.style.backgroundColor = '#ff8819';
+                            info.el.style.borderColor = '#ff8819';
+                        } else if (dateNow.getTime() < dateEventStart.getTime()) {
+                            // Biru jika acara belum dimulai
+                            info.el.style.backgroundColor = '#6362e7';
+                            info.el.style.borderColor = '#6362e7';
+                        }
+                    } else {
+                        console.log("Event dates are missing");
                     }
                 }
+
             });
 
             // Render the calendar

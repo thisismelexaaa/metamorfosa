@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Panel;
 use App\Http\Controllers\Controller;
 use App\Models\Panel\Konsultasi;
 use App\Models\Panel\Customer;
+use App\Models\Panel\HasilKonsultasi;
 use App\Models\Panel\Layanan;
 use App\Models\Panel\SubLayanan;
 use App\Models\User;
@@ -109,6 +110,12 @@ class KonsultasiController extends Controller
     public function show(String $id)
     {
         $data['konsultasi'] = Konsultasi::find($id);
+        $data['hasil_konsultasi'] = HasilKonsultasi::where('id_konsultasi', $id)->get();
+
+        if ($data['konsultasi'] == null) {
+            abort(404);
+        };
+
         return view('panel.konsultasi.show', $data);
     }
 

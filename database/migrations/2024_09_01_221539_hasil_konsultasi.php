@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('id_sub_layanan');
             $table->string('id_layanan');
             $table->string('id_user');
+            $table->string('id_customer');
             $table->integer('hari');
             $table->text('hasil');
             $table->timestamps();

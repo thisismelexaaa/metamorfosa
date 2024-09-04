@@ -37,6 +37,7 @@
                             <th>Layanan</th>
                             <th>Sub Layanan</th>
                             <th>Status Bayar</th>
+                            <th>Tangal Bayar</th>
                             <th>Total Harga</th>
                             <th>Di Bayar</th>
                             <th>Sisa Bayar</th>
@@ -67,6 +68,7 @@
                                         </button>
                                     </form>
                                 </td>
+                                <td>{{ \Carbon\Carbon::parse($item->updated_at, 'Asia/Jakarta')->locale('id')->isoFormat('DD MMMM YYYY') }}</td>
                                 <td class="currency" data-value="{{ $item->total_harga }}">
                                     {{ $item->total_harga }}</td>
                                 <td class="currency" data-value="{{ $item->dibayar }}">
@@ -78,6 +80,7 @@
                         @endforeach
                         <tr>
                             <th>Total</th>
+                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>
