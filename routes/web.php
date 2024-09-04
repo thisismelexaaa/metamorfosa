@@ -10,6 +10,7 @@ use App\Http\Controllers\Panel\CustomersController;
 use App\Http\Controllers\Panel\FinanceController;
 use App\Http\Controllers\Panel\KonsultasiController;
 use App\Http\Controllers\Panel\LayananController;
+use App\Http\Controllers\Panel\PartnersController;
 use App\Http\Controllers\Panel\SettingAccountController;
 use Illuminate\Support\Facades\Route;
 
@@ -50,7 +51,8 @@ Route::middleware('web', 'ModifiedUrl')->group(function () {
             '/layanan' => LayananController::class,
             '/account' => AccountController::class,
             '/setting-account' => SettingAccountController::class,
-            '/news' => NewsController::class
+            '/news' => NewsController::class,
+            '/partners' => PartnersController::class
         ]);
 
         Route::get('/get-layanan', [LayananController::class, 'getLayanan'])->name('layanan.getLayanan');
