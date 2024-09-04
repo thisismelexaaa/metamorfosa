@@ -118,6 +118,22 @@
             max-width: 100%;
             border-radius: 8px;
         }
+
+        .carousel-item-content {
+            text-align: center;
+        }
+
+        .carousel-item-content img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .partner-name {
+            display: block;
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: bold;
+        }
     </style>
 
     <div class="untree_co-hero pb-0" id="home-section">
@@ -164,67 +180,6 @@
     <div class="untree_co-section" id="about-section">
         <div class="container">
             <div class="row mb-5">
-                <div class="col-lg-12 text-center">
-                    <h2 class="heading">Metamorfosa Community Learning </h2>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-
-                <div class="col-lg-12" data-aos="fade" data-aos-delay="200">
-                    <div class="owl-2-slider owl-carousel">
-                        <div class="item">
-                            <div class="untree_co-testimonial d-flex">
-                                <div class="text-center">
-                                    <blockquote>
-                                        Berkomitmen untuk menciptakan lingkungan belajar kolaboratif yang mengakomodasi
-                                        setiap individu mengembangkan potensinya dengan cara yang unik.
-                                    </blockquote>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="item">
-                            <div class="untree_co-testimonial d-flex">
-                                <div class="text-center">
-                                    <blockquote>
-                                        Melalui program kami, peserta belajar dengan bimbingan mentor berpengalaman yang
-                                        memahami kebutuhan dan aspirasi mereka.
-                                    </blockquote>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="item">
-                            <div class="untree_co-testimonial d-flex">
-                                <div class="text-center">
-                                    <blockquote>
-                                        Kami mengadakan berbagai kegiatan pengembangan diri yang dirancang untuk
-                                        meningkatkan kreativitas, kolaborasi, serta meningkatkan pemahaman terhadap diri
-                                        sendiri dan lingkungan sekitar.
-                                    </blockquote>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="item">
-                            <div class="untree_co-testimonial d-flex">
-                                <div class="text-center">
-                                    <blockquote>
-                                        Kolaborasi adalah inti dari semua yang kami lakukan, memungkinkan pertukaran ide
-                                        yang mendalam dan membantu mewujudkan visi bersama untuk masa depan yang lebih baik.
-                                    </blockquote>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> <!-- /.row -->
-        </div> <!-- /.container -->
-    </div> <!-- /.untree_co-section -->
-
-    <div class="untree_co-section" id="about-section">
-        <div class="container">
-            <div class="row mb-5">
                 <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
                     <h2 class="heading">Metamorfosa Community Learning!</h2>
                 </div>
@@ -258,7 +213,7 @@
 
     </div>
 
-    <div class="untree_co-section">
+    <div class="untree_co-section" id="visimisi-section">
         <div class="container">
 
             <div class="row mb-5">
@@ -321,7 +276,7 @@
     </div>
 
     {{-- TIM KAMI SECTION --}}
-    <div class="untree_co-section" id="team">
+    <div class="untree_co-section" id="team-section">
         <div class="container">
             <div class="row mb-5">
                 <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
@@ -429,70 +384,30 @@
                 </div>
                 <div class="col-lg-12">
                     <div class="owl-3-slider owl-carousel" data-aos="fade-up">
-                        <!-- Support Teacher Item 1 -->
-                        <div class="item">
-                            <div class="card text-center border-0 shadow-md">
-                                <div class="card-body">
-                                    <div class="pic mb-3 mx-auto">
-                                        <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}" alt="Image"
-                                            class="img-fluid" style="max-width: 120px; border-radius: 50%;">
-                                    </div>
-                                    <div class="text">
-                                        <strong class="d-block font-weight-bold h5 mb-1">Micki Watulandi, S.E., M.M.,
-                                            C.P.S</strong>
-                                        <span class="d-block mb-3 text-muted">Support Teacher</span>
-                                        <blockquote class="blockquote">
-                                            <p class="mb-0">"Separated they live in Bookmarksgrove right at the coast of
-                                                the Semantics, a large language ocean."</p>
-                                        </blockquote>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Support Teacher Item 2 -->
-                        <div class="item">
-                            <div class="card text-center border-0 shadow-md">
-                                <div class="card-body">
-                                    <div class="pic mb-3 mx-auto">
-                                        <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}" alt="Image"
-                                            class="img-fluid" style="max-width: 120px; border-radius: 50%;">
-                                    </div>
-                                    <div class="text">
-                                        <strong class="d-block font-weight-bold h5 mb-1">Ervi Amaliyah, S.Pd</strong>
-                                        <span class="d-block mb-3 text-muted">Support Teacher</span>
-                                        <blockquote class="blockquote">
-                                            <p class="mb-0">"Separated they live in Bookmarksgrove right at the coast of
-                                                the Semantics, a large language ocean."</p>
-                                        </blockquote>
+                        @foreach ($users as $support_teacher)
+                            <div class="item">
+                                <div class="card text-center border-0 shadow-md">
+                                    <div class="card-body">
+                                        <div class="pic mb-3 mx-auto">
+                                            <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}"
+                                                alt="Image" class="img-fluid"
+                                                style="max-width: 120px; border-radius: 50%;">
+                                        </div>
+                                        <div class="text">
+                                            <strong
+                                                class="d-block font-weight-bold h5 mb-1">{{ $support_teacher->name }}</strong>
+                                            <span class="d-block mb-3 text-muted">{{ $support_teacher->role }}</span>
+                                            <blockquote class="blockquote">
+                                                <p class="mb-0">"{{ $support_teacher->bio ?? 'No Bio Available' }}"</p>
+                                            </blockquote>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <!-- Support Teacher Item 3 -->
-                        <div class="item">
-                            <div class="card text-center border-0 shadow-md">
-                                <div class="card-body">
-                                    <div class="pic mb-3 mx-auto">
-                                        <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}" alt="Image"
-                                            class="img-fluid" style="max-width: 120px; border-radius: 50%;">
-                                    </div>
-                                    <div class="text">
-                                        <strong class="d-block font-weight-bold h5 mb-1">Dr. Widya, MKN</strong>
-                                        <span class="d-block mb-3 text-muted">Support Teacher</span>
-                                        <blockquote class="blockquote">
-                                            <p class="mb-0">"Separated they live in Bookmarksgrove right at the coast of
-                                                the Semantics, a large language ocean."</p>
-                                        </blockquote>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -543,7 +458,7 @@
                                             @endif
                                         </ul>
                                         <p class="text-center mb-0">
-                                            <a href="#" class="btn btn-outline-primary">Selengkap</a>
+                                            <a href="/detail-layanan" class="btn btn-outline-primary">Selengkap</a>
                                         </p>
                                     </div>
                                 </div> <!-- /.pricing -->
@@ -596,33 +511,44 @@
     </div>
 
     {{-- PARTNER --}}
-    <div class="container-fluid px-5">
+    <div class="container-fluid px-5" id="partner">
         <div class="row justify-content-center">
             <div class="container col-12 text-center mt-5" data-aos="fade-up" data-aos-delay="100">
                 <h2 class="heading">Partner Kami</h2>
             </div>
             <div class="col-lg-12">
-                <div class="partner-slider-rtl owl-carousel">
-                    @for ($i = 1; $i < 5; $i++)
-                        <div class="item py-5" data-aos="fade-up" data-aos-delay="100">
-                            <img src="https://picsum.photos/200/100" alt="Thumbnail Aktivitas" class="news-image">
-                        </div>
-                    @endfor
-                    <!-- Add more items as needed -->
+                <!-- Carousel untuk arah kiri -->
+                <div class="partner-slider-rtl owl-carousel owl-theme">
+                    @foreach ($partners as $partner)
+                        @if ($partner->tipe == 1 || $partner->tipe == 2 || $partner->tipe == 3)
+                            <div class="item py-3" data-aos="fade-up" data-aos-delay="100">
+                                <div class="carousel-item-content">
+                                    <img src="{{ asset('assets/panel/partners/' . $partner->image) }}"
+                                        alt="{{ $partner->name }}" class="img-fluid">
+                                    <span class="partner-name">{{ $partner->name }}</span>
+                                </div>
+                            </div>
+                        @endif
+                    @endforeach
                 </div>
-                <div class="partner-slider owl-carousel">
-                    @for ($i = 1; $i < 5; $i++)
-                        <div class="item py-5" data-aos="fade-up" data-aos-delay="100">
-                            <img src="https://picsum.photos/200/100" alt="Thumbnail Aktivitas" class="news-image">
-                        </div>
-                    @endfor
-                    <!-- Add more items as needed -->
+
+                <!-- Carousel untuk arah kanan -->
+                <div class="partner-slider owl-carousel owl-theme">
+                    @foreach ($partners as $partner)
+                        @if ($partner->tipe == 4 || $partner->tipe == 5)
+                            <div class="item py-3" data-aos="fade-up" data-aos-delay="100">
+                                <div class="carousel-item-content">
+                                    <img src="{{ asset('assets/panel/partners/' . $partner->image) }}"
+                                        alt="{{ $partner->name }}" class="img-fluid">
+                                    <span class="partner-name">{{ $partner->name }}</span>
+                                </div>
+                            </div>
+                        @endif
+                    @endforeach
                 </div>
             </div>
         </div>
     </div>
-
-
 
     {{-- <div class="untree_co-section" id="klien-section">
         <div class="container">
@@ -1028,15 +954,16 @@
             // carousel
             const owlCarouselOptions = {
                 loop: true, // Enable loop
-                margin: 40, // Margin between items
+                margin: 10, // Margin between items
                 nav: false, // Show navigation arrows
                 autoplay: true, // Enable autoplay
                 autoplayTimeout: 3000, // Delay between slides (in milliseconds)
                 autoplayHoverPause: false, // Pause on hover
                 items: 4, // Number of items to show
                 navText: ["<", ">"], // Navigation text
-                touchDrag  : false,
-                mouseDrag  : false
+                touchDrag: false,
+                mouseDrag: false,
+                dots: false
             };
 
             $('.partner-slider').owlCarousel({

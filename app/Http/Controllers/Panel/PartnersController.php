@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
+use App\Models\Panel\Layanan;
 use App\Models\Panel\Partners;
 use Exception;
 use Illuminate\Http\Request;
