@@ -896,6 +896,8 @@ h4,
 
 .untree_co-hero {
     position: relative;
+    overflow:hidden;
+
 }
 .untree_co-hero,
 .untree_co-hero > .container > .row {

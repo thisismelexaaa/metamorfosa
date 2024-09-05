@@ -441,10 +441,10 @@
 
             <div class="row justify-content-center">
                 <div class="col-lg-10">
-                    <div class="owl-3-slider owl-carousel">
+                    <div class="owl-3-slider owl-carousel" data-aos="fade-up" data-aos-delay="100">
                         @foreach ($layanan as $layananItem)
                             <div class="item py-5">
-                                <div class="pricing active" data-aos="fade-up" data-aos-delay="100">
+                                <div class="pricing active">
                                     <div class="body">
                                         <div class="price">
                                             <span class="d-block plan mb-4">{{ $layananItem->layanan }}</span>
@@ -458,7 +458,7 @@
                                             @endif
                                         </ul>
                                         <p class="text-center mb-0">
-                                            <a href="/detail-layanan" class="btn btn-outline-primary">Selengkap</a>
+                                            <a href="/detail-layanan" class="btn btn-outline-primary">Selengkapnya</a>
                                         </p>
                                     </div>
                                 </div> <!-- /.pricing -->
@@ -500,7 +500,7 @@
 
                 <!-- Right Side: Detail View -->
                 <div class="col-lg">
-                    <div class="detail-view">
+                    <div class="detail-view" data-aos="fade-up" data-aos-delay="100">
                         <img src="" alt="Detail Image" class="detail-image w-100" id="detail-image"
                             class="img-fluid">
                     </div>
