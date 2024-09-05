@@ -86,8 +86,8 @@
                 </li>
                 <li class="profile-nav onhover-dropdown pe-0 py-0 me-0">
                     <div class="media profile-media">
-                        <img src="{{ asset('assets/panel/profile_images/1725325783_Zahrina Nurpurianii.jpg') }}"
-                            alt="Profile Image" width="24" height="24" style="border-radius: 50%;">
+                        <img src="{{ asset('assets/panel/profile_images/' . Auth::user()->gambar) }}" alt="Profile Image"
+                            width="24" height="24" style="border-radius: 50%;">
                     </div>
                     <ul class="profile-dropdown onhover-show-div">
                         <li>
