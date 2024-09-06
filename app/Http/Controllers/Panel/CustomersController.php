@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
+use App\Models\CustomerExport;
 use App\Models\Panel\Customer;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Laravel\Ui\Presets\React;
+use Maatwebsite\Excel\Excel;
 
 class CustomersController extends Controller
 {
@@ -16,7 +20,7 @@ class CustomersController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $data['customer'] = Customer::all();
 
@@ -130,15 +134,34 @@ class CustomersController extends Controller
         try {
             $customer = Customer::findOrFail($id);
 
-            // Toggle status between 1 and 2
-            $customer->status = $customer->status == 1 ? 2 : 1;
-            $customer->save();
+            $customer->status = 2;
+            $customer->delete();
 
-            $message = $customer->status == 1
-                ? 'Data berhasil dikembalikan!'
-                : 'Data berhasil dihapus!';
+            toast('Data berhasil di hapus!', 'success');
 
-            toast($message, 'success');
+            return back();
+        } catch (\Exception $e) {
+            toast($e->getMessage(), 'error');
+            return back();
+        }
+    }
+
+    public function trashedCustomers()
+    {
+        $data['customer'] = Customer::onlyTrashed()->get();
+
+        return view('panel.customers.trashed', $data);
+    }
+
+    public function restoreCustomers(string $id)
+    {
+        try {
+            $customer = Customer::onlyTrashed()->where('id', $id)->first();
+
+            $customer->status = 1;
+            $customer->restore();
+
+            toast('Data berhasil di kembalikan!', 'success');
 
             return back();
         } catch (\Exception $e) {

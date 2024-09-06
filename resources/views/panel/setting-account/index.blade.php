@@ -121,7 +121,7 @@
                                     @endif
                                     <!-- Foto Baru -->
                                     <div class="text-center">
-                                        <label class="form-label">Foto Baru</label>
+                                       laragon <label class="form-label">Foto Baru</label>
                                         <img src="{{ asset('assets/panel/profile_images/image-icon.jpg') }}"
                                             class="w-100 border-0 rounded-circle" alt="Foto Baru" id="preview">
                                     </div>

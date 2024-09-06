@@ -29,7 +29,7 @@ class CustomerSeeder extends Seeder
                 'pekerjaan_ayah' => $faker->jobTitle,
                 'nama_ibu' => $faker->name('female'),
                 'pekerjaan_ibu' => $faker->jobTitle,
-                'status' => $faker->randomElement([1, 2]),
+                'status' => 1
             ]);
         }
     }
