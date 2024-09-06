@@ -41,10 +41,10 @@
                                         Export Data
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Copy</a></li>
-                                        <li><a class="dropdown-item" href="#">CSV</a></li>
-                                        <li><a class="dropdown-item" href="#">PDF</a></li>
-                                        <li><a class="dropdown-item" href="#">XLSX</a></li>
+                                        <li><a class="dropdown-item" onclick="CopyToClipboard()">Copy</a></li>
+                                        <li><a class="dropdown-item" onclick="ExportToCSV()">CSV</a></li>
+                                        <li><a class="dropdown-item" onclick="ExportToPDF()">PDF</a></li>
+                                        <li><a class="dropdown-item" onclick="ExportToXLSX()">XLSX</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -59,21 +59,21 @@
                                 <th>No Daftar</th>
                                 <th>Nama Lengkap</th>
                                 <th>No Telepon</th>
-                                <th {{ Auth::user()->role == 'admin' ? '' : 'class="hidden"' }}>Status
-                                </th>
+                                {{-- <th {{ Auth::user()->role == 'admin' ? '' : 'class="hidden"' }}>Status
+                                </th> --}}
                                 <th class="bg-white text-dark">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody class="text-capitalize">
+                        <tbody class="text-capitalize" id="tbody">
                             @foreach ($customer as $item)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->no_daftar }}</td>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->no_tlp }}</td>
-                                    <td {{ Auth::user()->role == 'admin' ? '' : 'class="hidden"' }}>
+                                    {{-- <td {{ Auth::user()->role == 'admin' ? '' : 'class="hidden"' }}>
                                         {{ $item->status == 1 ? 'Aktif' : 'Tidak Aktif' }}
-                                    </td>
+                                    </td> --}}
                                     <td class="bg-white text-dark">
                                         <div class="d-flex gap-1">
                                             <a href="{{ route('customers.show', encrypt($item->id)) }}"
@@ -106,6 +106,10 @@
 @endsection
 
 @section('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
     <script src="{{ asset('function_js/customers/index.js') }}"></script>
     <script src="{{ asset('function_js/deleteRestoreData/index.js') }}"></script>
     {{-- <script src="{{ asset('function_js/showDeleted/index.js') }}"></script> --}}
