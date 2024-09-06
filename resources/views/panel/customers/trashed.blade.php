@@ -29,25 +29,22 @@
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive overflow-auto">
-                    @if (Auth::user()->role == 'admin' || Auth::user()->role == 4)
-                        <div class="d-flex justify-content-between gap-2 align-items-center">
-                            <div class="d-flex gap-2">
-                                <div class="dropdown">
-                                    <button class="btn btn-sm btn-primary text-white" type="button"
-                                        data-bs-toggle="dropdown">
-                                        Export Data
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Copy</a></li>
-                                        <li><a class="dropdown-item" href="#">CSV</a></li>
-                                        <li><a class="dropdown-item" href="#">PDF</a></li>
-                                        <li><a class="dropdown-item" href="#">XLSX</a></li>
-                                    </ul>
-                                </div>
+                    <div class="d-flex justify-content-between gap-2 align-items-center">
+                        <div class="d-flex gap-2">
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-primary text-white" type="button" data-bs-toggle="dropdown">
+                                    Export Data
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Copy</a></li>
+                                    <li><a class="dropdown-item" href="#">CSV</a></li>
+                                    <li><a class="dropdown-item" href="#">PDF</a></li>
+                                    <li><a class="dropdown-item" href="#">XLSX</a></li>
+                                </ul>
                             </div>
-                            <a href="{{ route('customers.index') }}" class="btn btn-sm btn-primary">Kembali</a>
                         </div>
-                    @endif
+                        <a href="{{ route('customers.index') }}" class="btn btn-sm btn-primary">Kembali</a>
+                    </div>
 
                     <table class="table nowrap table-striped table-hover align-middle" id="datatable">
                         <thead>
@@ -81,7 +78,7 @@
                                                 class="btn btn-warning btn-sm" title="Edit">
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
-                                            <form action="{{ route('restore-customers', encrypt($item->id)) }}"
+                                            <form action="{{ route('customers.restore', encrypt($item->id)) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('GET')

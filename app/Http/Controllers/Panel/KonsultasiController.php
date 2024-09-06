@@ -210,16 +210,10 @@ class KonsultasiController extends Controller
     {
         try {
             $konsultasi = Konsultasi::find($id);
+            $konsultasi->status = 2;
+            $konsultasi->delete();
 
-            // Toggle status between 0 and 1
-            $konsultasi->status = $konsultasi->status == 1 ? 2 : 1;
-            $konsultasi->save();
-
-            if ($konsultasi->status == 1) {
-                toast('Data berhasil dikembalikan!', 'success');
-            } else {
-                toast('Data berhasil dihapus!', 'success');
-            }
+            toast('Data berhasil dihapus!', 'success');
             return redirect()->back();
         } catch (\Exception $e) {
             toast($e->getMessage(), 'error');
@@ -235,5 +229,30 @@ class KonsultasiController extends Controller
         $idLayanan = $request->input('id_layanan');
         $subLayanan = SubLayanan::where('id_layanan', $idLayanan)->get();
         return response()->json($subLayanan);
+    }
+
+    // trashed
+    public function trashed()
+    {
+        $data['konsultasi'] = Konsultasi::onlyTrashed()->get();
+
+        return view('panel.konsultasi.trashed', $data);
+    }
+
+    public function restore(string $id)
+    {
+        try {
+            $konsultasi = Konsultasi::onlyTrashed()->where('id', $id)->first();
+
+            $konsultasi->status = 1;
+            $konsultasi->restore();
+
+            toast('Data berhasil di kembalikan!', 'success');
+
+            return back();
+        } catch (\Exception $e) {
+            toast($e->getMessage(), 'error');
+            return back();
+        }
     }
 }

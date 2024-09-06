@@ -61,10 +61,19 @@ Route::middleware('web', 'ModifiedUrl')->group(function () {
         Route::get('get-sub-layanan', [KonsultasiController::class, 'getSubLayanan'])->name('getSubLayanan');
 
         // trashed customers
-        Route::get('/trashed-customers', [CustomersController::class, 'trashedCustomers'])->name('customers.trash');
-        Route::get('/restore-customers/{id}', [CustomersController::class, 'restoreCustomers'])->name('restore-customers');
+        Route::get('/trashed-customers', [CustomersController::class, 'trashed'])->name('customers.trash');
+        Route::get('/restore-customers/{id}', [CustomersController::class, 'restore'])->name('customers.restore');
 
-        // export
+        // trashed konsultasi
+        Route::get('/trashed-konsultasi', [KonsultasiController::class, 'trashed'])->name('konsultasi.trash');
+        Route::get('/restore-konsultasi/{id}', [KonsultasiController::class, 'restore'])->name('konsultasi.restore');
 
+        // trashed news
+        Route::get('/trashed-news', [NewsController::class, 'trashed'])->name('news.trash');
+        Route::get('/restore-news/{id}', [NewsController::class, 'restore'])->name('news.restore');
+
+        // trashed partners
+        Route::get('/trashed-partners', [PartnersController::class, 'trashed'])->name('partners.trash');
+        Route::get('/restore-partners/{id}', [PartnersController::class, 'restore'])->name('partners.restore');
     });
 });

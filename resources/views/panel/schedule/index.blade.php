@@ -381,29 +381,69 @@
                     // Pastikan tanggal tidak null atau undefined
                     if (dateEventStart && dateEventEnd) {
                         // Hilangkan komponen waktu (jam, menit, detik) untuk membandingkan hanya tanggal
-                        dateEventStart = new Date(dateEventStart.toDateString());
-                        dateEventEnd = new Date(dateEventEnd.toDateString());
-                        dateNow = new Date(dateNow.toDateString());
+                        const dateNow = new Date();
+                        dateNow.setHours(0, 0, 0, 0); // Set ke awal hari
 
-                        // Perbandingan berdasarkan waktu
-                        if (dateNow.getTime() > dateEventEnd.getTime()) {
+                        const start = new Date(dateEventStart);
+                        start.setHours(0, 0, 0, 0); // Set ke awal hari
+
+                        const end = new Date(dateEventEnd);
+                        end.setHours(0, 0, 0, 0); // Set ke awal hari
+
+                        if (dateNow > end) {
                             // Hijau jika acara sudah selesai
                             info.el.style.backgroundColor = '#7dc006';
                             info.el.style.borderColor = '#7dc006';
-                        } else if (dateNow.getTime() === dateEventStart.getTime()) {
-                            // Kuning jika acara sedang berlangsung (tanggal mulai == tanggal sekarang)
-                            info.el.style.backgroundColor = '#ff8819';
-                            info.el.style.borderColor = '#ff8819';
-                        } else if (dateNow.getTime() < dateEventStart.getTime()) {
+                            info.el.style.color = '#ffff';
+
+                            info.el.addEventListener('mouseover', function() {
+                                info.el.style.backgroundColor = '#7dc006';
+                                info.el.style.borderColor = '#7dc006';
+                                info.el.style.color = '#000000';
+                            });
+
+                            info.el.addEventListener('mouseout', function() {
+                                info.el.style.backgroundColor = '#7dc006';
+                                info.el.style.borderColor = '#7dc006';
+                                info.el.style.color = '#ffff';
+                            });
+                        } else if (dateNow < start) {
                             // Biru jika acara belum dimulai
                             info.el.style.backgroundColor = '#6362e7';
                             info.el.style.borderColor = '#6362e7';
+                            info.el.style.color = '#ffff';
+
+                            info.el.addEventListener('mouseover', function() {
+                                info.el.style.backgroundColor = '#6362e7';
+                                info.el.style.borderColor = '#6362e7';
+                                info.el.style.color = '#000000';
+                            });
+
+                            info.el.addEventListener('mouseout', function() {
+                                info.el.style.backgroundColor = '#6362e7';
+                                info.el.style.borderColor = '#6362e7';
+                                info.el.style.color = '#ffff';
+                            });
+                        } else if (dateNow >= start && dateNow <= end) {
+                            // Kuning jika acara sedang berlangsung
+                            info.el.style.backgroundColor = '#ff8819';
+                            info.el.style.borderColor = '#ff8819';
+                            info.el.style.color = '#ffff';
+
+                            info.el.addEventListener('mouseover', function() {
+                                info.el.style.backgroundColor = '#ff8819';
+                                info.el.style.borderColor = '#ff8819';
+                                info.el.style.color = '#000000';
+                            });
+
+                            info.el.addEventListener('mouseout', function() {
+                                info.el.style.backgroundColor = '#ff8819';
+                                info.el.style.borderColor = '#ff8819';
+                                info.el.style.color = '#ffff';
+                            });
                         }
-                    } else {
-                        console.log("Event dates are missing");
                     }
                 }
-
             });
 
             // Render the calendar

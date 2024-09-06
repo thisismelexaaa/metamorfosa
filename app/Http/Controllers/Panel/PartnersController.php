@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\DB;
 
 class PartnersController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -105,7 +109,31 @@ class PartnersController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $partners = Partners::find($id);
+        $partners->status = 2;
+        $partners->delete();
+        toast('Berita berhasil di hapus!', 'success');
+        return redirect()->back();
+    }
+
+    public function restore(string $id)
+    {
+        $partners = Partners::withTrashed()->findOrFail($id);
+        $partners->status = 1;
+        $partners->restore();
+
+        toast('Berita berhasil di restore!', 'success');
+
+        return back();
+    }
+
+    public function trashed()
+    {
+        $data['partners'] = Partners::onlyTrashed()->get();
+        $data['partners']->each(function ($data) {
+            $this->DefineId($data);
+        });
+        return view('panel.partners.trashed', $data);
     }
 
     private function DefineId($data)

@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
             [5, 10, 15, 20, -1],
             [5, 10, 15, 20, "All"],
         ],
-        scrollCollapse: true,
+        // scrollCollapse: true,
         scrollX: true,
         pageLength: 5,
     });

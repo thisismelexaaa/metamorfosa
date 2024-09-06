@@ -146,14 +146,14 @@ class CustomersController extends Controller
         }
     }
 
-    public function trashedCustomers()
+    public function trashed()
     {
         $data['customer'] = Customer::onlyTrashed()->get();
 
         return view('panel.customers.trashed', $data);
     }
 
-    public function restoreCustomers(string $id)
+    public function restore(string $id)
     {
         try {
             $customer = Customer::onlyTrashed()->where('id', $id)->first();

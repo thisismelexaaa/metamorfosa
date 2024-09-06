@@ -5,10 +5,13 @@ namespace App\Models\Panel;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Konsultasi extends Model
 {
     use HasFactory;
+    use SoftDeletes;
+
     protected $table = 'konsultasi';
     protected $guarded = [];
 

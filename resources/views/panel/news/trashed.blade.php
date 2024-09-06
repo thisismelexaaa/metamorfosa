@@ -29,11 +29,8 @@
             <div class="card-body">
                 @if (Auth::user()->role == 'admin' || Auth::user()->role == 4)
                     <div class="d-flex justify-content-between gap-2 align-items-center">
-                        <div class="d-flex gap-2">
-                            <a href="{{ route('news.create') }}" class="btn btn-sm btn-primary">
-                                Tambah Data
-                            </a>
-                            {{-- <div class="dropdown">
+                        <div class="d-flex gap-2 opacity-0">
+                            <div class="dropdown">
                                 <button class="btn btn-sm btn-primary text-white" type="button" data-bs-toggle="dropdown">
                                     Export Data
                                 </button>
@@ -43,10 +40,9 @@
                                     <li><a class="dropdown-item" onclick="ExportToPDF()">PDF</a></li>
                                     <li><a class="dropdown-item" onclick="ExportToXLSX()">XLSX</a></li>
                                 </ul>
-                            </div> --}}
+                            </div>
                         </div>
-                        <a href="{{ route('news.trash') }}" class="btn btn-sm btn-primary">Lihat Data yang
-                            Dihapus</a>
+                        <a href="{{ route('news.index') }}" class="btn btn-sm btn-primary">Kembali</a>
                     </div>
                 @endif
                 <table class="table nowrap table-striped table-hover align-middle" id="datatable">
@@ -75,21 +71,17 @@
                                 <td>{{ \Carbon\Carbon::parse($item->created_at)->format('d F Y H:i') }}</td>
                                 <td>
                                     <div class="d-flex gap-1">
-                                        {{-- <a href="{{ route('news.show', encrypt($item->id)) }}"
-                                        class="btn btn-primary btn-sm" title="Lihat Detail">
-                                        <i class="bi bi-info-circle-fill"></i>
-                                    </a> --}}
                                         <a href="{{ route('news.edit', encrypt($item->id)) }}"
                                             class="btn btn-warning btn-sm" title="Edit">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
-                                        <form action="{{ route('news.destroy', encrypt($item->id)) }}" method="POST">
+                                        <form action="{{ route('news.restore', encrypt($item->id)) }}" method="POST">
                                             @csrf
-                                            @method('DELETE')
+                                            @method('GET')
                                             @if (Auth::user()->role == 'admin')
-                                                <button type="button" onclick="deleteData(this)"
-                                                    class="btn btn-outline-danger btn-sm" title="Hapus">
-                                                    <i class="bi bi-trash3-fill"></i>
+                                                <button type="button" onclick="restoreData(this)"
+                                                    class="btn btn-outline-success btn-sm" title="Restore">
+                                                    <i class="bi bi-eye-fill"></i>
                                                 </button>
                                             @endif
                                         </form>

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('url')->nullable();
             $table->string('status');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

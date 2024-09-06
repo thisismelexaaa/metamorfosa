@@ -50,9 +50,6 @@
                 @if (Auth::user()->role == 'admin' || Auth::user()->role == 4)
                     <div class="d-flex justify-content-between gap-2 align-items-center">
                         <div class="d-flex gap-2">
-                            <a href="{{ route('konsultasi.create') }}" class="btn btn-sm btn-primary">
-                                Tambah Data
-                            </a>
                             <div class="dropdown">
                                 <button class="btn btn-sm btn-primary text-white" type="button" data-bs-toggle="dropdown">
                                     Export Data
@@ -65,8 +62,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <a href="{{ route('konsultasi.trash') }}" class="btn btn-sm btn-primary">Lihat Data yang
-                            Dihapus</a>
+                        <a href="{{ route('konsultasi.index') }}" class="btn btn-sm btn-primary">Kembali</a>
                     </div>
                 @endif
                 <div class="table-responsive overflow-auto">
@@ -93,7 +89,7 @@
                                     <td>{{ $item->supportTeacher->name }}</td>
                                     <td class="bg-white text-dark">
                                         <div class="d-flex gap-1">
-                                            <form action="{{ route('konsultasi.destroy', encrypt($item->id)) }}"
+                                            <form action="{{ route('konsultasi.restore', encrypt($item->id)) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('DELETE')
@@ -105,10 +101,12 @@
                                                     class="btn btn-warning btn-sm" title="Edit">
                                                     <i class="bi bi-pencil-square"></i>
                                                 </a>
-                                                <button type="button" onclick="deleteData(this)"
-                                                    class="btn btn-outline-danger btn-sm" title="Hapus">
-                                                    <i class="bi bi-trash3-fill"></i>
-                                                </button>
+                                                @if (Auth::user()->role == 'admin')
+                                                    <button type="button" onclick="restoreData(this)"
+                                                        class="btn btn-outline-success btn-sm" title="Restore">
+                                                        <i class="bi bi-trash3-fill"></i>
+                                                    </button>
+                                                @endif
                                             </form>
                                         </div>
 

@@ -43,7 +43,6 @@
                                 <option selected>Pilih Kategori</option>
                                 <option value="1">Berita</option>
                                 <option value="2">Acara Mendatang</option>
-                                <option value="3"></option>
                             </select>
                         </div>
                         <div class="col form-group">

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
-use App\Models\News;
+use App\Models\Panel\News;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -185,16 +185,31 @@ class NewsController extends Controller
     public function destroy(string $id)
     {
         $news = News::findOrFail($id);
+        $news->status = 2;
+        $news->delete();
 
-        // Toggle status between 1 and 2
-        $news->status = $news->status == 1 ? 2 : 1;
-        $news->save();
+        toast('Berita berhasil di hapus!', 'success');
 
-        $message = $news->status == 1
-            ? 'Postingan berhasil di arsipkan!'
-            : 'Data berhasil di posting ulang!';
+        return back();
+    }
 
-        toast($message, 'success');
+    public function trashed()
+    {
+
+        $data['news'] = News::onlyTrashed()->get();
+        $data['news']->each(function ($data) {
+            $this->DefineId($data);
+        });
+        return view('panel.news.trashed', $data);
+    }
+
+    public function restore(string $id)
+    {
+        $news = News::withTrashed()->findOrFail($id);
+        $news->status = 1;
+        $news->restore();
+
+        toast('Berita berhasil di restore!', 'success');
 
         return back();
     }

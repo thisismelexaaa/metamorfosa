@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('hari');
             $table->text('hasil');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

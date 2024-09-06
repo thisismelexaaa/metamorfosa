@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Panel\Layanan;
 use App\Models\Panel\SubLayanan;
 use App\Http\Controllers\Controller;
-use App\Models\News;
+use App\Models\Panel\News;
 use App\Models\Panel\Partners;
 use App\Models\User;
 

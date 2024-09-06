@@ -53,60 +53,62 @@
                         </div>
                     </form>
                 </div>
-                <table class="table table-hover table-striped table-bordered align-middle w-100" id="datatable">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nama</th>
-                            <th>Kode Pelanggan</th>
-                            <th>Kode konsultasi</th>
-                            <th>Layanan</th>
-                            <th>Sub Layanan</th>
-                            <th>Status Bayar</th>
-                            <th>Tangal Bayar</th>
-                            <th>Total Harga</th>
-                            <th>Di Bayar</th>
-                            <th>Sisa Bayar</th>
-                            <th class="bg-white text-dark">Uang Masuk</th>
-                            {{-- <th>Action</th> --}}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($konsultasi as $key => $item)
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped align-middle w-100" id="datatable">
+                        <thead>
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $item->customer->name }}</td>
-                                <td><a
-                                        href="{{ route('konsultasi.show', encrypt($item->id)) }}">{{ $item->customer->no_daftar }}</a>
-                                </td>
-                                <td><a target="_blank" rel="noopener noreferrer"
-                                        href="{{ route('konsultasi.show', encrypt($item->id)) }}">{{ $item->kode_konsultasi }}</a>
-                                </td>
-                                <td>{{ $item->layanan->layanan }}</td>
-                                <td>{{ $item->subLayanan->sub_layanan }}</td>
-                                <td class="text-center">
-                                    <form action="{{ route('finance.update', encrypt($item->id)) }}" method="POST">
-                                        @csrf
-                                        @method('PUT')
-                                        <button type="button"
-                                            class="btn btn-sm badge bg-{{ $item->status_bayar == 1 ? 'success' : 'danger' }} text-white w-100 btn-lunas"
-                                            onclick="updateStatus(this)">
-                                            {{ $item->status_bayar == 1 ? 'Lunas' : 'Belum Lunas' }}
-                                        </button>
-                                    </form>
-                                </td>
-                                <td>{{ \Carbon\Carbon::parse($item->updated_at, 'Asia/Jakarta')->locale('id')->isoFormat('DD MMMM YYYY') }}
-                                </td>
-                                <td class="currency" data-value="{{ $item->total_harga }}">
-                                    {{ $item->total_harga }}</td>
-                                <td class="currency" data-value="{{ $item->dibayar }}">
-                                    {{ $item->dibayar }}</td>
-                                <td class="currency" data-value="{{ $item->sisa_bayar }}">
-                                    {{ $item->sisa_bayar }}</td>
-                                <td class="currency bg-white text-dark" data-value="{{ $item->dibayar }}">
-                                    {{ $item->dibayar }}</td>
+                                <th>#</th>
+                                <th>Nama</th>
+                                <th>Kode Pelanggan</th>
+                                <th>Kode konsultasi</th>
+                                <th>Layanan</th>
+                                <th>Sub Layanan</th>
+                                <th>Status Bayar</th>
+                                <th>Tangal Bayar</th>
+                                <th>Total Harga</th>
+                                <th>Di Bayar</th>
+                                <th>Sisa Bayar</th>
+                                <th class="bg-white text-dark">Uang Masuk</th>
+                                {{-- <th>Action</th> --}}
                             </tr>
-                        @endforeach
+                        </thead>
+                        <tbody>
+                            @foreach ($konsultasi as $key => $item)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $item->customer->name }}</td>
+                                    <td><a
+                                            href="{{ route('konsultasi.show', encrypt($item->id)) }}">{{ $item->customer->no_daftar }}</a>
+                                    </td>
+                                    <td><a target="_blank" rel="noopener noreferrer"
+                                            href="{{ route('konsultasi.show', encrypt($item->id)) }}">{{ $item->kode_konsultasi }}</a>
+                                    </td>
+                                    <td>{{ $item->layanan->layanan }}</td>
+                                    <td>{{ $item->subLayanan->sub_layanan }}</td>
+                                    <td class="text-center">
+                                        <form action="{{ route('finance.update', encrypt($item->id)) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <button type="button"
+                                                class="btn btn-sm badge bg-{{ $item->status_bayar == 1 ? 'success' : 'danger' }} text-white w-100 btn-lunas"
+                                                onclick="updateStatus(this)">
+                                                {{ $item->status_bayar == 1 ? 'Lunas' : 'Belum Lunas' }}
+                                            </button>
+                                        </form>
+                                    </td>
+                                    <td>{{ \Carbon\Carbon::parse($item->updated_at, 'Asia/Jakarta')->locale('id')->isoFormat('DD MMMM YYYY') }}
+                                    </td>
+                                    <td class="currency" data-value="{{ $item->total_harga }}">
+                                        {{ $item->total_harga }}</td>
+                                    <td class="currency" data-value="{{ $item->dibayar }}">
+                                        {{ $item->dibayar }}</td>
+                                    <td class="currency" data-value="{{ $item->sisa_bayar }}">
+                                        {{ $item->sisa_bayar }}</td>
+                                    <td class="currency bg-white text-dark" data-value="{{ $item->dibayar }}">
+                                        {{ $item->dibayar }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
                         <tfoot>
                             <th>Total</th>
                             <th></th>
@@ -122,8 +124,8 @@
                             <th class="currency bg-white text-dark" data-value="{{ $total }}">{{ $total }}
                             </th>
                         </tfoot>
-                    </tbody>
-                </table>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
