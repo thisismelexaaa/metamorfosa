@@ -18,7 +18,7 @@
                                 <i class="bi bi-house-door-fill"></i>
                             </a>
                         </li>
-                        <li class="breadcrumb-item active">Pelanggan</li>
+                        <li class="breadcrumb-item active titleDocs">Pelanggan</li>
                     </ol>
                 </div>
             </div>
@@ -106,10 +106,6 @@
 @endsection
 
 @section('scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-
     <script src="{{ asset('function_js/customers/index.js') }}"></script>
     <script src="{{ asset('function_js/deleteRestoreData/index.js') }}"></script>
     {{-- <script src="{{ asset('function_js/showDeleted/index.js') }}"></script> --}}

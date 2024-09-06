@@ -18,7 +18,7 @@
                                 <i class="bi bi-house-door-fill"></i>
                             </a>
                         </li>
-                        <li class="breadcrumb-item active">Keuangan</li>
+                        <li class="breadcrumb-item active titleDocs">Keuangan</li>
                     </ol>
                 </div>
             </div>
@@ -28,9 +28,35 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
+                <div class="d-flex justify-content-between gap-2">
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-primary text-white" type="button" data-bs-toggle="dropdown">
+                            Export Data
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" onclick="CopyToClipboard()">Copy</a></li>
+                            <li><a class="dropdown-item" onclick="ExportToCSV()">CSV</a></li>
+                            <li><a class="dropdown-item" onclick="ExportToPDF()">PDF</a></li>
+                            <li><a class="dropdown-item" onclick="ExportToXLSX()">XLSX</a></li>
+                        </ul>
+                    </div>
+                    <form action="{{ route('finance.index') }}" method="get">
+                        @csrf <!-- Ensure you include CSRF token if using Laravel -->
+                        <div class="d-flex gap-2">
+                            <div class="d-flex gap-2">
+                                <select name="tahun" id="tahun" class="form-select select2" aria-label="Select Year">
+                                </select>
+                                <select name="bulan" id="bulan" class="form-select select2" aria-label="Select Month">
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Rubah Periode</button>
+                        </div>
+                    </form>
+                </div>
                 <table class="table table-hover table-striped table-bordered align-middle w-100" id="datatable">
                     <thead>
                         <tr>
+                            <th>#</th>
                             <th>Nama</th>
                             <th>Kode Pelanggan</th>
                             <th>Kode konsultasi</th>
@@ -41,13 +67,14 @@
                             <th>Total Harga</th>
                             <th>Di Bayar</th>
                             <th>Sisa Bayar</th>
-                            <th>Uang Masuk</th>
+                            <th class="bg-white text-dark">Uang Masuk</th>
                             {{-- <th>Action</th> --}}
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($konsultasi as $key => $item)
                             <tr>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->customer->name }}</td>
                                 <td><a
                                         href="{{ route('konsultasi.show', encrypt($item->id)) }}">{{ $item->customer->no_daftar }}</a>
@@ -68,17 +95,19 @@
                                         </button>
                                     </form>
                                 </td>
-                                <td>{{ \Carbon\Carbon::parse($item->updated_at, 'Asia/Jakarta')->locale('id')->isoFormat('DD MMMM YYYY') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($item->updated_at, 'Asia/Jakarta')->locale('id')->isoFormat('DD MMMM YYYY') }}
+                                </td>
                                 <td class="currency" data-value="{{ $item->total_harga }}">
                                     {{ $item->total_harga }}</td>
                                 <td class="currency" data-value="{{ $item->dibayar }}">
                                     {{ $item->dibayar }}</td>
                                 <td class="currency" data-value="{{ $item->sisa_bayar }}">
                                     {{ $item->sisa_bayar }}</td>
-                                <td class="currency" data-value="{{ $item->dibayar }}">{{ $item->dibayar }}</td>
+                                <td class="currency bg-white text-dark" data-value="{{ $item->dibayar }}">
+                                    {{ $item->dibayar }}</td>
                             </tr>
                         @endforeach
-                        <tr>
+                        <tfoot>
                             <th>Total</th>
                             <th></th>
                             <th></th>
@@ -89,8 +118,10 @@
                             <th></th>
                             <th></th>
                             <th></th>
-                            <th class="currency" data-value="{{ $total }}">{{ $total }}</th>
-                        </tr>
+                            <th></th>
+                            <th class="currency bg-white text-dark" data-value="{{ $total }}">{{ $total }}
+                            </th>
+                        </tfoot>
                     </tbody>
                 </table>
             </div>
@@ -100,66 +131,4 @@
 
 @section('scripts')
     <script src="{{ asset('function_js/finance/index.js') }}"></script>
-    <script>
-        function updateStatus(id) {
-            // form prevent default
-            event.preventDefault();
-            const form = id.closest('form');
-            Swal.fire({
-                title: 'Apakah Anda yakin?',
-                text: "Anda akan mengubah status bayar konsultasi ini!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya, Ubah Status!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    form.submit();
-                }
-            })
-        }
-
-        document.addEventListener("DOMContentLoaded", function() {
-            // Arrays for months
-            const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September",
-                "Oktober", "November", "Desember"
-            ];
-
-            // Retrieve period data from Blade template
-            let periodeBulan = "{{ $periode['bulan'] }}"; // Assuming bulan is a month name
-            let periodeTahun = parseInt("{{ $periode['tahun'] }}"); // Ensure tahun is an integer
-
-            // Append months to the select element with id 'bulan'
-            const $bulanSelect = $('#bulan');
-            $bulanSelect.empty(); // Clear existing options if any
-            months.forEach((month, index) => {
-                $bulanSelect.append(new Option(month, index + 1));
-            });
-
-            // Get the current year and month
-            const currentYear = new Date().getFullYear();
-            const currentMonth = new Date().getMonth() + 1;
-
-            // Append years to the select element with id 'tahun' with a range of current year - 5 to current year + 5
-            const $tahunSelect = $('#tahun');
-            $tahunSelect.empty(); // Clear existing options if any
-            for (let i = currentYear - 5; i <= currentYear + 5; i++) {
-                $tahunSelect.append(new Option(i, i));
-            }
-
-            // Set the selected month and year if period data is available
-            $bulanSelect.val(periodeBulan).trigger('change');
-            $tahunSelect.val(periodeTahun || currentYear).trigger('change');
-
-            // Check if the selected year and month are current values
-            if ($tahunSelect.val() == currentYear && $bulanSelect.val() == currentMonth) {
-                // remove attribute disabled
-                $('.btn-lunas').removeClass('disabled');
-            } else {
-                // btn-lunas remove on click
-                $('.btn-lunas').addClass('disabled');
-            }
-        });
-    </script>
 @endsection

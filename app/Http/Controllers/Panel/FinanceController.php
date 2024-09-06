@@ -25,17 +25,17 @@ class FinanceController extends Controller
         $tahun = $request->input('tahun', $tahunNow);
         $bulan = $request->input('bulan', $bulanNow);
 
-        // Filter konsultasi berdasarkan tahun dan bulan dari created_at
+        // Filter konsultasi based on year and month from created_at
         $data['konsultasi'] = Konsultasi::whereYear('created_at', $tahun)
             ->whereMonth('created_at', $bulan)
             ->get();
 
-        // Hitung total dibayar berdasarkan tahun dan bulan
+        // Calculate total dibayar based on year and month
         $data['total'] = Konsultasi::whereYear('created_at', $tahun)
             ->whereMonth('created_at', $bulan)
             ->sum('dibayar');
 
-        // Periode
+        // Period
         $data['periode'] = [
             'tahun' => $tahun,
             'bulan' => $bulan

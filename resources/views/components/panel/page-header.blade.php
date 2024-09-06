@@ -35,18 +35,6 @@
         </div>
         <div class="nav-right col-10 col-sm-6 pull-right right-header p-0">
             <ul class="nav-menus">
-                <li class="{{ request()->routeIs('finance.*') ? '' : 'd-none' }}">
-                    <form action="{{ route('finance.index') }}" method="get">
-                        @csrf <!-- Ensure you include CSRF token if using Laravel -->
-                        <div class="d-flex gap-1">
-                            <select name="tahun" id="tahun" class="form-select select2" aria-label="Select Year">
-                            </select>
-                            <select name="bulan" id="bulan" class="form-select select2" aria-label="Select Month">
-                            </select>
-                            <button type="submit" class="btn btn-primary w-100">Change</button>
-                        </div>
-                    </form>
-                </li>
                 <li class="maximize">
                     <a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -131,12 +119,4 @@
         event.preventDefault();
         document.getElementById('logout-form').submit();
     }
-
-    document.addEventListener("DOMContentLoaded", () => {
-        $('.select2').select2({
-            theme: "bootstrap-5",
-            placeholder: "Pilih",
-            minimumResultsForSearch: Infinity
-        });
-    })
 </script>
