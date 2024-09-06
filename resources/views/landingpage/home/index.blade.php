@@ -520,7 +520,7 @@
                 <!-- Carousel untuk arah kiri -->
                 <div class="partner-slider-rtl owl-carousel owl-theme">
                     @foreach ($partners as $partner)
-                        @if ($partner->tipe == 1 || $partner->tipe == 2 || $partner->tipe == 3)
+                        @if (in_array($partner->tipe, [1, 2, 3]))
                             <div class="item py-3" data-aos="fade-up" data-aos-delay="100">
                                 <div class="carousel-item-content">
                                     <img src="{{ asset('assets/panel/partners/' . $partner->image) }}"
@@ -535,7 +535,7 @@
                 <!-- Carousel untuk arah kanan -->
                 <div class="partner-slider owl-carousel owl-theme">
                     @foreach ($partners as $partner)
-                        @if ($partner->tipe == 4 || $partner->tipe == 5)
+                        @if (in_array($partner->tipe, [4,5]))
                             <div class="item py-3" data-aos="fade-up" data-aos-delay="100">
                                 <div class="carousel-item-content">
                                     <img src="{{ asset('assets/panel/partners/' . $partner->image) }}"
@@ -959,7 +959,7 @@
                 autoplay: true, // Enable autoplay
                 autoplayTimeout: 3000, // Delay between slides (in milliseconds)
                 autoplayHoverPause: false, // Pause on hover
-                items: 4, // Number of items to show
+                items: 6, // Number of items to show
                 navText: ["<", ">"], // Navigation text
                 touchDrag: false,
                 mouseDrag: false,

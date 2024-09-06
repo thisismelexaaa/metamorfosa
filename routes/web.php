@@ -59,5 +59,12 @@ Route::middleware('web', 'ModifiedUrl')->group(function () {
         Route::get('/get-layanan', [LayananController::class, 'getLayanan'])->name('layanan.getLayanan');
         Route::get('/get-layanan/{id}', [CustomersController::class, 'getLayananById'])->name('customer.getLayananById');
         Route::get('get-sub-layanan', [KonsultasiController::class, 'getSubLayanan'])->name('getSubLayanan');
+
+        // trashed customers
+        Route::get('/trashed-customers', [CustomersController::class, 'trashedCustomers'])->name('customers.trash');
+        Route::get('/restore-customers/{id}', [CustomersController::class, 'restoreCustomers'])->name('restore-customers');
+
+        // export
+
     });
 });
