@@ -9,6 +9,7 @@
 
     <meta name="description" content="" />
     <meta name="keywords" content="" />
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -64,9 +65,9 @@
     <script src="{{ asset('assets/landingpage/js/jquery.waypoints.min.js') }}"></script>
     <script src="{{ asset('assets/landingpage/js/jquery.fancybox.min.js') }}"></script>
     <script src="{{ asset('assets/landingpage/js/aos.js') }}"></script>
-
     <script src="{{ asset('assets/landingpage/js/custom.js') }}"></script>
 
+    @yield('scripts')
 </body>
 
 </html>

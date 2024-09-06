@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\landingpage\HomeController;
+use App\Http\Controllers\Panel\NewsController;
 use App\Http\Controllers\Panel\AccountController;
 use App\Http\Controllers\Panel\DashboardController;
 use App\Http\Controllers\Panel\ScheduleController;
@@ -9,11 +10,13 @@ use App\Http\Controllers\Panel\CustomersController;
 use App\Http\Controllers\Panel\FinanceController;
 use App\Http\Controllers\Panel\KonsultasiController;
 use App\Http\Controllers\Panel\LayananController;
+use App\Http\Controllers\Panel\PartnersController;
 use App\Http\Controllers\Panel\SettingAccountController;
 use Illuminate\Support\Facades\Route;
 
 // Public routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/detail-layanan', [HomeController::class, 'detailLayanan'])->name('detailLayanan');
 
 // Guest routes
 Route::middleware('guest')->group(function () {
@@ -39,7 +42,7 @@ Route::middleware('web', 'ModifiedUrl')->group(function () {
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
     // Admin panel routes
-    Route::prefix('/panel/admin')->group(function () {
+    Route::prefix('/panel')->group(function () {
         Route::resources([
             '/dashboard' => DashboardController::class,
             '/customers' => CustomersController::class,
@@ -49,6 +52,8 @@ Route::middleware('web', 'ModifiedUrl')->group(function () {
             '/layanan' => LayananController::class,
             '/account' => AccountController::class,
             '/setting-account' => SettingAccountController::class,
+            '/news' => NewsController::class,
+            '/partners' => PartnersController::class
         ]);
 
         Route::get('/get-layanan', [LayananController::class, 'getLayanan'])->name('layanan.getLayanan');

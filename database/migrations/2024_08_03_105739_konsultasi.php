@@ -22,6 +22,8 @@ return new class extends Migration
             $table->text('hasil_konsultasi')->nullable();
             $table->date('tgl_masuk');
             $table->date('tgl_selesai')->nullable();
+            $table->time('jam_mulai')->nullable();
+            $table->time('jam_selesai')->nullable();
 
             $table->enum('status_bayar', ['1', '2']);
             $table->integer('sisa_bayar');

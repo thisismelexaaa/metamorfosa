@@ -17,7 +17,7 @@
             </a>
         </li>
         <li class="my-2 sidebar-list">
-            <span class="text-secondary">Master</span>
+            <span class="text-secondary"><i class="bi bi-speedometer2"></i> Master</span>
         </li>
         {{-- <li class="sidebar-list">
             <a class="sidebar-link sidebar-title {{ request()->routeIs('customers.*') ? 'active' : '' }}"

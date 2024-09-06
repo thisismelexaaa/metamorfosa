@@ -15,13 +15,32 @@ class FinanceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data['konsultasi'] = Konsultasi::all();
-        // get total harga
-        $data['total'] = Konsultasi::where('dibayar', '>', 0)->get()->sum('dibayar');
+        // Get the current year and month
+        $tahunNow = date('Y');
+        $bulanNow = date('m');
 
-        // dd($data);
+        // Get the year and month from the request or use the current year and month
+        $tahun = $request->input('tahun', $tahunNow);
+        $bulan = $request->input('bulan', $bulanNow);
+
+        // Filter konsultasi berdasarkan tahun dan bulan dari created_at
+        $data['konsultasi'] = Konsultasi::whereYear('created_at', $tahun)
+            ->whereMonth('created_at', $bulan)
+            ->get();
+
+        // Hitung total dibayar berdasarkan tahun dan bulan
+        $data['total'] = Konsultasi::whereYear('created_at', $tahun)
+            ->whereMonth('created_at', $bulan)
+            ->sum('dibayar');
+
+        // Periode
+        $data['periode'] = [
+            'tahun' => $tahun,
+            'bulan' => $bulan
+        ];
+
         return view('panel.finance.index', $data);
     }
 

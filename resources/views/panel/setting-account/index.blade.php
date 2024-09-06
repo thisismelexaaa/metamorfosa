@@ -39,7 +39,8 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
-                <form action="{{ route('setting-account.update', encrypt($user['id'])) }}" method="POST">
+                <form action="{{ route('setting-account.update', encrypt($user['id'])) }}" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="row gy-2">
@@ -77,8 +78,11 @@
                                 data-placeholder="Pilih Jenis Kelamin">
                                 <option selected value="{{ $user['jenis_kelamin'] }}"> {{ $user['jenis_kelamin'] }}
                                 </option>
-                                <option value="1">Laki Laki</option>
-                                <option value="2">Perempuan</option>
+                                @if ($user['jenis_kelamin'] == 'Laki-laki')
+                                    <option value="2">Perempuan</option>
+                                @else
+                                    <option value="1">Laki-laki</option>
+                                @endif
                             </select>
                         </div>
                         <div class="col-md-4 col-sm-2">
@@ -97,7 +101,32 @@
                         </div>
                         <div class="col-md-4 col-sm2">
                             <label for="bio">Bio</label>
-                            <textarea name="bio" id="bio" cols="30" rows="10" class="form-control" placeholder="Masukan Bio">{{ $user['bio'] }}</textarea>
+                            <textarea name="bio" id="bio" cols="30" rows="13" class="form-control" placeholder="Masukan Bio">{{ $user['bio'] }}</textarea>
+                        </div>
+                        <div class="col-md-8 mb-2">
+                            <div class="col-md-12">
+                                <label class="form-label" for="gambar">Profile Image</label>
+                                <input type="file" name="gambar" id="gambar" class="form-control"
+                                    accept="image/png, image/jpeg">
+                                <!-- Foto Lama dan Baru Bersebelahan -->
+                                <div class="d-flex gap-3 mt-3">
+                                    <!-- Foto Lama -->
+                                    @if ($user['gambar'])
+                                        <div class="text-center">
+                                            <label class="form-label">Foto Lama</label>
+                                            <img class="w-100 border-0 rounded-circle"
+                                                src="{{ asset('assets/panel/profile_images/' . $user['gambar']) }}"
+                                                alt="Foto Lama">
+                                        </div>
+                                    @endif
+                                    <!-- Foto Baru -->
+                                    <div class="text-center">
+                                        <label class="form-label">Foto Baru</label>
+                                        <img src="{{ asset('assets/panel/profile_images/image-icon.jpg') }}"
+                                            class="w-100 border-0 rounded-circle" alt="Foto Baru" id="preview">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary mt-2">Simpan</button>
@@ -114,6 +143,22 @@
             $('#jenis_kelamin').select2({ // select 2 initialization
                 theme: "bootstrap-5",
                 minimumResultsForSearch: Infinity,
+            });
+
+            document.getElementById('gambar').addEventListener('change', function(event) {
+                const preview = document.getElementById('preview');
+                const file = event.target.files[0];
+
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        preview.src = e.target.result; // Set preview ke gambar baru
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    preview.src =
+                        "{{ asset('assets/panel/profile_images/image-icon.jpg') }}"; // Kembali ke default jika tidak ada file
+                }
             });
         });
 

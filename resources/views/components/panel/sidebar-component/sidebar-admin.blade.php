@@ -17,7 +17,7 @@
             </a>
         </li>
         <li class="my-2 sidebar-list">
-            <span class="text-secondary">Master</span>
+            <span class="text-secondary"><i class="bi bi-speedometer2"></i> Master</span>
         </li>
         <li class="sidebar-list">
             <a class="sidebar-link sidebar-title {{ request()->routeIs('customers.*') ? 'active' : '' }}"
@@ -47,14 +47,28 @@
                 <span>Keuangan</span>
             </a>
         </li>
+        <li class="sidebar-list">
+            <a class="sidebar-link sidebar-title {{ request()->routeIs('news.*') ? 'active' : '' }}"
+                href="{{ route('news.index') }}">
+                <i class="bi bi-newspaper"></i>
+                <span>Berita</span>
+            </a>
+        </li>
         <li class="my-2 sidebar-list">
-            <span class="text-secondary">Pengaturan</span>
+            <span class="text-secondary"><i class="bi bi-gear"></i> Pengaturan</span>
         </li>
         <li class="sidebar-list">
             <a class="sidebar-link sidebar-title {{ request()->routeIs('layanan.*') ? 'active' : '' }}"
                 href="{{ route('layanan.index') }}">
                 <i class="bi bi-card-checklist"></i>
                 <span>Layanan</span>
+            </a>
+        </li>
+        <li class="sidebar-list">
+            <a class="sidebar-link sidebar-title {{ request()->routeIs('partner.*') ? 'active' : '' }}"
+                href="{{ route('partners.index') }}">
+                <i class="bi bi-universal-access"></i>
+                <span>Kerja Sama</span>
             </a>
         </li>
         <li class="sidebar-list">

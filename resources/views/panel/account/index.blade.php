@@ -54,10 +54,19 @@
                                             class="btn btn-sm btn-primary">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
-                                        <a href="{{ route('account.destroy', encrypt($user['id'])) }}"
+                                        {{-- <a href="{{ route('account.destroy', encrypt($user['id'])) }}"
                                             class="btn btn-sm btn-danger" data-confirm-delete="true">
                                             <i class="bi bi-trash3-fill"></i>
-                                        </a>
+                                        </a> --}}
+
+                                        <form action="{{ route('account.destroy', encrypt($user['id'])) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="button" onclick="deleteData(this)"
+                                                class="btn btn-outline-danger btn-sm" title="Hapus">
+                                                <i class="bi bi-trash3-fill"></i>
+                                            </button>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>
@@ -71,4 +80,6 @@
 
 @section('scripts')
     <script src="{{ asset('function_js/staff/index.js') }}"></script>
+    <script src="{{ asset('function_js/deleteRestoreData/index.js') }}"></script>
+    <script src="{{ asset('function_js/showDeleted/index.js') }}"></script>
 @overwrite

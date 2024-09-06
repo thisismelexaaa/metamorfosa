@@ -33,16 +33,14 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div class="d-flex justify-content-between">
                     <h3 class="mb-4">Detail Konsultasi</h3>
-                    <div class="">
-                        <div>
-                            Kode Konsultasi:
-                            <span class="text-primary fw-bold fs-6">
-                                {{ $konsultasi->kode_konsultasi }}
-                            </span>
-                        </div>
-                    </div>
+                    <span>
+                        Kode Konsultasi:
+                        <span class="text-primary fw-bold fs-6">
+                            {{ $konsultasi->kode_konsultasi }}
+                        </span>
+                    </span>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-hover table-bordered">
@@ -63,14 +61,43 @@
                                 <th>{{ __('Keluhan') }}</th>
                                 <td>{{ $konsultasi->keluhan }}</td>
                                 <th>{{ __('Tanggal Masuk') }}</th>
-                                <td>{{ \Carbon\Carbon::parse($konsultasi->tgl_masuk)->locale('id')->isoFormat('DD MMMM YYYY') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($konsultasi->tgl_masuk)->locale('id')->isoFormat('DD MMMM YYYY') }}
+                                </td>
                             </tr>
                             <tr>
-                                <th>{{ __('Hasil Konsultasi') }}</th>
+                                <th>{{ __('Hasil Konsultasi Terakhir') }}</th>
                                 <td>{{ $konsultasi->hasil_konsultasi ?? 'Belum Ada / Belum Konsultasi' }}</td>
                                 <th>{{ __('Tanggal Selesai') }}</th>
-                                <td>{{ \Carbon\Carbon::parse($konsultasi->tgl_selesai)->locale('id')->isoFormat('DD MMMM YYYY') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($konsultasi->tgl_selesai)->locale('id')->isoFormat('DD MMMM YYYY') }}
+                                </td>
                             </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h3 class="mb-4">Riwayat Konsultasi</h3>
+                <div class="table-responsive" style="width: 100%; height: 250px; overflow-y: auto">
+                    <table class="table table-bordered">
+                        <tbody>
+                            @foreach ($hasil_konsultasi as $item)
+                                <tr>
+                                    <th>
+                                        {{ __('Hasil Konsultasi') }}
+                                    </th>
+                                    <td>:</td>
+                                    <td style="width: 85%">
+                                        {{ \Carbon\Carbon::parse($item->created_at)->locale('id')->isoFormat('DD MMMM YYYY') }}
+                                        <br>
+                                        <div style="text-align: justify">
+                                            {{ $item->hasil }}
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

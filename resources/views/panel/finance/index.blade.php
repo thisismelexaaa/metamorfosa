@@ -37,11 +37,11 @@
                             <th>Layanan</th>
                             <th>Sub Layanan</th>
                             <th>Status Bayar</th>
+                            <th>Tangal Bayar</th>
                             <th>Total Harga</th>
                             <th>Di Bayar</th>
                             <th>Sisa Bayar</th>
                             <th>Uang Masuk</th>
-
                             {{-- <th>Action</th> --}}
                         </tr>
                     </thead>
@@ -62,12 +62,13 @@
                                         @csrf
                                         @method('PUT')
                                         <button type="button"
-                                            class="btn btn-sm badge bg-{{ $item->status_bayar == 1 ? 'success' : 'danger' }} text-white w-100"
+                                            class="btn btn-sm badge bg-{{ $item->status_bayar == 1 ? 'success' : 'danger' }} text-white w-100 btn-lunas"
                                             onclick="updateStatus(this)">
                                             {{ $item->status_bayar == 1 ? 'Lunas' : 'Belum Lunas' }}
                                         </button>
                                     </form>
                                 </td>
+                                <td>{{ \Carbon\Carbon::parse($item->updated_at, 'Asia/Jakarta')->locale('id')->isoFormat('DD MMMM YYYY') }}</td>
                                 <td class="currency" data-value="{{ $item->total_harga }}">
                                     {{ $item->total_harga }}</td>
                                 <td class="currency" data-value="{{ $item->dibayar }}">
@@ -75,25 +76,22 @@
                                 <td class="currency" data-value="{{ $item->sisa_bayar }}">
                                     {{ $item->sisa_bayar }}</td>
                                 <td class="currency" data-value="{{ $item->dibayar }}">{{ $item->dibayar }}</td>
-                                {{-- <td>
-                                    <div class="d-flex gap-2">
-                                        <a href="#" class="btn btn-sm btn-primary">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </a>
-                                        <a href="#" class="btn btn-sm btn-danger">
-                                            <i class="bi bi-trash3-fill"></i>
-                                        </a>
-                                    </div>
-                                </td> --}}
                             </tr>
                         @endforeach
-                    </tbody>
-                    <tfoot>
                         <tr>
-                            <th id="label-total">Total</th>
+                            <th>Total</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
                             <th class="currency" data-value="{{ $total }}">{{ $total }}</th>
                         </tr>
-                    </tfoot>
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -103,29 +101,6 @@
 @section('scripts')
     <script src="{{ asset('function_js/finance/index.js') }}"></script>
     <script>
-        $(document).ready(function() {
-            $('.currency').each(function() {
-                $(this).text(formatCurrency($(this).data('value')));
-            });
-
-            let totalColumns = document.querySelectorAll('thead tr th').length - 1;
-            const labelTotal = document.getElementById('label-total');
-
-            if (labelTotal) {
-                labelTotal.setAttribute('colspan', totalColumns);
-            }
-
-            function formatCurrency(value) {
-                const formatter = new Intl.NumberFormat('id-ID', {
-                    style: 'currency',
-                    currency: 'IDR',
-                    minimumFractionDigits: 0
-                });
-                return formatter.format(value);
-            }
-
-        });
-
         function updateStatus(id) {
             // form prevent default
             event.preventDefault();
@@ -144,5 +119,47 @@
                 }
             })
         }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // Arrays for months
+            const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September",
+                "Oktober", "November", "Desember"
+            ];
+
+            // Retrieve period data from Blade template
+            let periodeBulan = "{{ $periode['bulan'] }}"; // Assuming bulan is a month name
+            let periodeTahun = parseInt("{{ $periode['tahun'] }}"); // Ensure tahun is an integer
+
+            // Append months to the select element with id 'bulan'
+            const $bulanSelect = $('#bulan');
+            $bulanSelect.empty(); // Clear existing options if any
+            months.forEach((month, index) => {
+                $bulanSelect.append(new Option(month, index + 1));
+            });
+
+            // Get the current year and month
+            const currentYear = new Date().getFullYear();
+            const currentMonth = new Date().getMonth() + 1;
+
+            // Append years to the select element with id 'tahun' with a range of current year - 5 to current year + 5
+            const $tahunSelect = $('#tahun');
+            $tahunSelect.empty(); // Clear existing options if any
+            for (let i = currentYear - 5; i <= currentYear + 5; i++) {
+                $tahunSelect.append(new Option(i, i));
+            }
+
+            // Set the selected month and year if period data is available
+            $bulanSelect.val(periodeBulan).trigger('change');
+            $tahunSelect.val(periodeTahun || currentYear).trigger('change');
+
+            // Check if the selected year and month are current values
+            if ($tahunSelect.val() == currentYear && $bulanSelect.val() == currentMonth) {
+                // remove attribute disabled
+                $('.btn-lunas').removeClass('disabled');
+            } else {
+                // btn-lunas remove on click
+                $('.btn-lunas').addClass('disabled');
+            }
+        });
     </script>
 @endsection

@@ -118,6 +118,22 @@
             max-width: 100%;
             border-radius: 8px;
         }
+
+        .carousel-item-content {
+            text-align: center;
+        }
+
+        .carousel-item-content img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .partner-name {
+            display: block;
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: bold;
+        }
     </style>
 
     <div class="untree_co-hero pb-0" id="home-section">
@@ -164,68 +180,6 @@
     <div class="untree_co-section" id="about-section">
         <div class="container">
             <div class="row mb-5">
-                <div class="col-lg-12 text-center">
-                    <h2 class="heading">Metamorfosa Community Learning </h2>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-
-                <div class="col-lg-12" data-aos="fade" data-aos-delay="200">
-                    <div class="owl-2-slider owl-carousel">
-                        <div class="item">
-                            <div class="untree_co-testimonial d-flex">
-                                <div class="text-center">
-                                    <blockquote>
-                                        Berkomitmen untuk menciptakan lingkungan belajar kolaboratif yang mengakomodasi
-                                        setiap individu mengembangkan potensinya dengan cara yang unik.
-                                    </blockquote>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="item">
-                            <div class="untree_co-testimonial d-flex">
-                                <div class="text-center">
-                                    <blockquote>
-                                        Melalui program kami, peserta belajar dengan bimbingan mentor berpengalaman yang
-                                        memahami kebutuhan dan aspirasi mereka.
-                                    </blockquote>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="item">
-                            <div class="untree_co-testimonial d-flex">
-                                <div class="text-center">
-                                    <blockquote>
-                                        Kami mengadakan berbagai kegiatan pengembangan diri yang dirancang untuk
-                                        meningkatkan kreativitas, kolaborasi, serta meningkatkan pemahaman terhadap diri
-                                        sendiri dan lingkungan sekitar.
-                                    </blockquote>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="item">
-                            <div class="untree_co-testimonial d-flex">
-                                <div class="text-center">
-                                    <blockquote>
-                                        Kolaborasi adalah inti dari semua yang kami lakukan, memungkinkan pertukaran ide
-                                        yang mendalam dan membantu mewujudkan visi bersama untuk masa depan yang lebih baik.
-                                    </blockquote>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> <!-- /.row -->
-        </div> <!-- /.container -->
-    </div> <!-- /.untree_co-section -->
-
-    <div class="untree_co-section" id="about-section">
-        <div class="container">
-
-            <div class="row mb-5">
                 <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
                     <h2 class="heading">Metamorfosa Community Learning!</h2>
                 </div>
@@ -258,9 +212,8 @@
         </div> <!-- /.row -->
 
     </div>
-    </div>
 
-    <div class="untree_co-section">
+    <div class="untree_co-section" id="visimisi-section">
         <div class="container">
 
             <div class="row mb-5">
@@ -274,12 +227,6 @@
                 <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="100">
                     <div class="service horizontal d-flex">
                         <div class="service-icon color-1 mb-4">
-                            {{-- <svg class="bi bi-app-indicator" width="1em" height="1em" viewBox="0 0 16 16"
-                                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M5.5 2A3.5 3.5 0 0 0 2 5.5v5A3.5 3.5 0 0 0 5.5 14h5a3.5 3.5 0 0 0 3.5-3.5V8a.5.5 0 0 1 1 0v2.5a4.5 4.5 0 0 1-4.5 4.5h-5A4.5 4.5 0 0 1 1 10.5v-5A4.5 4.5 0 0 1 5.5 1H8a.5.5 0 0 1 0 1H5.5z" />
-                                <path d="M16 3a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                            </svg> --}}
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-eye-fill" viewBox="0 0 16 16">
                                 <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
@@ -326,10 +273,10 @@
             </div> <!-- /.row -->
 
         </div> <!-- /.container -->
-    </div> <!-- /.untree_co-section -->
+    </div>
 
     {{-- TIM KAMI SECTION --}}
-    <div class="untree_co-section" id="team">
+    <div class="untree_co-section" id="team-section">
         <div class="container">
             <div class="row mb-5">
                 <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
@@ -437,208 +384,27 @@
                 </div>
                 <div class="col-lg-12">
                     <div class="owl-3-slider owl-carousel" data-aos="fade-up">
-                        <!-- Support Teacher Item 1 -->
-                        <div class="item">
-                            <div class="card text-center border-0 shadow-md">
-                                <div class="card-body">
-                                    <div class="pic mb-3 mx-auto">
-                                        <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}" alt="Image"
-                                            class="img-fluid" style="max-width: 120px; border-radius: 50%;">
-                                    </div>
-                                    <div class="text">
-                                        <strong class="d-block font-weight-bold h5 mb-1">Micki Watulandi, S.E., M.M.,
-                                            C.P.S</strong>
-                                        <span class="d-block mb-3 text-muted">Support Teacher</span>
-                                        <blockquote class="blockquote">
-                                            <p class="mb-0">"Separated they live in Bookmarksgrove right at the coast of
-                                                the Semantics, a large language ocean."</p>
-                                        </blockquote>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Support Teacher Item 2 -->
-                        <div class="item">
-                            <div class="card text-center border-0 shadow-md">
-                                <div class="card-body">
-                                    <div class="pic mb-3 mx-auto">
-                                        <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}" alt="Image"
-                                            class="img-fluid" style="max-width: 120px; border-radius: 50%;">
-                                    </div>
-                                    <div class="text">
-                                        <strong class="d-block font-weight-bold h5 mb-1">Ervi Amaliyah, S.Pd</strong>
-                                        <span class="d-block mb-3 text-muted">Support Teacher</span>
-                                        <blockquote class="blockquote">
-                                            <p class="mb-0">"Separated they live in Bookmarksgrove right at the coast of
-                                                the Semantics, a large language ocean."</p>
-                                        </blockquote>
+                        @foreach ($users as $support_teacher)
+                            <div class="item">
+                                <div class="card text-center border-0 shadow-md">
+                                    <div class="card-body">
+                                        <div class="pic mb-3 mx-auto">
+                                            <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}"
+                                                alt="Image" class="img-fluid"
+                                                style="max-width: 120px; border-radius: 50%;">
+                                        </div>
+                                        <div class="text">
+                                            <strong
+                                                class="d-block font-weight-bold h5 mb-1">{{ $support_teacher->name }}</strong>
+                                            <span class="d-block mb-3 text-muted">{{ $support_teacher->role }}</span>
+                                            <blockquote class="blockquote">
+                                                <p class="mb-0">"{{ $support_teacher->bio ?? 'No Bio Available' }}"</p>
+                                            </blockquote>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <!-- Support Teacher Item 3 -->
-                        <div class="item">
-                            <div class="card text-center border-0 shadow-md">
-                                <div class="card-body">
-                                    <div class="pic mb-3 mx-auto">
-                                        <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}" alt="Image"
-                                            class="img-fluid" style="max-width: 120px; border-radius: 50%;">
-                                    </div>
-                                    <div class="text">
-                                        <strong class="d-block font-weight-bold h5 mb-1">Dr. Widya, MKN</strong>
-                                        <span class="d-block mb-3 text-muted">Support Teacher</span>
-                                        <blockquote class="blockquote">
-                                            <p class="mb-0">"Separated they live in Bookmarksgrove right at the coast of
-                                                the Semantics, a large language ocean."</p>
-                                        </blockquote>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    {{-- TIM 2 --}}
-    <div class="untree_co-section" id="team">
-        <div class="container">
-            <div class="row mb-5">
-                <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
-                    <h2 class="heading">Tim Kami</h2>
-                </div>
-            </div>
-
-            <!-- Founder and Co-Founders Section -->
-            <div class="row mb-5">
-                <!-- Founder -->
-                <div class="col-lg-6 mb-4">
-                    <div class="text-center" data-aos="fade-up" data-aos-delay="300">
-                        <h3 class="subheading">Founder</h3>
-                        <div class="untree_co-testimonial d-flex flex-column align-items-center">
-                            <div class="pic mb-3">
-                                <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}" alt="Image"
-                                    class="img-fluid" style="max-width: 150px; border-radius: 50%;">
-                            </div>
-                            <div class="text">
-                                <strong class="d-block font-weight-bold h5 mb-1">Citra Sabrina, M.Psi., Psikolog</strong>
-                                <span class="d-block mb-3">Founder Metamorfosa</span>
-                                <blockquote class="text-center">
-                                    &ldquo;Separated they <span class="highlight">live in Bookmarksgrove right at the coast
-                                        of the Semantics</span>, a large language ocean. A small river named Duden flows by
-                                    their place and supplies it with the necessary regelialia. &rdquo;
-                                </blockquote>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Co-Founders -->
-                <div class="col-lg-6">
-                    <div class="text-center" data-aos="fade-up" data-aos-delay="300">
-                        <h3 class="subheading">Co-Founder</h3>
-                        <div class="row">
-                            <div class="col-md-4 mb-4">
-                                <div class="untree_co-testimonial d-flex flex-column align-items-center">
-                                    <div class="pic mb-3">
-                                        <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}" alt="Image"
-                                            class="img-fluid" style="max-width: 150px; border-radius: 50%;">
-                                    </div>
-                                    <div class="text">
-                                        <strong class="d-block font-weight-bold h5 mb-1">Micki Watulandi, S.E., M.M.,
-                                            C.P.S</strong>
-                                        <span class="d-block mb-3">Co-Founder Metamorfosa</span>
-                                        <blockquote class="text-center">
-                                            &ldquo;Separated they <span class="highlight">live in Bookmarksgrove right at
-                                                the coast
-                                                of the Semantics</span>, a large language ocean. A small river named Duden
-                                            flows by
-                                            their place and supplies it with the necessary regelialia. &rdquo;
-                                        </blockquote>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4 mb-4">
-                                <div class="untree_co-testimonial d-flex flex-column align-items-center">
-                                    <div class="pic mb-3">
-                                        <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}"
-                                            alt="Image" class="img-fluid"
-                                            style="max-width: 150px; border-radius: 50%;">
-                                    </div>
-                                    <div class="text">
-                                        <strong class="d-block font-weight-bold h5 mb-1">Ervi Amaliyah, S.Pd</strong>
-                                        <span class="d-block mb-3">Co-Founder Metamorfosa</span>
-                                        <blockquote class="text-center">
-                                            &ldquo;Separated they <span class="highlight">live in Bookmarksgrove right at
-                                                the coast
-                                                of the Semantics</span>, a large language ocean. A small river named Duden
-                                            flows by
-                                            their place and supplies it with the necessary regelialia. &rdquo;
-                                        </blockquote>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4 mb-4">
-                                <div class="untree_co-testimonial d-flex flex-column align-items-center">
-                                    <div class="pic mb-3">
-                                        <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}"
-                                            alt="Image" class="img-fluid"
-                                            style="max-width: 150px; border-radius: 50%;">
-                                    </div>
-                                    <div class="text">
-                                        <strong class="d-block font-weight-bold h5 mb-1">Dr. Widya, MKN</strong>
-                                        <span class="d-block mb-3">Co-Founder Metamorfosa</span>
-                                        <blockquote class="text-center">
-                                            &ldquo;Separated they <span class="highlight">live in Bookmarksgrove right at
-                                                the coast
-                                                of the Semantics</span>, a large language ocean. A small river named Duden
-                                            flows by
-                                            their place and supplies it with the necessary regelialia. &rdquo;
-                                        </blockquote>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Support Teachers Section -->
-            <div class="row mb-5">
-                <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
-                    <h3 class="subheading">Support Teachers</h3>
-                </div>
-                <div class="col-lg-12">
-                    <div class="owl-3-slider owl-carousel" data-aos="fade-up">
-                        <!-- Support Teacher Items -->
-                        <div class="item">
-                            <div class="card text-center border-0 shadow-md">
-                                <div class="card-body">
-                                    <div class="pic mb-3 mx-auto">
-                                        <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}"
-                                            alt="Image" class="img-fluid"
-                                            style="max-width: 120px; border-radius: 50%;">
-                                    </div>
-                                    <div class="text">
-                                        <strong class="d-block font-weight-bold h5 mb-1">Micki Watulandi, S.E., M.M.,
-                                            C.P.S</strong>
-                                        <span class="d-block mb-3 text-muted">Support Teacher</span>
-                                        <blockquote class="blockquote">
-                                            <p class="mb-0">"Separated they live in Bookmarksgrove right at the coast of
-                                                the Semantics, a large language ocean."</p>
-                                        </blockquote>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Additional Support Teacher Items... -->
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -651,7 +417,7 @@
             <div class="row pricing-title">
                 <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
                     <h2 class="heading">Layanan Kami</h2>
-                    <div>
+                    {{-- <div>
                         <a href="#" class="js-custom-prev-v3 cusotm-slider-nav custom-prev"><span><svg
                                     class="bi bi-arrow-left" width="1em" height="1em" viewBox="0 0 16 16"
                                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -669,56 +435,37 @@
                                         d="M2 8a.5.5 0 0 1 .5-.5H13a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 8z" />
                                 </svg></span>
                         </a>
-                    </div>
+                    </div> --}}
                 </div>
             </div> <!-- /.row -->
 
             <div class="row justify-content-center">
                 <div class="col-lg-10">
-                    <div class="owl-3-slider owl-carousel">
+                    <div class="owl-3-slider owl-carousel" data-aos="fade-up" data-aos-delay="100">
                         @foreach ($layanan as $layananItem)
-                            <div class="item">
-                                <div class="pricing active" data-aos="fade-up" data-aos-delay="100">
+                            <div class="item py-5">
+                                <div class="pricing active">
                                     <div class="body">
                                         <div class="price">
                                             <span class="d-block plan mb-4">{{ $layananItem->layanan }}</span>
                                         </div>
                                         <ul class="list-unstyled ul-check primary mb-5">
-                                            @foreach ($sublayanan->where('id_layanan', $layananItem->id) as $subLayananItem)
+                                            @foreach ($layananItem->getSubLayanan->take(4) as $subLayananItem)
                                                 <li>{{ $subLayananItem->sub_layanan }}</li>
                                             @endforeach
+                                            @if ($layananItem->getSubLayanan->count() >= 4)
+                                                <li>Dan Layanan Lainnya</li>
+                                            @endif
                                         </ul>
-                                        <p class="text-center mb-0"><a href="#" class="btn btn-outline-primary">Get
-                                                Started</a></p>
+                                        <p class="text-center mb-0">
+                                            <a href="/detail-layanan" class="btn btn-outline-primary">Selengkapnya</a>
+                                        </p>
                                     </div>
                                 </div> <!-- /.pricing -->
                             </div>
                         @endforeach
-
-                        <div class="item">
-                            <div class="pricing active" data-aos="fade-up" data-aos-delay="100">
-                                <div class="body">
-                                    <div class="price">
-                                        <span class="d-block plan mb-4">Layanan 6</span>
-                                    </div>
-                                    <ul class="list-unstyled ul-check primary mb-5">
-                                        <li>Sub Layanan 1</li>
-                                        <li>Sub Layanan 2</li>
-                                        <li>Sub Layanan 3</li>
-                                        <li>Sub Layanan 4</li>
-                                        <li>Sub Layanan 5</li>
-                                        <li>Sub Layanan 6</li>
-                                        <li>Sub Layanan 6</li>
-                                        <li>Sub Layanan 6</li>
-                                        <li>Sub Layanan 6</li>
-                                    </ul>
-                                    <p class="text-center mb-0"><a href="#" class="btn btn-outline-primary">Get
-                                            Started</a></p>
-                                </div>
-                            </div> <!-- /.pricing -->
-                        </div>
                     </div>
-                </div> <!-- /.col-lg-10 -->
+                </div>
             </div> <!-- /.row -->
         </div> <!-- /.container -->
     </div>
@@ -730,33 +477,32 @@
                 <div class="col-12 text-center mb-5" data-aos="fade-up" data-aos-delay="0">
                     <h2 class="heading">Aktivitas Selanjutnya</h2>
                 </div>
-                <div class="col-lg-7">
+                <div class="col-lg">
                     <div class="news-feed">
-                        @for ($i = 1; $i <= 5; $i++)
-                            <div class="news-item" data-id="{{ $i }}" data-aos="fade-up"
-                                data-aos-delay="{{ $i * 100 }}">
-                                <img src="{{ asset('../assets/landingpage/images/dashboard.jpg') }}"
-                                    alt="Thumbnail Aktivitas {{ $i }}" class="news-image">
-                                <div class="news-content">
-                                    <div class="news-date">25 Aug 2024</div>
-                                    <h3 class="news-title">Aktivitas {{ $i }}</h3>
-                                    <p class="news-description">Far far away, behind the word mountains, far from the
-                                        countries Vokalia and Consonantia.</p>
-                                    <a href="#" class="btn btn-primary view-details"
-                                        data-id="{{ $i }}">Baca Selengkapnya</a>
+                        @foreach ($news as $i => $item)
+                            @if ($item->category == 2)
+                                <div class="news-item" data-aos="fade-up" data-aos-delay="100">
+                                    <img src="{{ asset('assets/image/news/' . $item->image) }}"
+                                        alt="Thumbnail Aktivitas {{ $i }}" class="news-image">
+                                    <div class="news-content">
+                                        <div class="news-date">{{ $item->created_at->format('d M Y') }}</div>
+                                        <h3 class="news-title">{{ $item->judul }}</h3>
+                                        <p class="news-description">{!! Str::limit($item->content, 100) !!}</p>
+                                        <a href="#" class="btn btn-primary view-details"
+                                            data-id="{{ $i }}">Baca
+                                            Selengkapnya</a>
+                                    </div>
                                 </div>
-                            </div>
-                        @endfor
+                            @endif
+                        @endforeach
                     </div>
                 </div>
 
                 <!-- Right Side: Detail View -->
-                <div class="col-lg-5">
-                    <div class="detail-view">
-                        <img src="" alt="Detail Image" id="detail-image" class="img-fluid">
-                        <h3 id="detail-title">Aktivitas Mendatang</h3>
-                        <p id="detail-description">Klik tombol "Baca Selengkapnya" pada aktivitas di sebelah kiri untuk
-                            melihat detail.</p>
+                <div class="col-lg">
+                    <div class="detail-view" data-aos="fade-up" data-aos-delay="100">
+                        <img src="" alt="Detail Image" class="detail-image w-100" id="detail-image"
+                            class="img-fluid">
                     </div>
                 </div>
 
@@ -764,8 +510,47 @@
         </div> <!-- /.container -->
     </div>
 
+    {{-- PARTNER --}}
+    <div class="container-fluid px-5" id="partner">
+        <div class="row justify-content-center">
+            <div class="container col-12 text-center mt-5" data-aos="fade-up" data-aos-delay="100">
+                <h2 class="heading">Partner Kami</h2>
+            </div>
+            <div class="col-lg-12">
+                <!-- Carousel untuk arah kiri -->
+                <div class="partner-slider-rtl owl-carousel owl-theme">
+                    @foreach ($partners as $partner)
+                        @if ($partner->tipe == 1 || $partner->tipe == 2 || $partner->tipe == 3)
+                            <div class="item py-3" data-aos="fade-up" data-aos-delay="100">
+                                <div class="carousel-item-content">
+                                    <img src="{{ asset('assets/panel/partners/' . $partner->image) }}"
+                                        alt="{{ $partner->name }}" class="img-fluid">
+                                    <span class="partner-name">{{ $partner->name }}</span>
+                                </div>
+                            </div>
+                        @endif
+                    @endforeach
+                </div>
 
-    <div class="untree_co-section" id="klien-section">
+                <!-- Carousel untuk arah kanan -->
+                <div class="partner-slider owl-carousel owl-theme">
+                    @foreach ($partners as $partner)
+                        @if ($partner->tipe == 4 || $partner->tipe == 5)
+                            <div class="item py-3" data-aos="fade-up" data-aos-delay="100">
+                                <div class="carousel-item-content">
+                                    <img src="{{ asset('assets/panel/partners/' . $partner->image) }}"
+                                        alt="{{ $partner->name }}" class="img-fluid">
+                                    <span class="partner-name">{{ $partner->name }}</span>
+                                </div>
+                            </div>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- <div class="untree_co-section" id="klien-section">
         <div class="container">
             <div class="row mb-5">
                 <div class="col-lg-12 text-center">
@@ -795,7 +580,6 @@
                 </div>
             </div>
             <div class="row justify-content-center">
-
                 <div class="col-lg-12" data-aos="fade" data-aos-delay="200">
                     <div class="owl-2-slider owl-carousel">
                         <div class="item">
@@ -874,9 +658,9 @@
                 </div>
             </div> <!-- /.row -->
         </div> <!-- /.container -->
-    </div> <!-- /.untree_co-section -->
+    </div> --}}
 
-    <div class="untree_co-section" id="about-section">
+    {{-- <div class="untree_co-section" id="about-section">
         <div class="container">
             <div class="row justify-content-between mb-5">
                 <div class="col-lg-8 mb-4 mb-lg-0" data-aos="fade-up" data-aos-delay="100">
@@ -947,9 +731,9 @@
                 </div>
             </div>
         </div> <!-- /.container -->
-    </div> <!-- /.untree_co-section -->
+    </div>  --}}
 
-    <div class="untree_co-section bg-light">
+    {{-- <div class="untree_co-section bg-light">
         <div class="container">
 
             <div class="row mb-5">
@@ -1027,7 +811,6 @@
                     </div> <!-- /.news-item -->
                 </div>
 
-
                 <div class="col-md-12 col-lg-4" data-aos="fade-up" data-aos-delay="300">
                     <div class="news-item">
                         <div class="vcard d-flex align-items-center mb-4">
@@ -1062,7 +845,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     {{-- <div class="untree_co-section" id="contact-section">
         <div class="container">
@@ -1129,60 +912,68 @@
             </div> <!-- /.row -->
         </div> <!-- /.container -->
     </div> <!-- /.untree_co-section bg-light --> --}}
+@endsection
 
-
+@section('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const details = {
-                1: {
-                    title: 'Aktivitas 1',
-                    description: 'Detail deskripsi untuk aktivitas 1.',
-                    image: '{{ asset('../assets/landingpage/images/poster_metamorfosa.jpg') }}'
-                },
-                2: {
-                    title: 'Aktivitas 2',
-                    description: 'Detail deskripsi untuk aktivitas 2.',
-                    image: '{{ asset('../assets/landingpage/images/dashboard.jpg') }}'
-                },
-                3: {
-                    title: 'Aktivitas 3',
-                    description: 'Detail deskripsi untuk aktivitas 3.',
-                    image: '{{ asset('../assets/landingpage/images/dashboard.jpg') }}'
-                },
-                // Add more details as needed
+            // Select all news items and detail image
+            const newsItems = document.querySelectorAll('.news-item');
+            const detailImage = document.querySelector('.detail-image');
+            const detailView = document.querySelector('.detail-view');
+
+            // Check if detailImage exists
+            if (!detailImage) return;
+
+            detailImage.src = newsItems[0].querySelector('.news-image').src;
+
+            newsItems.forEach(item => {
+                item.addEventListener('mouseover', () => {
+                    // Avoid adding 'hover' class if it already exists
+                    if (item.classList.contains('hover')) return;
+
+                    item.classList.add('hover');
+
+                    // Find and update news-image if it exists
+                    const newsImage = item.querySelector('.news-image');
+                    if (newsImage) {
+                        detailImage.src = newsImage.src;
+                        detailImage.classList.remove('d-none');
+                        detailView.classList.remove('d-none');
+                    }
+                });
+
+                item.addEventListener('mouseout', () => {
+                    // Only remove 'hover' class if it exists
+                    if (item.classList.contains('hover')) {
+                        item.classList.remove('hover');
+                    }
+                });
+            });
+
+            // carousel
+            const owlCarouselOptions = {
+                loop: true, // Enable loop
+                margin: 10, // Margin between items
+                nav: false, // Show navigation arrows
+                autoplay: true, // Enable autoplay
+                autoplayTimeout: 3000, // Delay between slides (in milliseconds)
+                autoplayHoverPause: false, // Pause on hover
+                items: 4, // Number of items to show
+                navText: ["<", ">"], // Navigation text
+                touchDrag: false,
+                mouseDrag: false,
+                dots: false
             };
 
-            // Example upcoming activity, adjust according to actual data
-            const upcomingActivityId = 1; // Replace with logic to get the nearest upcoming activity
-            const detailView = document.querySelector('.detail-view');
-            const detailTitle = document.getElementById('detail-title');
-            const detailDescription = document.getElementById('detail-description');
-            const detailImage = document.getElementById('detail-image');
+            $('.partner-slider').owlCarousel({
+                ...owlCarouselOptions,
+                rtl: false // Left-to-right direction
+            });
 
-            function showDetail(id) {
-                const detail = details[id];
-                if (detail) {
-                    detailTitle.textContent = detail.title;
-                    detailDescription.textContent = detail.description;
-                    detailImage.src = detail.image;
-                    detailImage.style.display = 'block'; // Show image when detail is selected
-                }
-            }
-
-            function setInitialDetail() {
-                if (upcomingActivityId in details) {
-                    showDetail(upcomingActivityId);
-                }
-            }
-
-            setInitialDetail();
-
-            document.querySelectorAll('.view-details').forEach(button => {
-                button.addEventListener('click', (event) => {
-                    event.preventDefault();
-                    const id = event.target.getAttribute('data-id');
-                    showDetail(id);
-                });
+            $('.partner-slider-rtl').owlCarousel({
+                ...owlCarouselOptions,
+                rtl: true // Right-to-left direction
             });
         });
     </script>
