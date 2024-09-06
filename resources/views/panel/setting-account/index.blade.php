@@ -19,6 +19,14 @@
             width: 120px;
             margin-bottom: 40px;
         }
+
+        .profile_image {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
     </style>
 
     <div class="container-fluid">
@@ -108,26 +116,28 @@
                                 <label class="form-label" for="gambar">Profile Image</label>
                                 <input type="file" name="gambar" id="gambar" class="form-control"
                                     accept="image/png, image/jpeg">
+
                                 <!-- Foto Lama dan Baru Bersebelahan -->
-                                <div class="d-flex gap-3 mt-3">
+                                <div class="d-flex gap-5 mt-3">
                                     <!-- Foto Lama -->
                                     @if ($user['gambar'])
                                         <div class="text-center">
-                                            <label class="form-label">Foto Lama</label>
-                                            <img class="w-100 border-0 rounded-circle"
+                                            <label class="form-label d-block">Foto Sekarang</label>
+                                            <img class="profile_image"
                                                 src="{{ asset('assets/panel/profile_images/' . $user['gambar']) }}"
-                                                alt="Foto Lama">
+                                                alt="Foto Sekarang">
                                         </div>
                                     @endif
                                     <!-- Foto Baru -->
                                     <div class="text-center">
-                                        <label class="form-label">Foto Baru</label>
+                                        <label class="form-label d-block">Foto Baru</label>
                                         <img src="{{ asset('assets/panel/profile_images/image-icon.jpg') }}"
-                                            class="w-100 border-0 rounded-circle" alt="Foto Baru" id="preview">
+                                            class="profile_image" alt="Foto Baru" id="preview">
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                     <button type="submit" class="btn btn-primary mt-2">Simpan</button>
                 </form>

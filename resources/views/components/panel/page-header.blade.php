@@ -76,7 +76,7 @@
                     <div class="media profile-media">
                         @if (Auth::user()->gambar)
                             <img src="{{ asset('assets/panel/profile_images/' . Auth::user()->gambar) }}"
-                                alt="Profile Image" width="24" height="24" style="border-radius: 50%;">
+                                alt="Profile Image" width="30" height="30" style="border-radius: 50%;">
                         @else
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
