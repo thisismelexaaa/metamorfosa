@@ -41,7 +41,8 @@
 
         <div class="card">
             <div class="card-body">
-                <div class="d-flex gap-2 mb-4">
+                <div
+                    class="d-flex gap-2 mb-4 {{ Auth::user()->role == 'admin' || Auth::user()->role == 4 ? '' : 'd-none' }}">
                     <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
                         Tambah Layanan
                     </button>
@@ -66,7 +67,8 @@
                                     </h2>
                                     <div id="flush-collapseOne{{ $data['id'] }}" class="accordion-collapse collapse"
                                         data-bs-parent="#accordionFlushExample">
-                                        <div class="d-flex gap-2 py-3">
+                                        <div
+                                            class="d-flex gap-2 py-3 {{ Auth::user()->role == 'admin' || Auth::user()->role == 4 ? '' : 'd-none' }}">
                                             <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
                                                 data-bs-target="#addModalSubLayanan{{ $data['id'] }}">
                                                 Tambah Sub Layanan
@@ -89,7 +91,8 @@
                                                                 <i class="bi bi-dot"></i> {{ $item->sub_layanan }} -
                                                                 Rp.{{ number_format($item->harga) }}
                                                             </span>
-                                                            <div class="d-flex gap-2">
+                                                            <div
+                                                                class="d-flex gap-2 {{ Auth::user()->role == 'admin' || Auth::user()->role == 4 ? '' : 'd-none' }}">
                                                                 <button type="button" class="btn btn-sm btn-warning"
                                                                     data-bs-toggle="modal"
                                                                     data-bs-target="#editModalSublayanan{{ $item->id }}">
@@ -110,61 +113,55 @@
                     </div>
                 </div>
                 <hrs>
-                <div class="my-3">
-                    <h4>Layanan Non Aktif</h4>
-                    <div class="accordion accordion-flush mt-3 border-bottom" id="accordionFlushExample">
-                        @foreach ($layanan as $data)
-                            @if ($data->status == 2)
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header">
-                                        <button class="accordion-button collapsed text-capitalize" type="button"
-                                            data-bs-toggle="collapse"
-                                            data-bs-target="#flush-collapseOne{{ $data['id'] }}" aria-expanded="false"
-                                            aria-controls="flush-collapseOne{{ $data['id'] }}">
-                                            {{ $data['layanan'] }}
-                                        </button>
-                                    </h2>
-                                    <div id="flush-collapseOne{{ $data['id'] }}" class="accordion-collapse collapse"
-                                        data-bs-parent="#accordionFlushExample">
-                                        <div class="d-flex gap-2 py-3">
-                                            <form action="{{ route('layanan.destroy', encrypt($data['id'])) }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <input type="hidden" name="layanan" value="{{ $data['layanan'] }}">
-                                                <button type="submit" class="btn btn-sm btn-success">Aktifkan
-                                                    {{ $data['layanan'] }}</button>
-                                            </form>
-                                        </div>
-                                        <ul class="list-group list-group-flush">
-                                            @foreach ($data->getSubLayanan as $item)
-                                                @if ($item->status == 2)
-                                                    <li class="list-group-item">
-                                                        <span class="d-flex justify-content-between">
-                                                            <span class="text-capitalize">
-                                                                <i class="bi bi-dot"></i> {{ $item->sub_layanan }} -
-                                                                Rp.{{ number_format($item->harga) }}
+                    <div class="my-3">
+                        <h4>Layanan Non Aktif</h4>
+                        <div class="accordion accordion-flush mt-3 border-bottom" id="accordionFlushExample">
+                            @foreach ($layanan as $data)
+                                @if ($data->status == 2)
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed text-capitalize" type="button"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#flush-collapseOne{{ $data['id'] }}"
+                                                aria-expanded="false" aria-controls="flush-collapseOne{{ $data['id'] }}">
+                                                {{ $data['layanan'] }}
+                                            </button>
+                                        </h2>
+                                        <div id="flush-collapseOne{{ $data['id'] }}" class="accordion-collapse collapse"
+                                            data-bs-parent="#accordionFlushExample">
+                                            <div
+                                                class="d-flex gap-2 py-3 {{ Auth::user()->role == 'admin' || Auth::user()->role == 4 ? '' : 'd-none' }}">
+                                                <form action="{{ route('layanan.destroy', encrypt($data['id'])) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <input type="hidden" name="layanan" value="{{ $data['layanan'] }}">
+                                                    <button type="submit" class="btn btn-sm btn-success">Aktifkan
+                                                        {{ $data['layanan'] }}</button>
+                                                </form>
+                                            </div>
+                                            <ul class="list-group list-group-flush">
+                                                @foreach ($data->getSubLayanan as $item)
+                                                    @if ($item->status == 2)
+                                                        <li class="list-group-item">
+                                                            <span class="d-flex justify-content-between">
+                                                                <span class="text-capitalize">
+                                                                    <i class="bi bi-dot"></i> {{ $item->sub_layanan }} -
+                                                                    Rp.{{ number_format($item->harga) }}
+                                                                </span>
                                                             </span>
-                                                            <div class="d-flex gap-2">
-                                                                <button type="button" class="btn btn-sm btn-warning"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target="#editModalSublayanan{{ $item->id }}">
-                                                                    Edit Sub Layanan
-                                                                </button>
-                                                            </div>
-                                                        </span>
-                                                    </li>
-                                                    @include('components.panel.modal.layanan.edit.edit-sublayanan')
-                                                @endif
-                                            @endforeach
-                                        </ul>
+                                                        </li>
+                                                        @include('components.panel.modal.layanan.edit.edit-sublayanan')
+                                                    @endif
+                                                @endforeach
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
-                                @include('components.panel.modal.layanan.add.add-sublayanan')
-                            @endif
-                        @endforeach
+                                    @include('components.panel.modal.layanan.add.add-sublayanan')
+                                @endif
+                            @endforeach
+                        </div>
                     </div>
-                </div>
             </div>
         </div>
     </div>

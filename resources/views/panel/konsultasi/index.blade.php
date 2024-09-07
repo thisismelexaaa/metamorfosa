@@ -47,28 +47,28 @@
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
-                @if (Auth::user()->role == 'admin' || Auth::user()->role == 4)
-                    <div class="d-flex justify-content-between gap-2 align-items-center">
-                        <div class="d-flex gap-2">
-                            <a href="{{ route('konsultasi.create') }}" class="btn btn-sm btn-primary">
-                                Tambah Data
-                            </a>
-                            <div class="dropdown">
-                                <button class="btn btn-sm btn-primary text-white" type="button" data-bs-toggle="dropdown">
-                                    Export Data
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" onclick="CopyToClipboard()">Copy</a></li>
-                                    <li><a class="dropdown-item" onclick="ExportToCSV()">CSV</a></li>
-                                    <li><a class="dropdown-item" onclick="ExportToPDF()">PDF</a></li>
-                                    <li><a class="dropdown-item" onclick="ExportToXLSX()">XLSX</a></li>
-                                </ul>
-                            </div>
+                <div class="d-flex justify-content-between gap-2 align-items-center">
+                    <div class="d-flex gap-2">
+                        <a href="{{ route('konsultasi.create') }}"
+                            class="btn btn-sm btn-primary {{ Auth::user()->role == 'admin' || Auth::user()->role == 4 ? '' : 'd-none' }}">
+                            Tambah Data
+                        </a>
+                        <div
+                            class="dropdown {{ Auth::user()->role == 'admin' || Auth::user()->role == 4 || Auth::user()->role == 5 ? '' : 'd-none' }}">
+                            <button class="btn btn-sm btn-primary text-white" type="button" data-bs-toggle="dropdown">
+                                Export Data
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="CopyToClipboard()">Copy</a></li>
+                                <li><a class="dropdown-item" onclick="ExportToCSV()">CSV</a></li>
+                                <li><a class="dropdown-item" onclick="ExportToPDF()">PDF</a></li>
+                                <li><a class="dropdown-item" onclick="ExportToXLSX()">XLSX</a></li>
+                            </ul>
                         </div>
-                        <a href="{{ route('konsultasi.trash') }}" class="btn btn-sm btn-primary">Lihat Data yang
-                            Dihapus</a>
                     </div>
-                @endif
+                    <a href="{{ route('konsultasi.trash') }}" class="btn btn-sm btn-primary">Lihat Data yang
+                        Dihapus</a>
+                </div>
                 <div class="table-responsive overflow-auto">
                     <table class="table nowrap table-striped table-hover align-middle" id="datatable">
                         <thead>
