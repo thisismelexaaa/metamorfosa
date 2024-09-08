@@ -75,5 +75,9 @@ Route::middleware('web', 'ModifiedUrl')->group(function () {
         // trashed partners
         Route::get('/trashed-partners', [PartnersController::class, 'trashed'])->name('partners.trash');
         Route::get('/restore-partners/{id}', [PartnersController::class, 'restore'])->name('partners.restore');
+
+        // trashed account
+        Route::get('/trashed-account', [AccountController::class, 'trashed'])->name('account.trash');
+        Route::get('/restore-account/{id}', [AccountController::class, 'restore'])->name('account.restore');
     });
 });

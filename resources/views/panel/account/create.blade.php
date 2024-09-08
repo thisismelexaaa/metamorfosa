@@ -36,17 +36,22 @@
                     @csrf
                     <h3>Data Diri</h3>
                     <div class="row mb-2">
-                        <div class="col-md-4 mb-2">
+                        <div class="col-md-3 mb-2">
                             <label class="form-label" for="nama">Nama Lengkap</label>
                             <input required id="nama" type="text" class="form-control" name="name"
                                 placeholder="Masukkan Nama Lengkap">
                         </div>
-                        <div class="col-md-4 mb-2">
+                        <div class="col-md-3 mb-2">
                             <label class="form-label" for="username">Username</label>
                             <input required id="username" type="text" class="form-control" name="username"
                                 placeholder="Masukkan Username">
                         </div>
-                        <div class="col-md-4 mb-2">
+                        <div class="col-md-3 mb-2">
+                            <label class="form-label" for="no_hp">Nomor Telepon/Handphone</label>
+                            <input required id="no_hp" type="no_hp" class="form-control" name="no_hp"
+                                placeholder="Masukkan Nomer Telepon/Handphone">
+                        </div>
+                        <div class="col-md-3 mb-2">
                             <label class="form-label" for="email">Email</label>
                             <input required id="email" type="email" class="form-control" name="email"
                                 placeholder="Masukkan Email">
@@ -96,7 +101,7 @@
                             </select>
                         </div>
                     </div>
-                    <p class="text-danger">Notes: *Password awal adalah username</p>
+                    <p class="text-danger">Notes: *Password awal adalah "metamorfosa"</p>
                     <button class="btn btn-sm btn-primary" type="submit">Submit Data</button>
                 </form>
 

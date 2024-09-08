@@ -341,10 +341,14 @@
                     const startTime = extendedProps.jam_mulai;
                     const endTime = extendedProps.jam_selesai;
                     const title = `${extendedProps.kode_konsultasi} - ${extendedProps.customer.name}`;
+                    const support_teacher = extendedProps.support_teacher;
+
+                    console.log(extendedProps);
 
                     return {
                         html: `
                             <div class="fc-event-time">${startTime} - ${endTime}</div>
+                            <div class="fc-event-title">${support_teacher.name}</div>
                             <div class="fc-event-title">${title}</div>
                         `
                     };

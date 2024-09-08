@@ -88,7 +88,7 @@
                                 placeholder="Masukkan Tanggal Selesai">
                         </div>
                         <div class="col-md">
-                            <label class="form-label" for="jam_mulai">Mulai Sesi</label>
+                            <label class="form-label" for="jam_mulai">Waktu Sesi</label>
                             <div class="d-flex gap-3">
                                 <input required id="jam_mulai" type="time" class="form-control" name="jam_mulai"
                                     placeholder="Masukkan Tanggal Masuk">
@@ -173,9 +173,11 @@
                 const options = {
                     theme: CLASSES.bootstrapTheme
                 };
-                if (selector !== SELECTORS.supportTeacher) {
+
+                if (selector !== SELECTORS.supportTeacher && selector !== SELECTORS.customer && selector !== SELECTORS.layanan) {
                     options.minimumResultsForSearch = Infinity;
                 }
+
                 $(selector).select2(options);
             }
 

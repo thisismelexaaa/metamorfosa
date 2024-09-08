@@ -28,26 +28,18 @@
         <div class="card">
             <div class="card-body">
                 <div class="d-flex justify-content-between gap-2 align-items-center">
-                    <div class="d-flex gap-2">
-                        <a href="{{ route('account.create') }}"
-                            class="btn btn-sm btn-primary {{ Auth::user()->role == 'admin' || Auth::user()->role == 4 ? '' : 'd-none' }}">
-                            Tambah Data
-                        </a>
-                        <div
-                            class="dropdown {{ Auth::user()->role == 'admin' || Auth::user()->role == 4 || Auth::user()->role == 5 ? '' : 'd-none' }}">
-                            <button class="btn btn-sm btn-primary text-white" type="button" data-bs-toggle="dropdown">
-                                Export Data
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="CopyToClipboard()">Copy</a></li>
-                                <li><a class="dropdown-item" onclick="ExportToCSV()">CSV</a></li>
-                                <li><a class="dropdown-item" onclick="ExportToPDF()">PDF</a></li>
-                                <li><a class="dropdown-item" onclick="ExportToXLSX()">XLSX</a></li>
-                            </ul>
-                        </div>
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-primary text-white" type="button" data-bs-toggle="dropdown">
+                            Export Data
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" onclick="CopyToClipboard()">Copy</a></li>
+                            <li><a class="dropdown-item" onclick="ExportToCSV()">CSV</a></li>
+                            <li><a class="dropdown-item" onclick="ExportToPDF()">PDF</a></li>
+                            <li><a class="dropdown-item" onclick="ExportToXLSX()">XLSX</a></li>
+                        </ul>
                     </div>
-                    <a href="{{ route('account.trash') }}" class="btn btn-sm btn-primary">Lihat Data yang
-                        Dihapus</a>
+                    <a href="{{ route('account.index') }}" class="btn btn-sm btn-primary">Kembali</a>
                 </div>
                 <table class="table nowrap table-striped table-hover align-middle" id="datatable">
                     <thead>
@@ -68,7 +60,7 @@
                                 <td>{{ $user['name'] }}</td>
                                 <td>{{ $user['username'] }}</td>
                                 <td>{{ $user['email'] }}</td>
-                                <td>{{ $user['jenis_kelamin']}}</td>
+                                <td>{{ $user['jenis_kelamin'] == 1 ? 'Laki-laki' : 'Perempuan' }}</td>
                                 <td>{{ $user->role }}</td>
                                 <td>
                                     <div class="d-flex gap-2">
@@ -76,13 +68,15 @@
                                             class="btn btn-sm btn-primary">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
-                                        <form action="{{ route('account.destroy', encrypt($user['id'])) }}" method="POST">
+                                        <form action="{{ route('account.restore', encrypt($user->id)) }}" method="POST">
                                             @csrf
-                                            @method('DELETE')
-                                            <button type="button" onclick="deleteData(this)"
-                                                class="btn btn-outline-danger btn-sm" title="Hapus">
-                                                <i class="bi bi-trash3-fill"></i>
-                                            </button>
+                                            @method('GET')
+                                            @if (Auth::user()->role == 'admin')
+                                                <button type="button" onclick="restoreData(this)"
+                                                    class="btn btn-outline-success btn-sm" title="Restore">
+                                                    <i class="bi bi-trash3-fill"></i>
+                                                </button>
+                                            @endif
                                         </form>
                                     </div>
                                 </td>

@@ -25,9 +25,6 @@ class AccountController extends Controller
         $title = 'Delete Confirmation';
         $text = "Apakah anda yakin ingin menghapus pengguna ini?";
 
-        // Call the confirmDelete function (assuming it's defined elsewhere)
-        confirmDelete($title, $text);
-
         // Process each user to define role, status, and gender
         $users->each(function ($user) {
             $this->DefineId($user);
@@ -59,7 +56,7 @@ class AccountController extends Controller
                 'alamat' => 'required',
                 'status' => 'required',
                 'jenis_kelamin' => 'required',
-                'gambar' => 'required|mimes:jpg,jpeg,png|max:2048', // Validate image
+                'no_hp' => 'required',
             ]);
 
             // Handle file upload
@@ -68,6 +65,12 @@ class AccountController extends Controller
                 $nama_file = time() . "_" . $file->getClientOriginalName();
                 $file->move(public_path('assets/panel/profile_images'), $nama_file);
                 $data['gambar'] = $nama_file; // Save the file name in the data array
+            }
+
+            if ($request->jenis_kelamin == 'Laki-laki') {
+                $data['jenis_kelamin'] = 1;
+            } else {
+                $data['jenis_kelamin'] = 2;
             }
 
             $data['password'] = bcrypt('metamorfosa');
@@ -127,7 +130,7 @@ class AccountController extends Controller
                 'alamat' => 'required',
                 'status' => 'required',
                 'jenis_kelamin' => 'required',
-                'gambar' => 'sometimes|mimes:jpg,jpeg,png|max:2048', // Image is optional
+                'no_hp' => 'required',
             ]);
 
             $user = User::find($id);
@@ -160,8 +163,6 @@ class AccountController extends Controller
         }
     }
 
-
-
     /**
      * Remove the specified resource from storage.
      */
@@ -184,6 +185,23 @@ class AccountController extends Controller
             toast('Akun tidak ditemukan!', 'error');
         }
 
+        return redirect()->route('account.index');
+    }
+
+    public function trashed()
+    {
+        $users = User::onlyTrashed()->get();
+        $users->each(function ($user) {
+            $this->DefineId($user);
+        });
+        return view('panel.account.trashed', compact('users'));
+    }
+
+    public function restore(string $id)
+    {
+        $user = User::onlyTrashed()->find($id);
+        $user->restore();
+        toast('Akun berhasil di restore!', 'success');
         return redirect()->route('account.index');
     }
 
@@ -210,6 +228,11 @@ class AccountController extends Controller
         $user->status = $statuses[$user->status] ?? 'Unknown Status';
 
         // Define gender
-        $user->jenis_kelamin = ($user->jenis_kelamin == 1) ? 'Laki - Laki' : 'Perempuan';
+        $jenis_kelamin = [
+            1 => 'Laki - Laki',
+            2 => 'Perempuan',
+        ];
+
+        $user->jenis_kelamin = $jenis_kelamin[$user->jenis_kelamin] ?? 'Computer';
     }
 }

@@ -24,8 +24,10 @@ return new class extends Migration
             $table->string('alamat')->nullable();
             $table->string('bio')->nullable();
             $table->string('gambar')->nullable();
+            $table->string('no_hp')->nullable();
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

@@ -88,7 +88,7 @@
                                             <form action="{{ route('konsultasi.restore', encrypt($item->id)) }}"
                                                 method="POST">
                                                 @csrf
-                                                @method('DELETE')
+                                                @method('GET')
                                                 <a href="{{ route('konsultasi.show', encrypt($item->id)) }}"
                                                     class="btn btn-primary btn-sm" title="Lihat Detail">
                                                     <i class="bi bi-info-circle-fill"></i>

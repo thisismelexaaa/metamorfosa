@@ -203,8 +203,12 @@
                 customer: '#id_customer',
                 supportTeacher: '#id_support_teacher',
                 statusBayar: '#status_bayar',
+                totalHarga: '#total_harga',
+                dibayar: '#dibayar',
+                sisaBayar: '#sisa_bayar',
+                colDibayar: '#col_dibayar',
+                colSisaBayar: '#col_sisa_bayar',
                 rubahKeluhan: '#rubahKeluhan',
-                keluhan: '#keluhan',
             };
 
             const CLASSES = {
@@ -213,18 +217,19 @@
             };
 
             // Initialize select2 elements with common options
-            [SELECTORS.layanan, SELECTORS.customer, SELECTORS.supportTeacher, SELECTORS
-                .subLayanan
-            ].forEach(
+            [SELECTORS.layanan, SELECTORS.customer, SELECTORS.supportTeacher, SELECTORS.statusBayar].forEach(
                 initializeSelect2);
 
             function initializeSelect2(selector) {
                 const options = {
                     theme: CLASSES.bootstrapTheme
                 };
-                if (selector !== SELECTORS.supportTeacher) {
+
+                if (selector !== SELECTORS.supportTeacher && selector !== SELECTORS.customer && selector !==
+                    SELECTORS.layanan) {
                     options.minimumResultsForSearch = Infinity;
                 }
+
                 $(selector).select2(options);
             }
 
@@ -264,13 +269,55 @@
                 }
             });
 
-            $(SELECTORS.rubahKeluhan).on('change', function() {
-                if ($(this).is(':checked')) {
-                    $(SELECTORS.keluhan).removeAttr('readonly');
-                } else {
-                    $(SELECTORS.keluhan).attr('readonly', 'readonly');
+            // Handle currency formatting on input
+            $(SELECTORS.totalHarga).on('input', handleCurrencyInput);
+            $(SELECTORS.dibayar).on('input', handleCurrencyInput);
+
+            function handleCurrencyInput() {
+                const value = this.value.replace(/[^\d]/g, ''); // Remove non-numeric characters
+                this.value = value ? formatCurrency(value) : '';
+                calculateSisaBayar();
+            }
+
+            // Update total price and remaining payment on sub-layanan change
+            $(SELECTORS.subLayanan).on('change', function() {
+                const harga = $(this).find('option:selected').data('harga');
+                $(SELECTORS.totalHarga).val(harga ? formatCurrency(harga) : '');
+                calculateSisaBayar();
+            });
+
+            // Handle the change event for payment status
+            $(SELECTORS.statusBayar).on('change', togglePaymentFields);
+
+            function togglePaymentFields() {
+                const isBelumLunas = $(this).val() === '2';
+                $(SELECTORS.colDibayar + ', ' + SELECTORS.colSisaBayar).toggleClass(CLASSES.dNone, !isBelumLunas);
+                if (!isBelumLunas) {
+                    $(SELECTORS.sisaBayar).val(0);
+                    $(SELECTORS.dibayar).val('');
                 }
-            })
+            }
+
+            // Initial toggle based on status
+            if ($(SELECTORS.statusBayar).val() === '1') {
+                togglePaymentFields();
+            }
+
+            // Calculate the remaining payment
+            function calculateSisaBayar() {
+                const totalHarga = parseFloat($(SELECTORS.totalHarga).val().replace(/[^\d]/g, '')) || 0;
+                const dibayar = parseFloat($(SELECTORS.dibayar).val().replace(/[^\d]/g, '')) || 0;
+                $(SELECTORS.sisaBayar).val(formatCurrency(totalHarga - dibayar));
+            }
+
+            // Example formatCurrency function
+            function formatCurrency(value) {
+                return new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0
+                }).format(value);
+            }
         });
     </script>
 @endsection

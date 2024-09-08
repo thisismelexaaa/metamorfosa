@@ -37,7 +37,7 @@ class UserSeeder extends Seeder
                 'role' => '2',
                 'status' => 1,
                 'alamat' => 'Jl. ABC 1234',
-                'jenis_kelamin' => 'computer',
+                'jenis_kelamin' => rand(1, 2),
             ]);
         }
 
@@ -50,7 +50,7 @@ class UserSeeder extends Seeder
             'role' => '3',
             'status' => 1,
             'alamat' => 'Jl. ABC 1234',
-            'jenis_kelamin' => 'computer',
+            'jenis_kelamin' => rand(1, 2),
         ]);
 
         User::create([
@@ -62,7 +62,7 @@ class UserSeeder extends Seeder
             'role' => '4',
             'status' => 1,
             'alamat' => 'Jl. ABC 1234',
-            'jenis_kelamin' => 'computer',
+            'jenis_kelamin' => rand(1, 2),
         ]);
 
         User::create([
@@ -74,7 +74,7 @@ class UserSeeder extends Seeder
             'role' => '5',
             'status' => 1,
             'alamat' => 'Jl. ABC 1234',
-            'jenis_kelamin' => 'computer',
+            'jenis_kelamin' => rand(1, 2),
         ]);
     }
 }
