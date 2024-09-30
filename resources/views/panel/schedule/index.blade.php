@@ -68,7 +68,7 @@
 
     @foreach ($konsultasi as $key => $item)
         <?php $key += 1; ?>
-        <div class="modal modalDetail{{ $key }} fade" id="modal{{ $key }}" tabindex="-1"
+        <div class="modal modalDetail{{ $item->id }} fade" id="modal{{ $item->id }}" tabindex="-1"
             aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
@@ -132,16 +132,17 @@
                                         $durasi = $tgl_selesai - $tgl_masuk;
                                         // dd($tgl_masuk, $tgl_selesai, $durasi);
                                     @endphp
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="isKonsul{{ $key }}"
+                                    <div class="form-check {{ $item->status == 3 ? 'd-none' : '' }}">
+                                        <input class="form-check-input" type="checkbox" id="isKonsul{{ $item->id }}"
                                             name="isKonsul" {{ $item->hasil_konsultasi != null ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="isKonsul{{ $key }}">
+                                        <label class="form-check-label" for="isKonsul{{ $item->id }}">
                                             Sudah Melakukan Konsultasi
                                         </label>
                                     </div>
 
-                                    <div class="row {{ $item->hasil_konsultasi == null ? 'd-none' : '' }}"
-                                        id="hasilKonsultasi{{ $key }}">
+                                    <div
+                                        class="row {{ $item->hasil_konsultasi == null ? 'd-none' : '' }} {{ $item->status == 3 ? 'd-none' : '' }}"
+                                        id="hasilKonsultasi{{ $item->id }}">
                                         <input type="hidden" name="id_konsultasi" value="{{ $item->id }}">
                                         <input type="hidden" name="id_layanan" value="{{ $item->id_layanan }}">
                                         <input type="hidden" name="id_sub_layanan" value="{{ $item->id_sub_layanan }}">
@@ -183,17 +184,17 @@
                                             @endforeach
 
                                             {{-- Submit button for initial consultation results --}}
-                                            {{-- <button
+                                            <button
                                                 class="btn btn-sm btn-primary my-2 w-100 {{ $item->hasil_konsultasi != null ? 'd-none' : '' }}">
                                                 Submit Hasil Konsultasi
-                                            </button> --}}
+                                            </button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            @if (Auth::user()->role == 2)
+                            @if (Auth::user()->role == 2 && $item->status != 3)
                                 <form action="{{ route('konsultasi.update', encrypt($item->id)) }}" method="POST">
                                     @csrf
                                     @method('PUT')
@@ -343,8 +344,6 @@
                     const title = `${extendedProps.kode_konsultasi} - ${extendedProps.customer.name}`;
                     const support_teacher = extendedProps.support_teacher;
 
-                    console.log(extendedProps);
-
                     return {
                         html: `
                             <div class="fc-event-time">${startTime} - ${endTime}</div>
@@ -356,6 +355,8 @@
 
                 eventClick: function(info) {
                     const id = info.event.id;
+                    console.log(info);
+
                     $(`.modalDetail${id}`).modal('show');
 
                     const isKonsul = document.getElementById(`isKonsul${id}`);

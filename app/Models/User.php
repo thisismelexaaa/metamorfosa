@@ -29,6 +29,8 @@ class User extends Authenticatable
         'bio',
         'gambar',
         'no_hp',
+        'isFounder',
+        'isCoFounder',
         'created_at',
         'updated_at',
         'deleted_at',

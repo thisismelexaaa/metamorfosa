@@ -2,6 +2,78 @@
 
 @section('home')
     <style>
+        /* Berita Feed */
+        .berita-feed {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .berita-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .berita-item:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .berita-image {
+            width: 150px;
+            height: auto;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .berita-content {
+            flex: 1;
+        }
+
+        .berita-date {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 10px;
+        }
+
+        .berita-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .berita-description {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        /* Berita Detail View */
+        .berita-detail-view {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+        }
+
+        .berita-detail-image {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+
+
         .card {
             border-radius: 10px;
             transition: transform 0.3s, box-shadow 0.3s;
@@ -285,131 +357,106 @@
             </div>
 
             <!-- Founder Section -->
-            <div class="row mb-5">
-                <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
-                    <h3 class="subheading">Founder</h3>
-                </div>
-                <div class="col-lg-12">
-                    <div class="mb-4 text-center" data-aos="fade-up" data-aos-delay="300">
-                        <div class="untree_co-testimonial d-flex flex-column align-items-center">
-                            <div class="pic mb-3">
-                                <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}" alt="Image"
-                                    class="img-fluid" style="max-width: 150px; border-radius: 50%;">
-                            </div>
-                            <div class="text">
-                                <strong class="d-block font-weight-bold h5 mb-1">Citra Sabrina, M.Psi., Psikolog</strong>
-                                <span class="d-block mb-3">Founder Metamorfosa</span>
-                                <blockquote class="text-center">
-                                    &ldquo;Separated they <span class="highlight">live in Bookmarksgrove right at the coast
-                                        of the Semantics</span>, a large language ocean. A small river named Duden flows by
-                                    their place and supplies it with the necessary regelialia. &rdquo;
-                                </blockquote>
+            @if ($founders)
+                <div class="row mb-5">
+                    <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
+                        <h3 class="subheading">Founder</h3>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="mb-4 text-center" data-aos="fade-up" data-aos-delay="300">
+                            <div class="untree_co-testimonial d-flex flex-column align-items-center">
+                                <div class="pic mb-3">
+                                    <img src="{{ asset($founder->gambar ? 'assets/panel/profile_images/' . $founder->gambar : 'assets/landingpage/images/person_1.jpg') }}"
+                                        alt="Founder Image" class="img-fluid"
+                                        style="max-width: 150px; border-radius: 50%;">
+                                </div>
+                                <div class="text">
+                                    <strong class="d-block font-weight-bold h5 mb-1">{{ $founder->name }}</strong>
+                                    <span class="d-block mb-3">Founder Metamorfosa</span>
+                                    <blockquote class="text-center">
+                                        &ldquo;{{ $founder->bio ?? 'Belum Ada Bio' }}&rdquo;
+                                    </blockquote>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            @endif
 
             <!-- Co-Founders Section -->
-            <div class="row mb-5">
-                <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
-                    <h3 class="subheading">Co-Founder</h3>
-                </div>
-                <div class="col-lg-4">
-                    <div class="mb-4 text-center" data-aos="fade-up" data-aos-delay="300">
-                        <div class="untree_co-testimonial d-flex flex-column align-items-center">
-                            <div class="pic mb-3">
-                                <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}" alt="Image"
-                                    class="img-fluid" style="max-width: 150px; border-radius: 50%;">
-                            </div>
-                            <div class="text">
-                                <strong class="d-block font-weight-bold h5 mb-1">Micki Watulandi, S.E., M.M.,
-                                    C.P.S</strong>
-                                <span class="d-block mb-3">Co-Founder Metamorfosa</span>
-                                <blockquote class="text-center">
-                                    &ldquo;Separated they <span class="highlight">live in Bookmarksgrove right at the coast
-                                        of the Semantics</span>, a large language ocean. A small river named Duden flows by
-                                    their place and supplies it with the necessary regelialia. &rdquo;
-                                </blockquote>
-                            </div>
-                        </div>
+            @if ($cofounders->isNotEmpty())
+                <div class="row mb-5">
+                    <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
+                        <h3 class="subheading">Co-Founders</h3>
                     </div>
-                </div>
-
-                <div class="col-lg-4">
-                    <div class="mb-4 text-center" data-aos="fade-up" data-aos-delay="300">
-                        <div class="untree_co-testimonial d-flex flex-column align-items-center">
-                            <div class="pic mb-3">
-                                <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}" alt="Image"
-                                    class="img-fluid" style="max-width: 150px; border-radius: 50%;">
-                            </div>
-                            <div class="text">
-                                <strong class="d-block font-weight-bold h5 mb-1">Ervi Amaliyah, S.Pd</strong>
-                                <span class="d-block mb-3">Co-Founder Metamorfosa</span>
-                                <blockquote class="text-center">
-                                    &ldquo;Separated they <span class="highlight">live in Bookmarksgrove right at the coast
-                                        of the Semantics</span>, a large language ocean. A small river named Duden flows by
-                                    their place and supplies it with the necessary regelialia. &rdquo;
-                                </blockquote>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4">
-                    <div class="mb-4 text-center" data-aos="fade-up" data-aos-delay="300">
-                        <div class="untree_co-testimonial d-flex flex-column align-items-center">
-                            <div class="pic mb-3">
-                                <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}" alt="Image"
-                                    class="img-fluid" style="max-width: 150px; border-radius: 50%;">
-                            </div>
-                            <div class="text">
-                                <strong class="d-block font-weight-bold h5 mb-1">Dr. Widya, MKN</strong>
-                                <span class="d-block mb-3">Co-Founder Metamorfosa</span>
-                                <blockquote class="text-center">
-                                    &ldquo;Separated they <span class="highlight">live in Bookmarksgrove right at the coast
-                                        of the Semantics</span>, a large language ocean. A small river named Duden flows by
-                                    their place and supplies it with the necessary regelialia. &rdquo;
-                                </blockquote>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Support Teachers Section -->
-            <div class="row mb-5">
-                <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
-                    <h3 class="subheading">Support Teachers</h3>
-                </div>
-                <div class="col-lg-12">
-                    <div class="owl-3-slider owl-carousel" data-aos="fade-up">
-                        @foreach ($users as $support_teacher)
-                            <div class="item">
-                                <div class="card text-center border-0 shadow-md">
-                                    <div class="card-body">
-                                        <div class="pic mb-3 mx-auto">
-                                            <img src="{{ asset('../assets/landingpage/images/person_1.jpg') }}"
-                                                alt="Image" class="img-fluid"
-                                                style="max-width: 120px; border-radius: 50%;">
-                                        </div>
-                                        <div class="text">
-                                            <strong
-                                                class="d-block font-weight-bold h5 mb-1">{{ $support_teacher->name }}</strong>
-                                            <span class="d-block mb-3 text-muted">{{ $support_teacher->role }}</span>
-                                            <blockquote class="blockquote">
-                                                <p class="mb-0">"{{ $support_teacher->bio ?? 'No Bio Available' }}"</p>
-                                            </blockquote>
-                                        </div>
+                    @foreach ($cofounders as $cofounder)
+                        <div class="col-lg-4 mb-4">
+                            <div class="text-center" data-aos="fade-up" data-aos-delay="300">
+                                <div class="untree_co-testimonial d-flex flex-column align-items-center">
+                                    <div class="pic mb-3">
+                                        <img src="{{ asset($cofounder->gambar ? 'assets/panel/profile_images/' . $cofounder->gambar : 'assets/landingpage/images/person_1.jpg') }}"
+                                            alt="Co-Founder Image" class="img-fluid"
+                                            style="max-width: 150px; border-radius: 50%;">
+                                    </div>
+                                    <div class="text">
+                                        <strong class="d-block font-weight-bold h5 mb-1">{{ $cofounder->name }}</strong>
+                                        <span class="d-block mb-3">Co-Founder Metamorfosa</span>
+                                        <blockquote class="text-center">
+                                            &ldquo;{{ $cofounder->bio ?? 'Belum Ada Bio' }}&rdquo;
+                                        </blockquote>
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+
+            <!-- Support Teachers Section -->
+            @if ($support_teachers->isNotEmpty())
+                <div class="row mb-5">
+                    <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
+                        <h3 class="subheading">Support Teachers</h3>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="owl-carousel owl-3-slider" data-aos="fade-up">
+                            @foreach ($support_teachers as $support_teacher)
+                                <div class="item">
+                                    <div class="card text-center border-0 shadow-md">
+                                        <div class="card-body">
+                                            <div class="pic mb-3 mx-auto">
+                                                <img src="{{ asset($support_teacher->gambar ? 'assets/panel/profile_images/' . $support_teacher->gambar : 'assets/landingpage/images/person_1.jpg') }}"
+                                                    alt="Support Teacher Image" class="img-fluid"
+                                                    style="max-width: 120px; border-radius: 50%;">
+                                            </div>
+                                            <div class="text">
+                                                <strong
+                                                    class="d-block font-weight-bold h5 mb-1 text-capitalize">{{ $support_teacher->name }}</strong>
+                                                <span class="d-block mb-3 text-muted">{{ $support_teacher->role }}</span>
+                                                <blockquote class="blockquote">
+                                                    <p class="mb-0">"{{ $support_teacher->bio ?? 'Belum Ada Bio' }}"</p>
+                                                </blockquote>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endif
+
+            <!-- Empty State Message -->
+            @if ($support_teachers->isEmpty() && $cofounders->isEmpty() && !$founders)
+                <div class="row mb-5">
+                    <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
+                        <h3 class="subheading">Tidak Ada Support Teacher, Co-Founders, atau Founder</h3>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
+
 
     {{-- LAYANAN KAMI --}}
     <div class="untree_co-section bg-light" id="layanan-section">
@@ -417,25 +464,6 @@
             <div class="row pricing-title">
                 <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
                     <h2 class="heading">Layanan Kami</h2>
-                    {{-- <div>
-                        <a href="#" class="js-custom-prev-v3 cusotm-slider-nav custom-prev"><span><svg
-                                    class="bi bi-arrow-left" width="1em" height="1em" viewBox="0 0 16 16"
-                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd"
-                                        d="M5.854 4.646a.5.5 0 0 1 0 .708L3.207 8l2.647 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 0 1 .708 0z" />
-                                    <path fill-rule="evenodd"
-                                        d="M2.5 8a.5.5 0 0 1 .5-.5h10.5a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
-                                </svg></span></a>
-                        <a href="#" class="js-custom-next-v3 cusotm-slider-nav custom-next"><span>
-                                <svg class="bi bi-arrow-right" width="1em" height="1em" viewBox="0 0 16 16"
-                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd"
-                                        d="M10.146 4.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L12.793 8l-2.647-2.646a.5.5 0 0 1 0-.708z" />
-                                    <path fill-rule="evenodd"
-                                        d="M2 8a.5.5 0 0 1 .5-.5H13a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 8z" />
-                                </svg></span>
-                        </a>
-                    </div> --}}
                 </div>
             </div> <!-- /.row -->
 
@@ -477,75 +505,133 @@
                 <div class="col-12 text-center mb-5" data-aos="fade-up" data-aos-delay="0">
                     <h2 class="heading">Aktivitas Selanjutnya</h2>
                 </div>
-                <div class="col-lg">
-                    <div class="news-feed">
-                        @foreach ($news as $i => $item)
-                            @if ($item->category == 2)
-                                <div class="news-item" data-aos="fade-up" data-aos-delay="100">
-                                    <img src="{{ asset('assets/image/news/' . $item->image) }}"
-                                        alt="Thumbnail Aktivitas {{ $i }}" class="news-image">
-                                    <div class="news-content">
-                                        <div class="news-date">{{ $item->created_at->format('d M Y') }}</div>
-                                        <h3 class="news-title">{{ $item->judul }}</h3>
-                                        <p class="news-description">{!! Str::limit($item->content, 100) !!}</p>
-                                        <a href="#" class="btn btn-primary view-details"
-                                            data-id="{{ $i }}">Baca
-                                            Selengkapnya</a>
+                @if ($news->isNotEmpty())
+                    <div class="col-lg">
+                        <div class="news-feed">
+                            @foreach ($news as $i => $item)
+                                @if ($item->category == 2)
+                                    <div class="news-item" data-aos="fade-up" data-aos-delay="100">
+                                        <img src="{{ asset('assets/image/news/' . $item->image) }}"
+                                            alt="Thumbnail Aktivitas {{ $i }}" class="news-image">
+                                        <div class="news-content">
+                                            <div class="news-date">{{ $item->created_at->format('d M Y') }}</div>
+                                            <h3 class="news-title">{{ $item->judul }}</h3>
+                                            <p class="news-description">{!! Str::limit($item->content, 40) !!}</p>
+                                            <a href="{{ route('home.news', encrypt($item->id)) }}"
+                                                class="btn btn-primary view-details" data-id="{{ $i }}">Baca
+                                                Selengkapnya</a>
+                                        </div>
                                     </div>
-                                </div>
-                            @endif
-                        @endforeach
+                                @endif
+                            @endforeach
+                        </div>
                     </div>
-                </div>
 
-                <!-- Right Side: Detail View -->
-                <div class="col-lg">
-                    <div class="detail-view" data-aos="fade-up" data-aos-delay="100">
-                        <img src="" alt="Detail Image" class="detail-image w-100" id="detail-image"
-                            class="img-fluid">
+                    <!-- Right Side: Detail View -->
+                    <div class="col-lg">
+                        <div class="detail-view" data-aos="fade-up" data-aos-delay="100">
+                            <img src="" alt="Detail Image" class="detail-image w-100" id="detail-image"
+                                class="img-fluid">
+                        </div>
                     </div>
-                </div>
+                @else
+                    <div class="col-12" data-aos="fade-up" data-aos-delay="0">
+                        <h3 class="subheading text-center">Tidak Ada Aktivitas Selanjutnya</h3>
+                    </div>
+                @endif
 
             </div> <!-- /.row -->
         </div> <!-- /.container -->
     </div>
 
-    {{-- PARTNER --}}
-    <div class="container-fluid px-5" id="partner">
-        <div class="row justify-content-center">
-            <div class="container col-12 text-center mt-5" data-aos="fade-up" data-aos-delay="100">
-                <h2 class="heading">Partner Kami</h2>
-            </div>
-            <div class="col-lg-12">
-                <!-- Carousel untuk arah kiri -->
-                <div class="partner-slider-rtl owl-carousel owl-theme">
-                    @foreach ($partners as $partner)
-                        @if (in_array($partner->tipe, [1, 2, 3]))
-                            <div class="item py-3" data-aos="fade-up" data-aos-delay="100">
-                                <div class="carousel-item-content">
-                                    <img src="{{ asset('assets/panel/partners/' . $partner->image) }}"
-                                        alt="{{ $partner->name }}" class="img-fluid">
-                                    <span class="partner-name">{{ $partner->name }}</span>
-                                </div>
-                            </div>
-                        @endif
-                    @endforeach
+    <div class="untree_co-section bg-light" id="berita-section">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-12 text-center mb-5" data-aos="fade-up" data-aos-delay="0">
+                    <h2 class="heading">Berita Terbaru</h2>
                 </div>
+                @if ($news->isNotEmpty())
+                    <div class="col-lg">
+                        <div class="berita-detail-view" data-aos="fade-up" data-aos-delay="100">
+                            <img src="" alt="Detail Image Berita" class="berita-detail-image w-100"
+                                id="berita-detail-image" class="img-fluid">
+                        </div>
+                    </div>
 
-                <!-- Carousel untuk arah kanan -->
-                <div class="partner-slider owl-carousel owl-theme">
-                    @foreach ($partners as $partner)
-                        @if (in_array($partner->tipe, [4,5]))
-                            <div class="item py-3" data-aos="fade-up" data-aos-delay="100">
-                                <div class="carousel-item-content">
-                                    <img src="{{ asset('assets/panel/partners/' . $partner->image) }}"
-                                        alt="{{ $partner->name }}" class="img-fluid">
-                                    <span class="partner-name">{{ $partner->name }}</span>
-                                </div>
-                            </div>
-                        @endif
-                    @endforeach
+                    <div class="col-lg">
+                        <div class="berita-feed">
+                            @foreach ($news as $i => $berita)
+                                @if ($berita->category == 1)
+                                    <!-- Berita has category 2 -->
+                                    <div class="berita-item" data-aos="fade-up" data-aos-delay="100">
+                                        <img src="{{ asset('assets/image/news/' . $berita->image) }}"
+                                            alt="Thumbnail Berita {{ $i }}" class="berita-image">
+                                        <div class="berita-content">
+                                            <div class="berita-date">{{ $berita->created_at->format('d M Y') }}</div>
+                                            <h3 class="berita-title">{{ $berita->judul }}</h3>
+                                            <p class="berita-description">{!! Str::limit($berita->content, 40) !!}</p>
+                                            <a href="{{ route('home.news', encrypt($berita->id)) }}"
+                                                class="btn btn-primary view-details" data-id="{{ $i }}">Baca
+                                                Selengkapnya</a>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+                @else
+                    <div class="col-12" data-aos="fade-up" data-aos-delay="0">
+                        <h3 class="subheading text-center">Tidak Ada Berita Terbaru</h3>
+                    </div>
+                @endif
+            </div> <!-- /.row -->
+        </div> <!-- /.container -->
+    </div>
+
+    {{-- PARTNER --}}
+    <div class="untree_co-section" id="partner">
+        <div class="container-fluid px-5">
+            <div class="row justify-content-center">
+                <div class="col-12 text-center mb-5" data-aos="fade-up" data-aos-delay="0">
+                    <h2 class="heading">Partner Kami</h2>
                 </div>
+                @if ($partners->isNotEmpty())
+                    <div class="col-lg-12">
+                        <!-- Carousel untuk arah kiri -->
+                        <div class="partner-slider-rtl owl-carousel owl-theme">
+                            @foreach ($partners as $partner)
+                                @if (in_array($partner->tipe, [1, 2, 3]))
+                                    <div class="item py-3" data-aos="fade-up" data-aos-delay="100">
+                                        <div class="carousel-item-content">
+                                            <img src="{{ asset('assets/panel/partners/' . $partner->image) }}"
+                                                alt="{{ $partner->name }}" class="img-fluid">
+                                            <span class="partner-name">{{ $partner->name }}</span>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+
+                        <!-- Carousel untuk arah kanan -->
+                        <div class="partner-slider owl-carousel owl-theme">
+                            @foreach ($partners as $partner)
+                                @if (in_array($partner->tipe, [4, 5]))
+                                    <div class="item py-3" data-aos="fade-up" data-aos-delay="100">
+                                        <div class="carousel-item-content">
+                                            <img src="{{ asset('assets/panel/partners/' . $partner->image) }}"
+                                                alt="{{ $partner->name }}" class="img-fluid">
+                                            <span class="partner-name">{{ $partner->name }}</span>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+                @else
+                    <div class="col-12" data-aos="fade-up" data-aos-delay="0">
+                        <h3 class="subheading text-center">Tidak Ada Partner</h3>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
@@ -974,6 +1060,41 @@
             $('.partner-slider-rtl').owlCarousel({
                 ...owlCarouselOptions,
                 rtl: true // Right-to-left direction
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Select all berita items and detail image
+            const beritaItems = document.querySelectorAll('.berita-item');
+            const beritaDetailImage = document.querySelector('.berita-detail-image');
+            const beritaDetailView = document.querySelector('.berita-detail-view');
+
+            // Check if detailImage exists
+            if (!beritaDetailImage) return;
+
+            // Set initial image source to the first item's image
+            beritaDetailImage.src = beritaItems[0]?.querySelector('.berita-image').src;
+
+            beritaItems.forEach(item => {
+                item.addEventListener('mouseover', () => {
+                    // Avoid adding 'hover' class if it already exists
+                    if (item.classList.contains('hover')) return;
+
+                    item.classList.add('hover');
+
+                    // Find and update berita-image if it exists
+                    const beritaImage = item.querySelector('.berita-image');
+                    if (beritaImage) {
+                        beritaDetailImage.src = beritaImage.src;
+                        beritaDetailImage.classList.remove('d-none');
+                        beritaDetailView.classList.remove('d-none');
+                    }
+                });
+
+                item.addEventListener('mouseout', () => {
+                    // Only remove 'hover' class if it exists
+                    item.classList.remove('hover');
+                });
             });
         });
     </script>

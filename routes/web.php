@@ -41,6 +41,8 @@ Route::prefix('/error')->group(function () {
 Route::middleware('web', 'ModifiedUrl')->group(function () {
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
+    Route::get('/news/{id}', [HomeController::class, 'showNews'])->name('home.news');
+
     // Admin panel routes
     Route::prefix('/panel')->group(function () {
         Route::resources([

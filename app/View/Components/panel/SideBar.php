@@ -17,7 +17,7 @@ class SideBar extends Component
      */
     public function __construct()
     {
-        // $this->isLogin = $isLogin;
+        //
     }
 
     /**

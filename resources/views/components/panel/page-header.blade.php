@@ -33,7 +33,7 @@
                 </div>
             </div>
         </div>
-        <div class="nav-right col-10 col-sm-6 pull-right right-header p-0">
+        <div class="nav-right col-10 col-sm-6 pull-right right-header">
             <ul class="nav-menus">
                 <li class="maximize">
                     <a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()">
@@ -60,7 +60,7 @@
                         </svg>
                     </a>
                 </li>
-                <li class="profile-nav onhover-dropdown pe-0 py-0 me-0">
+                <li class="profile-nav onhover-dropdown">
                     <div class="media profile-media">
                         @if (Auth::user()->gambar)
                             <img src="{{ asset('assets/panel/profile_images/' . Auth::user()->gambar) }}"
@@ -93,13 +93,20 @@
                     </div>
                     <ul class="profile-dropdown onhover-show-div">
                         <li>
-                            <a href="{{ route('setting-account.index') }}">
-                                <i data-feather="settings"></i>
-                                <span>Pengaturan Akun</span>
+                            <a href="{{ route('setting-account.index') }}" class="text-dark">
+                                <div class="d-flex gap-2">
+                                    <i class="bi bi-gear-fill"></i>
+                                    <span>Akun</span>
+                                </div>
                             </a>
                         </li>
                         <li>
-                            <a onclick="logoout()">Log Out</a>
+                            <a onclick="logoout()">
+                                <div class="d-flex gap-2">
+                                    <i class="bi bi-box-arrow-in-left"></i>
+                                    <span>Keluar</span>
+                                </div>
+                            </a>
                         </li>
                     </ul>
                 </li>
@@ -115,7 +122,6 @@
 
 <script>
     function logoout() {
-        event.preventDefault();
         document.getElementById('logout-form').submit();
     }
 </script>

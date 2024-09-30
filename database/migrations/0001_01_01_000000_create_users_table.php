@@ -25,6 +25,8 @@ return new class extends Migration
             $table->string('bio')->nullable();
             $table->string('gambar')->nullable();
             $table->string('no_hp')->nullable();
+            $table->string('isFounder')->nullable();
+            $table->string('isCoFounder')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

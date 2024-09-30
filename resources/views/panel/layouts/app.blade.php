@@ -60,7 +60,7 @@
     <!-- Loader ends-->
     <main class="page-wrapper compact-wrapper" id="pageWrapper">
         <x-panel.page-header />
-        <div class="page-body-wrapper">
+        <div class="page-body-wrapper pb-5">
             <x-panel.side-bar />
             <div class="page-body">
                 @yield('content')

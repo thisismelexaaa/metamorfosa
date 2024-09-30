@@ -39,8 +39,13 @@ class AccountController extends Controller
      */
     public function create()
     {
-        return view('panel.account.create');
+
+        $data['isFounder'] = User::where('isFounder', 1)->first();
+        $data['isCoFounder'] = User::where('isCoFounder', 1)->first();
+
+        return view('panel.account.create', $data);
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -77,6 +82,17 @@ class AccountController extends Controller
             $data['created_at'] = now();
             $data['updated_at'] = now();
 
+            if ($request->isFounder == 'on') {
+                $data['isFounder'] = 1;
+                $data['isCoFounder'] = null;
+            }
+
+            if ($request->isCoFounder == 'on') {
+                $data['isFounder'] = null;
+                $data['isCoFounder'] = 1;
+            }
+
+            // dd($data);
             User::create($data); // Store the validated data including 'gambar' field
 
             toast('Akun berhasil di tambahkan!', 'success');
