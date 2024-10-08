@@ -130,18 +130,17 @@
                                         $tgl_masuk = \Carbon\Carbon::parse($item->tgl_masuk)->day;
                                         $tgl_selesai = \Carbon\Carbon::parse($item->tgl_selesai)->day;
                                         $durasi = $tgl_selesai - $tgl_masuk;
-                                        // dd($tgl_masuk, $tgl_selesai, $durasi);
                                     @endphp
+
                                     <div class="form-check {{ $item->status == 3 ? 'd-none' : '' }}">
                                         <input class="form-check-input" type="checkbox" id="isKonsul{{ $item->id }}"
                                             name="isKonsul" {{ $item->hasil_konsultasi != null ? 'checked' : '' }}>
                                         <label class="form-check-label" for="isKonsul{{ $item->id }}">
-                                            Sudah Melakukan Konsultasi
+                                            Absen Konsultasi
                                         </label>
                                     </div>
 
-                                    <div
-                                        class="row {{ $item->hasil_konsultasi == null ? 'd-none' : '' }} {{ $item->status == 3 ? 'd-none' : '' }}"
+                                    <div class="row {{ $item->hasil_konsultasi == null ? 'd-none' : '' }} {{ $item->status == 3 ? 'd-none' : '' }}"
                                         id="hasilKonsultasi{{ $item->id }}">
                                         <input type="hidden" name="id_konsultasi" value="{{ $item->id }}">
                                         <input type="hidden" name="id_layanan" value="{{ $item->id_layanan }}">
@@ -373,18 +372,27 @@
                         extendedProps
                     } = info.event;
 
-                    // Kondisi berdasarkan status
-                    if (extendedProps.status === 3) {
-                        info.el.style.backgroundColor = '#7dc006';
-                        info.el.style.borderColor = '#7dc006';
-                    }
-
                     let dateEventStart = info.event.start; // Tanggal mulai acara
                     let dateEventEnd = info.event.end; // Tanggal akhir acara
                     let dateNow = new Date(); // Tanggal sekarang
 
-                    // Pastikan tanggal tidak null atau undefined
-                    if (dateEventStart && dateEventEnd) {
+                    if (extendedProps.status === 3) {
+                        info.el.style.backgroundColor = '#7dc006';
+                        info.el.style.borderColor = '#7dc006';
+                        info.el.style.color = '#ffff';
+
+                        info.el.addEventListener('mouseover', function() {
+                            info.el.style.backgroundColor = '#7dc006';
+                            info.el.style.borderColor = '#7dc006';
+                            info.el.style.color = '#000000';
+                        });
+
+                        info.el.addEventListener('mouseout', function() {
+                            info.el.style.backgroundColor = '#7dc006';
+                            info.el.style.borderColor = '#7dc006';
+                            info.el.style.color = '#ffff';
+                        });
+                    } else if (dateEventStart && dateEventEnd) {
                         // Hilangkan komponen waktu (jam, menit, detik) untuk membandingkan hanya tanggal
                         const dateNow = new Date();
                         dateNow.setHours(0, 0, 0, 0); // Set ke awal hari

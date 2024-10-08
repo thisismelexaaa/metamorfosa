@@ -46,7 +46,7 @@
                             </ul>
                         </div>
                     </div>
-                    <a href="{{ route('account.trash') }}" class="btn btn-sm btn-primary">Lihat Data yang
+                    <a href="{{ route('account.trash') }}" class="btn btn-sm btn-primary {{ Auth::user()->role == 'admin' || Auth::user()->role == 4 || Auth::user()->role == 5 ? '' : 'd-none' }}">Lihat Data yang
                         Dihapus</a>
                 </div>
                 <table class="table nowrap table-striped table-hover align-middle" id="datatable">
@@ -68,8 +68,11 @@
                                 <td>{{ $user['name'] }}</td>
                                 <td>{{ $user['username'] }}</td>
                                 <td>{{ $user['email'] }}</td>
-                                <td>{{ $user['jenis_kelamin']}}</td>
-                                <td>{{ $user->role }}</td>
+                                <td>{{ $user['jenis_kelamin'] }}</td>
+                                <td>
+                                    {{ $user->role }} -
+                                    {{ $user->isFounder ? 'Founder' : ($user->isCoFounder ? 'Co-Founder' : '') }}
+                                </td>
                                 <td>
                                     <div class="d-flex gap-2">
                                         <a href="{{ route('account.edit', encrypt($user['id'])) }}"

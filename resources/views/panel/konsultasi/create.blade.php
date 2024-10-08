@@ -68,6 +68,18 @@
 
                     <div class="row mb-2">
                         <div class="col-md">
+                            <label class="form-label" for="ruangan">Ruangan</label>
+                            <select required id="ruangan" name="ruangan" class="form-select select2"
+                                data-placeholder="Pilih Support Teacher">
+                                <option disabled selected>Pilih Ruangan</option>
+                                <option value="ruangan 1">Ruangan 1</option>
+                                <option value="ruangan 2">Ruangan 2</option>
+                                <option value="ruangan 3">Ruangan 3</option>
+                                <option value="ruangan 4">Ruangan 4</option>
+                                <option value="ruangan 5">Ruangan 5</option>
+                            </select>
+                        </div>
+                        <div class="col-md">
                             <label class="form-label" for="id_support_teacher">Support Teacher</label>
                             <select required id="id_support_teacher" name="id_support_teacher" class="form-select select2"
                                 data-placeholder="Pilih Support Teacher">
@@ -158,6 +170,7 @@
                 colDibayar: '#col_dibayar',
                 colSisaBayar: '#col_sisa_bayar',
                 rubahKeluhan: '#rubahKeluhan',
+                ruangan: '#ruangan'
             };
 
             const CLASSES = {
@@ -166,7 +179,7 @@
             };
 
             // Initialize select2 elements with common options
-            [SELECTORS.layanan, SELECTORS.customer, SELECTORS.supportTeacher, SELECTORS.statusBayar].forEach(
+            [SELECTORS.layanan, SELECTORS.customer, SELECTORS.supportTeacher, SELECTORS.statusBayar, SELECTORS.ruangan].forEach(
                 initializeSelect2);
 
             function initializeSelect2(selector) {

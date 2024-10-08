@@ -1,7 +1,7 @@
 @extends('panel.layouts.app')
 
 @section('title')
-    Tambah Data Pelanggan
+    Tambah Data Klien
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-12 col-sm-6">
-                    <h3>{{ __('Tambah Data Pelanggan') }}</h3>
+                    <h3>{{ __('Tambah Data Klien') }}</h3>
                 </div>
                 <div class="col-12 col-sm-6">
                     <ol class="breadcrumb">
@@ -40,7 +40,7 @@
                         <div class="col-md">
                             <label class="form-label" for="nama">Nama Lengkap</label>
                             <input required id="nama" type="text" class="form-control" name="name"
-                                placeholder="Masukkan Nama Lengkap Pelanggan">
+                                placeholder="Masukkan Nama Lengkap Klien">
                         </div>
                         <div class="col-md">
                             <label class="form-label" for="no_tlp">Nomor Telepon</label>

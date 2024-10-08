@@ -66,7 +66,9 @@
                             </ul>
                         </div>
                     </div>
-                    <a href="{{ route('konsultasi.trash') }}" class="btn btn-sm btn-primary">Lihat Data yang
+                    <a href="{{ route('konsultasi.trash') }}"
+                        class="btn btn-sm btn-primary {{ Auth::user()->role == 'admin' || Auth::user()->role == 4 || Auth::user()->role == 5 ? '' : 'd-none' }}">Lihat
+                        Data yang
                         Dihapus</a>
                 </div>
                 <div class="table-responsive overflow-auto">
@@ -77,6 +79,7 @@
                                 <th>Kode Konsultasi</th>
                                 <th>Nama Pelanggan</th>
                                 <th>Layanan</th>
+                                <th>Ruangan</th>
                                 <th>Sub Layanan</th>
                                 <th>Support Teacher</th>
                                 <th class="bg-white text-dark">Action</th>
@@ -85,12 +88,13 @@
                         <tbody>
                             @foreach ($konsultasi as $item)
                                 <tr>
-                                    <td class="text-start">{{ $item->customer->no_daftar }}</td>
-                                    <td>{{ $item->kode_konsultasi }}</td>
-                                    <td>{{ $item->customer->name }}</td>
-                                    <td>{{ $item->layanan->layanan }}</td>
-                                    <td>{{ $item->subLayanan->sub_layanan }}</td>
-                                    <td>{{ $item->supportTeacher->name }}</td>
+                                    <td class="text-start">{{ $item->customer->no_daftar ?? 'N/A' }}</td>
+                                    <td>{{ $item->kode_konsultasi ?? 'N/A' }}</td>
+                                    <td>{{ $item->customer->name ?? 'N/A' }}</td>
+                                    <td>{{ $item->layanan->layanan ?? 'N/A' }}</td>
+                                    <td class="text-capitalize">{{ $item->ruangan ?? 'N/A' }}</td>
+                                    <td>{{ $item->subLayanan->sub_layanan ?? 'N/A' }}</td>
+                                    <td>{{ $item->supportTeacher->name ?? 'N/A' }}</td>
                                     <td class="bg-white text-dark">
                                         <div class="d-flex gap-1">
                                             <form action="{{ route('konsultasi.destroy', encrypt($item->id)) }}"
@@ -111,7 +115,6 @@
                                                 </button>
                                             </form>
                                         </div>
-
                                     </td>
                                 </tr>
                             @endforeach

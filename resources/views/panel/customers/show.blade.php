@@ -1,7 +1,7 @@
 @extends('panel.layouts.app')
 
 @section('title')
-    Detail Data Pelanggan
+    Detail Data Klien
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-12 col-sm-6">
-                    <h3>{{ __('Detail Data Pelanggan') }}</h3>
+                    <h3>{{ __('Detail Data Klien') }}</h3>
                 </div>
                 <div class="col-12 col-sm-6">
                     <ol class="breadcrumb">
@@ -20,10 +20,10 @@
                         </li>
                         <li class="breadcrumb-item">
                             <a class="home-item" href="{{ route('customers.index') }}">
-                                Pelanggan
+                                Klien
                             </a>
                         </li>
-                        <li class="breadcrumb-item active">Detail Data Pelanggan</li>
+                        <li class="breadcrumb-item active">Detail Data Klien</li>
                     </ol>
                 </div>
             </div>

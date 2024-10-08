@@ -357,7 +357,7 @@
             </div>
 
             <!-- Founder Section -->
-            @if ($founders)
+            @if (isset($founder))
                 <div class="row mb-5">
                     <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
                         <h3 class="subheading">Founder</h3>
@@ -366,12 +366,13 @@
                         <div class="mb-4 text-center" data-aos="fade-up" data-aos-delay="300">
                             <div class="untree_co-testimonial d-flex flex-column align-items-center">
                                 <div class="pic mb-3">
-                                    <img src="{{ asset($founder->gambar ? 'assets/panel/profile_images/' . $founder->gambar : 'assets/landingpage/images/person_1.jpg') }}"
+                                    <img src="{{ isset($founder->gambar) && $founder->gambar ? asset('assets/panel/profile_images/' . $founder->gambar) : asset('assets/landingpage/images/person_1.jpg') }}"
                                         alt="Founder Image" class="img-fluid"
                                         style="max-width: 150px; border-radius: 50%;">
                                 </div>
                                 <div class="text">
-                                    <strong class="d-block font-weight-bold h5 mb-1">{{ $founder->name }}</strong>
+                                    <strong
+                                        class="d-block font-weight-bold h5 mb-1">{{ $founder->name ?? 'Founder Name Unavailable' }}</strong>
                                     <span class="d-block mb-3">Founder Metamorfosa</span>
                                     <blockquote class="text-center">
                                         &ldquo;{{ $founder->bio ?? 'Belum Ada Bio' }}&rdquo;
@@ -394,12 +395,13 @@
                             <div class="text-center" data-aos="fade-up" data-aos-delay="300">
                                 <div class="untree_co-testimonial d-flex flex-column align-items-center">
                                     <div class="pic mb-3">
-                                        <img src="{{ asset($cofounder->gambar ? 'assets/panel/profile_images/' . $cofounder->gambar : 'assets/landingpage/images/person_1.jpg') }}"
+                                        <img src="{{ isset($cofounder->gambar) && $cofounder->gambar ? asset('assets/panel/profile_images/' . $cofounder->gambar) : asset('assets/landingpage/images/person_1.jpg') }}"
                                             alt="Co-Founder Image" class="img-fluid"
                                             style="max-width: 150px; border-radius: 50%;">
                                     </div>
                                     <div class="text">
-                                        <strong class="d-block font-weight-bold h5 mb-1">{{ $cofounder->name }}</strong>
+                                        <strong
+                                            class="d-block font-weight-bold h5 mb-1">{{ $cofounder->name ?? 'Co-Founder Name Unavailable' }}</strong>
                                         <span class="d-block mb-3">Co-Founder Metamorfosa</span>
                                         <blockquote class="text-center">
                                             &ldquo;{{ $cofounder->bio ?? 'Belum Ada Bio' }}&rdquo;
@@ -425,14 +427,15 @@
                                     <div class="card text-center border-0 shadow-md">
                                         <div class="card-body">
                                             <div class="pic mb-3 mx-auto">
-                                                <img src="{{ asset($support_teacher->gambar ? 'assets/panel/profile_images/' . $support_teacher->gambar : 'assets/landingpage/images/person_1.jpg') }}"
+                                                <img src="{{ isset($support_teacher->gambar) && $support_teacher->gambar ? asset('assets/panel/profile_images/' . $support_teacher->gambar) : asset('assets/landingpage/images/person_1.jpg') }}"
                                                     alt="Support Teacher Image" class="img-fluid"
                                                     style="max-width: 120px; border-radius: 50%;">
                                             </div>
                                             <div class="text">
                                                 <strong
-                                                    class="d-block font-weight-bold h5 mb-1 text-capitalize">{{ $support_teacher->name }}</strong>
-                                                <span class="d-block mb-3 text-muted">{{ $support_teacher->role }}</span>
+                                                    class="d-block font-weight-bold h5 mb-1 text-capitalize">{{ $support_teacher->name ?? 'Support Teacher Name Unavailable' }}</strong>
+                                                <span
+                                                    class="d-block mb-3 text-muted">{{ $support_teacher->role ?? 'Role Unavailable' }}</span>
                                                 <blockquote class="blockquote">
                                                     <p class="mb-0">"{{ $support_teacher->bio ?? 'Belum Ada Bio' }}"</p>
                                                 </blockquote>
@@ -492,7 +495,15 @@
                                 </div> <!-- /.pricing -->
                             </div>
                         @endforeach
+
                     </div>
+                    @if ($layanan->isEmpty())
+                        <div class="row mb-5">
+                            <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
+                                <h3 class="subheading">Tidak ada layanan</h3>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div> <!-- /.row -->
         </div> <!-- /.container -->

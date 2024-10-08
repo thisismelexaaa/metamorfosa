@@ -1,7 +1,7 @@
 @extends('panel.layouts.app')
 
 @section('title')
-    Pelanggan
+    Klien
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-12 col-sm-6">
-                    <h3>{{ __('Pelanggan') }}</h3>
+                    <h3>{{ __('Klien') }}</h3>
                 </div>
                 <div class="col-12 col-sm-6">
                     <ol class="breadcrumb">
@@ -18,7 +18,7 @@
                                 <i class="bi bi-house-door-fill"></i>
                             </a>
                         </li>
-                        <li class="breadcrumb-item active titleDocs">Pelanggan</li>
+                        <li class="breadcrumb-item active titleDocs">Klien</li>
                     </ol>
                 </div>
             </div>
@@ -48,7 +48,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <a href="{{ route('customers.trash') }}" class="btn btn-sm btn-primary">Lihat Data yang
+                        <a href="{{ route('customers.trash') }}" class="btn btn-sm btn-primary {{ Auth::user()->role == 'admin' || Auth::user()->role == 4 || Auth::user()->role == 5 ? '' : 'd-none' }}">Lihat Data yang
                             Dihapus</a>
                     </div>
                     <table class="table nowrap table-striped table-hover align-middle" id="datatable">

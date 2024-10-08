@@ -1,7 +1,7 @@
 @extends('panel.layouts.app')
 
 @section('title')
-    Pelanggan
+    Klien - Data yang dihapus
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-12 col-sm-6">
-                    <h3>{{ __('Pelanggan') }}</h3>
+                    <h3>{{ __('Klien - Data yang dihapus') }}</h3>
                 </div>
                 <div class="col-12 col-sm-6">
                     <ol class="breadcrumb">
@@ -18,7 +18,12 @@
                                 <i class="bi bi-house-door-fill"></i>
                             </a>
                         </li>
-                        <li class="breadcrumb-item active">Pelanggan</li>
+                        <li class="breadcrumb-item">
+                            <a class="home-item" href="{{ route('customers.index') }}">
+                                <i class="bi bi-house-door-fill"></i>
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item active">Data yang dihapus</li>
                     </ol>
                 </div>
             </div>

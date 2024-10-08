@@ -34,7 +34,7 @@
                             Tambah Data
                         </a>
                     </div>
-                    <a href="{{ route('news.trash') }}" class="btn btn-sm btn-primary">Lihat Data yang
+                    <a href="{{ route('news.trash') }}" class="btn btn-sm btn-primary {{ Auth::user()->role == 'admin' || Auth::user()->role == 4 || Auth::user()->role == 5 ? '' : 'd-none' }}">Lihat Data yang
                         Dihapus</a>
                 </div>
                 <table class="table nowrap table-striped table-hover align-middle" id="datatable">

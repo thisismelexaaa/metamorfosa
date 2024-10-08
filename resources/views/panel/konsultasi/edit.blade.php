@@ -5,6 +5,14 @@
 @endsection
 
 @section('content')
+    @php
+        $selectedCustomerId = $konsultasi->id_customer;
+        $selectedLayananId = $konsultasi->id_layanan;
+        $selectedSubLayananId = $konsultasi->id_sub_layanan;
+        $selectedSupportTeacherId = $konsultasi->supportTeacher->id;
+        $ruanganList = ['ruangan 1', 'ruangan 2', 'ruangan 3', 'ruangan 4', 'ruangan 5'];
+    @endphp
+
     <div class="container-fluid">
         <div class="page-title">
             <div class="row">
@@ -31,8 +39,6 @@
     </div>
     <div class="container-fluid">
         <div class="card overflow-hidden p-5 shadow-sm">
-
-            {{-- @dd($konsultasi->id) --}}
             <form method="POST" action="{{ route('konsultasi.update', encrypt($id)) }}">
                 @csrf
                 @method('PUT')
@@ -44,10 +50,6 @@
                             <label class="form-label" for="id_customer">Customer</label>
                             <select required id="id_customer" name="id_customer" class="form-select select2"
                                 data-placeholder="Pilih Customer">
-                                @php
-                                    $selectedCustomerId = $konsultasi->id_customer;
-                                @endphp
-
                                 @foreach ($customers as $customer)
                                     @if ($customer->id != $selectedCustomerId)
                                         <option value="{{ $customer->id }}">{{ $customer->name }}</option>
@@ -63,9 +65,6 @@
                             <label class="form-label" for="id_layanan">Layanan</label>
                             <select required id="id_layanan" name="id_layanan" class="form-select select2"
                                 data-placeholder="Pilih Layanan">
-                                @php
-                                    $selectedLayananId = $konsultasi->id_layanan;
-                                @endphp
                                 @foreach ($layanan as $item)
                                     @if ($item->id != $selectedLayananId)
                                         <option value="{{ $item->id }}">{{ $item->layanan }}</option>
@@ -80,9 +79,6 @@
                             <label class="form-label" for="id_sub_layanan">Sub Layanan</label>
                             <select required id="id_sub_layanan" name="id_sub_layanan" class="form-select select2"
                                 data-placeholder="Pilih Sub Layanan">
-                                @php
-                                    $selectedSubLayananId = $konsultasi->id_sub_layanan;
-                                @endphp
                                 @foreach ($konsultasi->subLayanan->getLayanan->getSubLayanan as $item)
                                     @if ($item->id != $selectedSubLayananId)
                                         <option value="{{ $item->id }}">{{ $item->sub_layanan }}</option>
@@ -97,13 +93,21 @@
 
                     <div class="row mb-2">
                         <div class="col-md">
+                            <label class="form-label" for="ruangan">Ruangan</label>
+                            <select required id="ruangan" name="ruangan" class="form-select select2" data-placeholder="Pilih Support Teacher">
+                                <option value="{{ $konsultasi->ruangan }}">{{ ucfirst($konsultasi->ruangan) }}</option>
+                                @foreach ($ruanganList as $ruangan)
+                                    @if ($ruangan !== $konsultasi->ruangan)
+                                        <option value="{{ $ruangan }}">{{ ucfirst($ruangan) }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-md">
                             <label class="form-label" for="id_support_teacher">Support Teacher</label>
                             <select required id="id_support_teacher" name="id_support_teacher" class="form-select select2"
                                 data-placeholder="Pilih Support Teacher">
-                                @php
-                                    $selectedSupportTeacherId = $konsultasi->supportTeacher->id;
-                                @endphp
-
                                 @foreach ($support_teacher as $teacher)
                                     @if ($teacher->id != $selectedSupportTeacherId)
                                         <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
@@ -209,6 +213,7 @@
                 colDibayar: '#col_dibayar',
                 colSisaBayar: '#col_sisa_bayar',
                 rubahKeluhan: '#rubahKeluhan',
+                ruangan: '#ruangan'
             };
 
             const CLASSES = {
@@ -217,7 +222,9 @@
             };
 
             // Initialize select2 elements with common options
-            [SELECTORS.layanan, SELECTORS.customer, SELECTORS.supportTeacher, SELECTORS.statusBayar].forEach(
+            [SELECTORS.layanan, SELECTORS.customer, SELECTORS.supportTeacher, SELECTORS.statusBayar, SELECTORS
+                .ruangan
+            ].forEach(
                 initializeSelect2);
 
             function initializeSelect2(selector) {
