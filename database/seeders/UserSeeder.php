@@ -13,7 +13,6 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create 1 Admin
         User::create([
             'name' => 'Admin',
             'username' => 'admin',
@@ -26,7 +25,6 @@ class UserSeeder extends Seeder
             'jenis_kelamin' => 'computer',
         ]);
 
-        // Create 5 Support Teachers
         // for ($i = 1; $i <= 5; $i++) {
         //     User::create([
         //         'name' => "Support Teacher $i",

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_sub_layanan');
             $table->string('kode_konsultasi');
             $table->string('id_support_teacher');
+            $table->string('ruangan');
             $table->text('keluhan');
             $table->text('hasil_konsultasi')->nullable();
             $table->date('tgl_masuk');

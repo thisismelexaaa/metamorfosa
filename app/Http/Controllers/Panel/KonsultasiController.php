@@ -57,6 +57,7 @@ class KonsultasiController extends Controller
             'status_bayar' => 'required',
             'jam_mulai' => 'required',
             'jam_selesai' => 'required',
+            'ruangan' => 'required',
         ]);
 
         // kode konsultas
@@ -173,6 +174,7 @@ class KonsultasiController extends Controller
             'jam_mulai' => 'required',
             'jam_selesai' => 'required',
             'keluhan' => 'required',
+            'ruangan' => 'required',
         ]);
 
         // Extract and clean 'dibayar' field to get numeric value

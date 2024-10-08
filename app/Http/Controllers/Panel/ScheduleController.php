@@ -50,57 +50,46 @@ class ScheduleController extends Controller
      */
     public function store(Request $request)
     {
-
-        $hasil = HasilKonsultasi::class;
+        // Validate the request inputs
         $request->validate([
             'id_konsultasi' => 'required',
             'id_sub_layanan' => 'required',
             'id_layanan' => 'required',
             'id_user' => 'required',
             'id_customer' => 'required',
-            'hasil_konsultasi' => 'required',
         ]);
 
-        // check if data already exists
-        $data = $request->all();
-
+        // Prepare the data array
         $data = [
-            'id_konsultasi' => $data['id_konsultasi'],
-            'id_sub_layanan' => $data['id_sub_layanan'],
-            'id_layanan' => $data['id_layanan'],
-            'id_user' => $data['id_user'],
-            'id_customer' => $data['id_customer'],
-            'hasil' => $data['hasil_konsultasi'],
+            'id_konsultasi' => $request->id_konsultasi,
+            'id_sub_layanan' => $request->id_sub_layanan,
+            'id_layanan' => $request->id_layanan,
+            'id_user' => $request->id_user,
+            'id_customer' => $request->id_customer,
+            'hasil' => $request->hasil_konsultas[0] ?? 'Tidak Ada Hasil Konsultasi',
         ];
 
+        // Check if a previous consultation result exists for this consultation
         $cek = HasilKonsultasi::where('id_konsultasi', $data['id_konsultasi'])
-        ->latest()
-        ->first();
+            ->latest()
+            ->first();
 
-        // cek jika tanggal sama
-        $dateNow = date('Y-m-d');
+        // Increment 'hari' if a previous result exists, otherwise set to 1
+        $data['hari'] = optional($cek)->hari + 1 ?? 1;
 
-        if ($cek) {
-            $hari = $cek->hari + 1;
-            $data['hari'] = $hari;
-        } else {
-            $data['hari'] = 1;
-        }
+        // Create a new consultation result
+        HasilKonsultasi::create($data);
 
-        $data['hasil'] = end($data['hasil']);
-
-        // dd($data);
-
-        $hasil::create($data);
-
+        // Update the 'hasil_konsultasi' field in the 'konsultasi' table
         Konsultasi::where('id', $data['id_konsultasi'])->update([
             'hasil_konsultasi' => $data['hasil'],
         ]);
 
-
+        // Notify success and redirect back
         toast('Hasil Konsultasi berhasil diperbarui!', 'success');
         return redirect()->back();
     }
+
 
     /**
      * Display the specified resource.
