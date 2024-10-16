@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('id_support_teacher');
             $table->string('ruangan');
             $table->text('keluhan');
-            $table->text('hasil_konsultasi')->nullable();
             $table->date('tgl_masuk');
             $table->date('tgl_selesai')->nullable();
             $table->time('jam_mulai')->nullable();

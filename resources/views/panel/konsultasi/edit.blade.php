@@ -37,6 +37,7 @@
             </div>
         </div>
     </div>
+
     <div class="container-fluid">
         <div class="card overflow-hidden p-5 shadow-sm">
             <form method="POST" action="{{ route('konsultasi.update', encrypt($id)) }}">
@@ -94,7 +95,8 @@
                     <div class="row mb-2">
                         <div class="col-md">
                             <label class="form-label" for="ruangan">Ruangan</label>
-                            <select required id="ruangan" name="ruangan" class="form-select select2" data-placeholder="Pilih Support Teacher">
+                            <select required id="ruangan" name="ruangan" class="form-select select2"
+                                data-placeholder="Pilih Support Teacher">
                                 <option value="{{ $konsultasi->ruangan }}">{{ ucfirst($konsultasi->ruangan) }}</option>
                                 @foreach ($ruanganList as $ruangan)
                                     @if ($ruangan !== $konsultasi->ruangan)
@@ -128,45 +130,17 @@
                             <input id="tgl_selesai" type="date" class="form-control" name="tgl_selesai"
                                 placeholder="Masukkan Tanggal Selesai" value="{{ $konsultasi->tgl_selesai }}">
                         </div>
+                        <div class="col-md">
+                            <label class="form-label" for="jam_mulai">Waktu Sesi</label>
+                            <div class="d-flex gap-3">
+                                <input required id="jam_mulai" type="time" class="form-control" name="jam_mulai"
+                                    placeholder="Masukkan Tanggal Masuk" value="{{ $konsultasi->jam_mulai }}">
+                                <span class="my-auto">s/d</span>
+                                <input required id="jam_selesai" type="time" class="form-control" name="jam_selesai"
+                                    placeholder="Masukkan Tanggal Masuk" value="{{ $konsultasi->jam_selesai }}">
+                            </div>
+                        </div>
                     </div>
-
-                    {{-- <div class="row mb-2">
-                        <div class="col-md">
-                            <label class="form-label" for="status_bayar">Status Pembayaran</label>
-                            <select required id="status_bayar" name="status_bayar" class="form-select select2"
-                                data-placeholder="Pilih Status Pembayaran">
-                                @php
-                                    $options = [
-                                        1 => 'Lunas',
-                                        2 => 'Belum Lunas',
-                                    ];
-                                @endphp
-
-                                @foreach ($options as $value => $label)
-                                    <option value="{{ $value }}"
-                                        {{ $konsultasi->status_bayar == $value ? 'selected' : '' }}>
-                                        {{ $label }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-md d-none" id="col_dibayar">
-                            <label class="form-label" for="dibayar">Dibayar</label>
-                            <input id="dibayar" type="text" class="form-control currency" name="dibayar"
-                                placeholder="Masukkan Jumlah Dibayar" value="{{ $konsultasi->dibayar }}">
-                        </div>
-                        <div class="col-md">
-                            <label class="form-label" for="total_harga">Total Harga</label>
-                            <input required id="total_harga" type="text" class="form-control currency"
-                                name="total_harga" placeholder="Total Harga" readonly
-                                value="{{ $konsultasi->total_harga }}">
-                        </div>
-                        <div class="col-md d-none" id="col_sisa_bayar">
-                            <label class="form-label" for="sisa_bayar">Sisa Bayar</label>
-                            <input id="sisa_bayar" type="text" class="form-control currency" name="sisa_bayar"
-                                placeholder="Sisa Bayar" readonly value="{{ $konsultasi->sisa_bayar }}">
-                        </div>
-                    </div> --}}
 
                     <div class="row mb-2">
                         <div class="col-md">
@@ -181,11 +155,6 @@
                             </div>
                             <textarea required id="keluhan" rows="4" class="form-control" name="keluhan" placeholder="Masukkan Keluhan"
                                 readonly> {{ $konsultasi->keluhan }}</textarea>
-                        </div>
-                        <div class="col-md">
-                            <label class="form-label" for="hasil_konsultasi">Hasil Konsultasi</label>
-                            <textarea id="hasil_konsultasi" rows="4" class="form-control" name="hasil_konsultasi"
-                                placeholder="Masukkan Hasil Konsultasi">{{ $konsultasi->hasil_konsultasi }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -325,6 +294,15 @@
                     minimumFractionDigits: 0
                 }).format(value);
             }
+
+            // if checked keluhan not readonly
+            $(SELECTORS.rubahKeluhan).on('change', function() {
+                if ($(this).is(':checked')) {
+                    $('#keluhan').prop('readonly', false);
+                } else {
+                    $('#keluhan').prop('readonly', true);
+                }
+            });
         });
     </script>
 @endsection

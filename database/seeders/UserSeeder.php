@@ -25,19 +25,19 @@ class UserSeeder extends Seeder
             'jenis_kelamin' => 'computer',
         ]);
 
-        // for ($i = 1; $i <= 5; $i++) {
-        //     User::create([
-        //         'name' => "Support Teacher $i",
-        //         'username' => "support_teacher_$i",
-        //         'email' => "support_teacher$i@domain.com",
-        //         'email_verified_at' => now(),
-        //         'password' => bcrypt('123123'),
-        //         'role' => '2',
-        //         'status' => 1,
-        //         'alamat' => 'Jl. ABC 1234',
-        //         'jenis_kelamin' => rand(1, 2),
-        //     ]);
-        // }
+        for ($i = 1; $i <= 5; $i++) {
+            User::create([
+                'name' => "Support Teacher $i",
+                'username' => "support_teacher_$i",
+                'email' => "support_teacher$i@domain.com",
+                'email_verified_at' => now(),
+                'password' => bcrypt('123123'),
+                'role' => '2',
+                'status' => 1,
+                'alamat' => 'Jl. ABC 1234',
+                'jenis_kelamin' => rand(1, 2),
+            ]);
+        }
 
         // User::create([
         //     'name' => "Staff",

@@ -119,20 +119,24 @@
                                     <td>{{ $item->supportTeacher->name }}</td>
                                 </tr>
                             </table>
+
                             {{-- checkbox --}}
-                            {{-- @dd(Auth::user()->role == 2 ? 'hidden' : '') --}}
-                            <div {{ Auth::user()->role != 2 ? 'hidden' : '' }}>
+                            <div {{ Auth::user()->role != 2 ? '' : '' }}>
                                 <form action="{{ route('schedule.store') }}" method="POST">
                                     @csrf
                                     @method('POST')
+
                                     @php
                                         // Calculate duration in days
                                         $tgl_masuk = \Carbon\Carbon::parse($item->tgl_masuk)->day;
                                         $tgl_selesai = \Carbon\Carbon::parse($item->tgl_selesai)->day;
-                                        $durasi = $tgl_selesai - $tgl_masuk;
+                                        // range dari tgl_masuk sampai tgl_selesai
+                                        $range = range($tgl_masuk, $tgl_selesai);
+                                        $days = count($range);
+                                        $durasi = $days;
                                     @endphp
 
-                                    <div class="form-check {{ $item->status == 3 ? 'd-none' : '' }}">
+                                    <div class="form-check mt-2 {{ $item->status == 3 ? 'd-none' : '' }}">
                                         <input class="form-check-input" type="checkbox" id="isKonsul{{ $item->id }}"
                                             name="isKonsul" {{ $item->hasil_konsultasi != null ? 'checked' : '' }}>
                                         <label class="form-check-label" for="isKonsul{{ $item->id }}">
@@ -147,42 +151,27 @@
                                         <input type="hidden" name="id_sub_layanan" value="{{ $item->id_sub_layanan }}">
                                         <input type="hidden" name="id_user" value="{{ Auth::user()->id }}">
                                         <input type="hidden" name="id_customer" value="{{ $item->id_customer }}">
-                                        <div class="col-12" style="height: 200px; overflow-y: auto">
+                                        <div class="col-12" style="height: 250px; overflow-y: auto">
                                             {{-- Initial Form Group --}}
                                             <div class="form-group {{ $item->hasil_konsultasi != null ? 'd-none' : '' }}">
-                                                <label for="hasilKonsultasi1" class="form-label">
-                                                    Catatan / Hasil Konsultasi Hari Ke-1
+                                                <label for="hasilKonsultasi1" class="form-label d-flex align-items-center">
+                                                    Catatan / Hasil Konsultasi Hari Ke-
+                                                    <select name="hari" class="form-select w-25 ms-2"
+                                                        id="hariKonsultasi">
+                                                        @for ($i = 1; $i <= $durasi; $i++)
+                                                            <option value="{{ $i }}">{{ $i }}</option>
+                                                        @endfor
+                                                    </select>
                                                 </label>
                                                 <textarea class="form-control" id="hasilKonsultasi1" rows="3" placeholder="Hasil Konsultasi"
                                                     name="hasil_konsultasi[]" {{ $item->hasil_konsultasi != null ? 'disabled' : '' }}></textarea>
+
+                                                <label for="hasilKonsultasi1" class="form-label mt-2">
+                                                    Foto
+                                                </label>
+                                                <input type="file" name="fotoNotes" id="fotoNotes" class="form-control">
                                             </div>
 
-                                            {{-- Iterating through existing consultation results --}}
-                                            @foreach ($item->hasilKonsultasi as $hasil)
-                                                <div
-                                                    class="form-group {{ $item->hasil_konsultasi != null ? 'd-none' : '' }}">
-                                                    <label for="hasilKonsultasi" class="form-label">
-                                                        Catatan / Hasil Konsultasi Hari Ke-{{ $hasil->hari }}
-                                                    </label>
-                                                    <textarea class="form-control" id="hasilKonsultasi" rows="3" placeholder="Hasil Konsultasi"
-                                                        name="hasil_konsultasi[]" {{ $item->hasil_konsultasi != null ? 'disabled' : '' }}></textarea>
-                                                </div>
-
-                                                {{-- Additional form group if this is the last entry and there are more days --}}
-                                                @if ($loop->last && $hasil->hari <= $durasi)
-                                                    <div class="form-group">
-                                                        <label for="additionalHasilKonsultasi" class="form-label">
-                                                            Catatan / Hasil Konsultasi Hari Ke-{{ $hasil->hari + 1 }}
-                                                        </label>
-                                                        <textarea class="form-control" id="additionalHasilKonsultasi" rows="3" placeholder="Hasil Konsultasi"
-                                                            name="hasil_konsultasi[]"></textarea>
-                                                    </div>
-                                                    <button class="btn btn-sm btn-primary my-2 w-100">Submit Hasil
-                                                        Konsultasi</button>
-                                                @endif
-                                            @endforeach
-
-                                            {{-- Submit button for initial consultation results --}}
                                             <button
                                                 class="btn btn-sm btn-primary my-2 w-100 {{ $item->hasil_konsultasi != null ? 'd-none' : '' }}">
                                                 Submit Hasil Konsultasi

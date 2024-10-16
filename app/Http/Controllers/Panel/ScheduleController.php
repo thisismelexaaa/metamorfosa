@@ -26,13 +26,15 @@ class ScheduleController extends Controller
 
         $id_role = $data['auth']->role;
 
-        // dd($id_role);
-
         if ($id_role == 'admin' || $id_role == 4 || $id_role == 5) {
             $data['konsultasi'] = Konsultasi::all();
         } else {
             $data['konsultasi'] = Konsultasi::where('id_support_teacher', Auth::user()->id)->get();
         }
+
+        $data['hasil_konsultasi'] = HasilKonsultasi::all();
+
+        // dd($data);
 
         return view('panel.schedule.index', $data);
     }
@@ -66,8 +68,12 @@ class ScheduleController extends Controller
             'id_layanan' => $request->id_layanan,
             'id_user' => $request->id_user,
             'id_customer' => $request->id_customer,
-            'hasil' => $request->hasil_konsultas[0] ?? 'Tidak Ada Hasil Konsultasi',
+            'hasil' => $request->hasil_konsultasi[0] ?? 'Tidak Ada Hasil Konsultasi',
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
+
+        // dd($data);
 
         // Check if a previous consultation result exists for this consultation
         $cek = HasilKonsultasi::where('id_konsultasi', $data['id_konsultasi'])
@@ -79,11 +85,6 @@ class ScheduleController extends Controller
 
         // Create a new consultation result
         HasilKonsultasi::create($data);
-
-        // Update the 'hasil_konsultasi' field in the 'konsultasi' table
-        Konsultasi::where('id', $data['id_konsultasi'])->update([
-            'hasil_konsultasi' => $data['hasil'],
-        ]);
 
         // Notify success and redirect back
         toast('Hasil Konsultasi berhasil diperbarui!', 'success');
