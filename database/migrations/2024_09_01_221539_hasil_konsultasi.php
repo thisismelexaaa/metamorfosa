@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('id_customer');
             $table->integer('hari');
             $table->text('hasil');
+            $table->string('foto_notes')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
