@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\ChartFilterController;
 use App\Http\Controllers\landingpage\HomeController;
 use App\Http\Controllers\Panel\NewsController;
 use App\Http\Controllers\Panel\AccountController;
@@ -42,6 +43,11 @@ Route::middleware('web', 'ModifiedUrl')->group(function () {
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
     Route::get('/news/{id}', [HomeController::class, 'showNews'])->name('home.news');
+
+    // dashboard chart filter
+    Route::get('/chart-filter', [ChartFilterController::class, 'getIncomeData'])->name('chart-filter');
+    Route::get('/chart-filter-cust', [ChartFilterController::class, 'getCustomerData'])->name('chart-filter-cust');
+
 
     // Admin panel routes
     Route::prefix('/panel')->group(function () {

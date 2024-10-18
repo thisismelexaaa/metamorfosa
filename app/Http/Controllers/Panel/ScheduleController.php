@@ -84,7 +84,7 @@ class ScheduleController extends Controller
             'id_layanan' => $request->id_layanan,
             'id_user' => $request->id_user,
             'id_customer' => $request->id_customer,
-            'hasil' => $request->hasil_konsultasi[0] ?? 'Tidak Ada Hasil Konsultasi',
+            'hasil' => $request->hasil_konsultasi ?? 'Tidak Ada Hasil Konsultasi',
             'foto_notes' => $new_name,
             'created_at' => now(),
             'updated_at' => now(),
