@@ -34,7 +34,7 @@ class ScheduleController extends Controller
 
         $data['hasil_konsultasi'] = HasilKonsultasi::all();
 
-        // dd($data);
+        // dd($data['konsultasi'][0]->hasilKonsultasi);
 
         return view('panel.schedule.index', $data);
     }

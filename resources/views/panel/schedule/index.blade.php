@@ -134,6 +134,14 @@
                                         $range = range($tgl_masuk, $tgl_selesai);
                                         $days = count($range);
                                         $durasi = $days;
+                                        // count beetween tgl_masuk and tgl_selesai
+                                        if ($item->hasilKonsultasi != null) {
+                                            $hari_konsultasi_selesai = $item->hasilKonsultasi
+                                                ->pluck('hari')
+                                                ->toArray();
+                                        } else {
+                                            $hari_konsultasi_selesai = [];
+                                        }
                                     @endphp
 
                                     <div class="form-check mt-2 {{ $item->status == 3 ? 'd-none' : '' }}">
@@ -159,8 +167,12 @@
                                                     <select name="hari" class="form-select w-25 ms-2"
                                                         id="hariKonsultasi">
                                                         @for ($i = 1; $i <= $durasi; $i++)
-                                                            <option value="{{ $i }}">{{ $i }}
-                                                            </option>
+                                                            {{-- <option value="{{ $i }}">{{ $i }}
+                                                            </option> --}}
+                                                            @if (!in_array($i, $hari_konsultasi_selesai))
+                                                                <option value="{{ $i }}">{{ $i }}
+                                                                </option>
+                                                            @endif
                                                         @endfor
                                                     </select>
                                                 </label>
@@ -170,11 +182,11 @@
                                                 <label for="hasilKonsultasi1" class="form-label mt-2">
                                                     Foto
                                                 </label>
-                                                <input type="file" name="fotoNotes" id="fotoNotes{{ $item->id }}" class="form-control"
-                                                    accept="image/png, image/jpeg">
+                                                <input type="file" name="fotoNotes" id="fotoNotes{{ $item->id }}"
+                                                    class="form-control" accept="image/png, image/jpeg">
                                                 {{-- display selected image --}}
-                                                <img src="" alt="" id="imagePreview{{ $item->id }}" class="mt-2"
-                                                    width="200">
+                                                <img src="" alt="" id="imagePreview{{ $item->id }}"
+                                                    class="mt-2" width="200">
                                             </div>
 
                                             <button

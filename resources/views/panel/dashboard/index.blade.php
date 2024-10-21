@@ -23,8 +23,9 @@
         }
 
         .chart-container {
-        height: 400px; /* Set tinggi sama untuk kedua chart */
-    }
+            height: 400px;
+            /* Set tinggi sama untuk kedua chart */
+        }
     </style>
 @endsection
 
@@ -159,7 +160,7 @@
                     </div>
                 </div>
             </div>
-        
+
             <!-- Grafik Pendapatan Pelanggan -->
             <div class="col-md-6">
                 <div class="card">
@@ -170,6 +171,7 @@
                         <div class="chart-container" style="position: relative; width: 100%;">
                             <canvas id="customerIncomeChart"></canvas>
                         </div>
+                        <div id="targetMessage" style="text-align: center; margin-top: 10px; font-weight: bold;"></div>
                     </div>
                 </div>
             </div>
@@ -268,6 +270,13 @@
             .then(data => {
                 const labels = data.map(item => item.month);
                 const values = data.map(item => item.total);
+
+                // Hitung total customer selama tahun ini
+                const totalCustomers = values.reduce((sum, value) => sum + value, 0);
+
+                // Set target customer
+                const targetCustomer = 40;
+
                 if (customerIncomeChart) {
                     customerIncomeChart.destroy();
                 }
@@ -294,6 +303,17 @@
                         }
                     }
                 });
+
+                const targetMessage = document.getElementById('targetMessage');
+                if (totalCustomers >= targetCustomer) {
+                    targetMessage.textContent =
+                        `Target tercapai: ${totalCustomers} pelanggan (Target: ${targetCustomer} pelanggan)`;
+                    targetMessage.style.color = 'green';
+                } else {
+                    targetMessage.textContent =
+                        `Total pelanggan: ${totalCustomers} (Target: ${targetCustomer} pelanggan)`;
+                    targetMessage.style.color = 'red';
+                }
             });
     </script>
 @endsection

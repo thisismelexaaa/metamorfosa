@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Panel\Customer;
 use App\Models\Panel\Konsultasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -150,7 +151,7 @@ class ChartFilterController extends Controller
 
         $customerData = [];
 
-        $rawData = Konsultasi::selectRaw('MONTH(created_at) as month, COUNT(id) as total')
+        $rawData = Customer::selectRaw('MONTH(created_at) as month, COUNT(id) as total')
             ->whereYear('created_at', $currentYear)
             ->groupBy('month')
             ->get();
