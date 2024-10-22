@@ -74,7 +74,10 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="labelModal">Detail Konsultasi {{ $item->kode_konsultasi }}</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <a href="" class="btn btn-link">Lihat Riwayat Konsultasi</a>
+                        {{-- <div class="d-flex justify-content-between">
+                        </div> --}}
+                        {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
                     </div>
                     <div class="modal-body">
                         <div class="dataPelanggan">
@@ -130,21 +133,22 @@
                                         // Calculate duration in days
                                         $tgl_masuk = \Carbon\Carbon::parse($item->tgl_masuk)->day;
                                         $tgl_selesai = \Carbon\Carbon::parse($item->tgl_selesai)->day;
+                                        $tgl_sekarang = \Carbon\Carbon::now()->day;
+
                                         // range dari tgl_masuk sampai tgl_selesai
                                         $range = range($tgl_masuk, $tgl_selesai);
                                         $days = count($range);
                                         $durasi = $days;
                                         // count beetween tgl_masuk and tgl_selesai
                                         if ($item->hasilKonsultasi != null) {
-                                            $hari_konsultasi_selesai = $item->hasilKonsultasi
-                                                ->pluck('hari')
-                                                ->toArray();
+                                            $hari_konsultasi_selesai = $item->hasilKonsultasi->pluck('hari')->toArray();
                                         } else {
                                             $hari_konsultasi_selesai = [];
                                         }
                                     @endphp
 
-                                    <div class="form-check mt-2 {{ $item->status == 3 ? 'd-none' : '' }}">
+                                    <div
+                                        class="form-check mt-2 {{ $item->status == 3 ? 'd-none' : '' }} {{ $tgl_sekarang > $tgl_selesai ? 'd-none' : '' }} {{ $tgl_sekarang < $tgl_masuk ? 'd-none' : '' }}">
                                         <input class="form-check-input" type="checkbox" id="isKonsul{{ $item->id }}"
                                             name="isKonsul" {{ $item->hasil_konsultasi != null ? 'checked' : '' }}>
                                         <label class="form-check-label" for="isKonsul{{ $item->id }}">
@@ -203,7 +207,9 @@
                                 <form action="{{ route('konsultasi.update', encrypt($item->id)) }}" method="POST">
                                     @csrf
                                     @method('PUT')
-                                    <button type="button" class="btn btn-success" onclick="updateStatus(this)">
+                                    <button type="button"
+                                        class="btn btn-success {{ $tgl_sekarang > $tgl_selesai ? 'd-none' : '' }} {{ $item->status == 3 ? 'd-none' : '' }} {{ $tgl_sekarang < $tgl_masuk ? 'd-none' : '' }}"
+                                        onclick="updateStatus(this)">
                                         Konsultasi Selesai
                                     </button>
                                     <input type="hidden" name="isDone">
@@ -217,84 +223,6 @@
         </div>
     @endforeach
 @endsection
-
-
-
-{{-- @section('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-
-            let isKonsul = document.getElementById('isKonsul');
-            let hasilKonsultasi = document.getElementById('hasilKonsultasi');
-
-            isKonsul.addEventListener('change', function() {
-                if (isKonsul.checked) {
-                    hasilKonsultasi.classList.remove('d-none');
-                } else {
-                    hasilKonsultasi.classList.add('d-none');
-                }
-            });
-
-            const calendarEl = document.getElementById('calendar');
-            const dataJson = @json($konsultasi);
-            const data = dataJson.map(item => ({
-                id: item.id,
-                title: item.kode_konsultasi + ' - ' + item.customer.name,
-                start: item.tgl_masuk + 'T00:00:00',
-                end: item.tgl_selesai + 'T23:59:59',
-                allDay: item.tgl_masuk === item.tgl_selesai,
-                extendedProps: item,
-            }));
-
-            let title = "Change View";
-
-            const calendar = new FullCalendar.Calendar(calendarEl, {
-                locale: 'id',
-                customButtons: {
-                    ChangeView: {
-                        text: title,
-                        click: function() {
-                            if (calendar.view.type === 'listWeek') {
-                                calendar.changeView('dayGridMonth');
-                            } else {
-                                calendar.changeView('listWeek');
-                            }
-                        }
-                    }
-                },
-                headerToolbar: {
-                    left: 'ChangeView',
-                    center: 'title',
-                    right: 'today prev,next'
-                },
-                initialView: 'dayGridMonth',
-                timezone: 'local',
-                height: 700,
-                contentHeight: 25,
-                events: data,
-                eventClick: function(info) {
-                    let id = info.event.id;
-                    let event = info.event.extendedProps;
-
-                    // Check the status of the event
-                    let button = document.querySelector('.modalDetail' + id);
-
-                    $(button).modal('show');
-                },
-                eventRender: function(info, element) {
-                    let event = info.event.extendedProps;
-                    console.log(event);
-
-                    if (event.status == 3) {
-                        element.css('background-color', '#fffff');
-                    }
-                },
-            });
-
-            calendar.render();
-        });
-    </script>
-@endsection --}}
 
 @section('scripts')
     <script>

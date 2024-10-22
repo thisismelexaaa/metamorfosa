@@ -92,7 +92,7 @@
                                     aria-label="password" aria-describedby="basic-addon1" autocomplete="new-password"
                                     placeholder="Masukkan Password Baru" />
                                 <div class="input-group-append">
-                                    <span class="input-group-text" onclick="password_show_hide();">
+                                    <span class="input-group-text" style="cursor: pointer;" onclick="password_show_hide();">
                                         <i class="bi bi-eye-fill" id="show_eye"></i>
                                         <i class="bi bi-eye-slash-fill d-none" id="hide_eye"></i>
                                     </span>
@@ -121,7 +121,7 @@
                                     @endif
                                     <!-- Foto Baru -->
                                     <div class="text-center">
-                                       laragon <label class="form-label">Foto Baru</label>
+                                        <label class="form-label">Foto Baru</label>
                                         <img src="{{ asset('assets/panel/profile_images/image-icon.jpg') }}"
                                             class="w-100 border-0 rounded-circle" alt="Foto Baru" id="preview">
                                     </div>
