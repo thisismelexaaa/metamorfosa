@@ -34,7 +34,7 @@ class ScheduleController extends Controller
 
         $data['hasil_konsultasi'] = HasilKonsultasi::all();
 
-        // dd($data);
+        // dd($data['konsultasi'][0]->hasilKonsultasi);
 
         return view('panel.schedule.index', $data);
     }
@@ -59,7 +59,23 @@ class ScheduleController extends Controller
             'id_layanan' => 'required',
             'id_user' => 'required',
             'id_customer' => 'required',
+            'fotoNotes' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
         ]);
+
+        // insert image
+        $image = $request->file('fotoNotes');
+
+        // get username but replace space with underscore and lowercase
+        $username = str_replace(' ', '_', strtolower(Auth::user()->name));
+
+        // if there is no folder in public/absen-konsultasi/username create new folder
+        if (!file_exists(public_path('assets/absen-konsultasi/' . $username))) {
+            mkdir(public_path('assets/absen-konsultasi/' . $username), 0777, true);
+        }
+        
+        $new_name = $username. '_' . $request->hari . '_' . rand() . '.' . $image->getClientOriginalExtension();
+
+        $image->move(public_path('assets/absen-konsultasi/' . $username), $new_name);
 
         // Prepare the data array
         $data = [
@@ -68,7 +84,8 @@ class ScheduleController extends Controller
             'id_layanan' => $request->id_layanan,
             'id_user' => $request->id_user,
             'id_customer' => $request->id_customer,
-            'hasil' => $request->hasil_konsultasi[0] ?? 'Tidak Ada Hasil Konsultasi',
+            'hasil' => $request->hasil_konsultasi ?? 'Tidak Ada Hasil Konsultasi',
+            'foto_notes' => $new_name,
             'created_at' => now(),
             'updated_at' => now(),
         ];

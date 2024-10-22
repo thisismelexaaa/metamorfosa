@@ -122,7 +122,7 @@
 
                             {{-- checkbox --}}
                             <div {{ Auth::user()->role != 2 ? '' : '' }}>
-                                <form action="{{ route('schedule.store') }}" method="POST">
+                                <form action="{{ route('schedule.store') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     @method('POST')
 
@@ -134,6 +134,14 @@
                                         $range = range($tgl_masuk, $tgl_selesai);
                                         $days = count($range);
                                         $durasi = $days;
+                                        // count beetween tgl_masuk and tgl_selesai
+                                        if ($item->hasilKonsultasi != null) {
+                                            $hari_konsultasi_selesai = $item->hasilKonsultasi
+                                                ->pluck('hari')
+                                                ->toArray();
+                                        } else {
+                                            $hari_konsultasi_selesai = [];
+                                        }
                                     @endphp
 
                                     <div class="form-check mt-2 {{ $item->status == 3 ? 'd-none' : '' }}">
@@ -151,7 +159,7 @@
                                         <input type="hidden" name="id_sub_layanan" value="{{ $item->id_sub_layanan }}">
                                         <input type="hidden" name="id_user" value="{{ Auth::user()->id }}">
                                         <input type="hidden" name="id_customer" value="{{ $item->id_customer }}">
-                                        <div class="col-12" style="height: 250px; overflow-y: auto">
+                                        <div class="col-12" style="height: auto; overflow-y: auto">
                                             {{-- Initial Form Group --}}
                                             <div class="form-group {{ $item->hasil_konsultasi != null ? 'd-none' : '' }}">
                                                 <label for="hasilKonsultasi1" class="form-label d-flex align-items-center">
@@ -159,17 +167,26 @@
                                                     <select name="hari" class="form-select w-25 ms-2"
                                                         id="hariKonsultasi">
                                                         @for ($i = 1; $i <= $durasi; $i++)
-                                                            <option value="{{ $i }}">{{ $i }}</option>
+                                                            {{-- <option value="{{ $i }}">{{ $i }}
+                                                            </option> --}}
+                                                            @if (!in_array($i, $hari_konsultasi_selesai))
+                                                                <option value="{{ $i }}">{{ $i }}
+                                                                </option>
+                                                            @endif
                                                         @endfor
                                                     </select>
                                                 </label>
                                                 <textarea class="form-control" id="hasilKonsultasi1" rows="3" placeholder="Hasil Konsultasi"
-                                                    name="hasil_konsultasi[]" {{ $item->hasil_konsultasi != null ? 'disabled' : '' }}></textarea>
+                                                    name="hasil_konsultasi" {{ $item->hasil_konsultasi != null ? 'disabled' : '' }}></textarea>
 
                                                 <label for="hasilKonsultasi1" class="form-label mt-2">
                                                     Foto
                                                 </label>
-                                                <input type="file" name="fotoNotes" id="fotoNotes" class="form-control">
+                                                <input type="file" name="fotoNotes" id="fotoNotes{{ $item->id }}"
+                                                    class="form-control" accept="image/png, image/jpeg">
+                                                {{-- display selected image --}}
+                                                <img src="" alt="" id="imagePreview{{ $item->id }}"
+                                                    class="mt-2" width="200">
                                             </div>
 
                                             <button
@@ -200,6 +217,8 @@
         </div>
     @endforeach
 @endsection
+
+
 
 {{-- @section('scripts')
     <script>
@@ -347,6 +366,7 @@
 
                     $(`.modalDetail${id}`).modal('show');
 
+
                     const isKonsul = document.getElementById(`isKonsul${id}`);
                     const hasilKonsultasi = document.getElementById(`hasilKonsultasi${id}`);
 
@@ -355,6 +375,23 @@
                             hasilKonsultasi.classList.toggle('d-none', !isKonsul.checked);
                         });
                     }
+                    const fotoNotes = document.getElementById(`fotoNotes${id}`);
+                    const imagePreview = document.getElementById(`imagePreview${id}`);
+                    // display image preview in modal
+                    fotoNotes.addEventListener('change', function() {
+                        const file = this.files[0];
+
+                        if (file) {
+                            const reader = new FileReader();
+
+                            reader.onload = function() {
+                                imagePreview.src = reader.result;
+                            }
+
+                            reader.readAsDataURL(file);
+                        }
+                    });
+
                 },
                 eventDidMount: function(info) {
                     const {
@@ -473,4 +510,5 @@
             })
         }
     </script>
+    <script></script>
 @endsection

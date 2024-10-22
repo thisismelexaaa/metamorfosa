@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Panel\Customer;
 use App\Models\Panel\Konsultasi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -24,17 +25,35 @@ class DashboardController extends Controller
         $data['now'] = date('Y-m');
         $data['year'] = date('Y');
         $data['pelanggan'] = Customer::all();
-        $data['total_harga'] = Konsultasi::where('total_harga', '>', 0)
-            ->where('created_at', 'like', '%' . $data['now'] . '%')
-            ->get()
-            ->sum('total_harga');
-        $data['total_harga_year'] = Konsultasi::where('total_harga', '>', 0)
-            ->where('created_at', 'like', '%' . $data['year'] . '%')
-            ->get()
-            ->sum('total_harga');
-        $data['total_harga_full'] = Konsultasi::where('total_harga', '>', 0)
-            ->get()
-            ->sum('total_harga');
+        if (Auth::user()->role == 'admin') { 
+            $data['total_harga'] = Konsultasi::where('total_harga', '>', 0)
+                ->where('created_at', 'like', '%' . $data['now'] . '%')
+                ->get()
+                ->sum('total_harga');
+            $data['total_harga_year'] = Konsultasi::where('total_harga', '>', 0)
+                ->where('created_at', 'like', '%' . $data['year'] . '%')
+                ->get()
+                ->sum('total_harga');
+            $data['total_harga_full'] = Konsultasi::where('total_harga', '>', 0)
+                ->get()
+                ->sum('total_harga');
+            } else {
+            $data['total_harga'] = Konsultasi::where('total_harga', '>', 0)
+                ->where('created_at', 'like', '%' . $data['now'] . '%')
+                ->where('id_support_teacher', Auth::user()->id)
+                ->get()
+                ->sum('total_harga');
+            $data['total_harga_year'] = Konsultasi::where('total_harga', '>', 0)
+                ->where('created_at', 'like', '%' . $data['year'] . '%')
+                ->where('id_support_teacher', Auth::user()->id)
+                ->get()
+                ->sum('total_harga');
+            $data['total_harga_full'] = Konsultasi::where('total_harga', '>', 0)
+                ->where('id_support_teacher', Auth::user()->id)
+                ->get()
+                ->sum('total_harga');
+
+        }
 
         return view('panel.dashboard.index', $data);
     }

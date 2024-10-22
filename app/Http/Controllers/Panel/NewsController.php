@@ -46,9 +46,11 @@ class NewsController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'images' => 'required|array',
             'kategori' => 'required|string|max:255',
             'konten' => 'required|string',
         ]);
+        
 
         // Prepare the data for storing
         $data = [
@@ -89,8 +91,39 @@ class NewsController extends Controller
         // Dump the validated data and prepared data for debugging
         // dd($request->all(), $data);
 
-        // Store the data in the database
-        News::create($data);
+        // Store the data in the database and get the id
+        // News::create($data);
+        $news = News::create($data);
+
+        // Check if the request has files named 'images'
+        if ($request->hasFile('images')) {
+            // Loop through each image file
+            foreach ($request->file('images') as $image) {
+                // Get the original name of the uploaded file
+                $originalFileName = $image->getClientOriginalName();
+
+                // Get the file extension
+                $fileExtension = $image->getClientOriginalExtension();
+
+                // Hash the original file name
+                $hashedFileName = hash('sha256', $originalFileName);
+
+                // Combine the hashed name with the original file extension
+                $fileName = $hashedFileName . '.' . $fileExtension;
+
+                // Optionally, sanitize the file name to avoid issues with special characters
+                $fileName = str_replace(' ', '_', $fileName);
+
+                // Move the file to the public folder with the new name
+                $image->move(public_path('assets/image/news'), $fileName);
+
+                // Save the file name in the 'image' column
+                $news->images()->create([
+                    'image' => $fileName,
+                    'alt_text' => $originalFileName,
+                ]);
+            }
+        }
 
         // Redirect back with success message
         toast('Berita berhasil di post!', 'success');

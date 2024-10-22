@@ -90,10 +90,41 @@
                                     </th>
                                     <td>:</td>
                                     <td style="width: 85%">
-                                        {{ \Carbon\Carbon::parse($item->created_at)->locale('id')->isoFormat('DD MMMM YYYY') }}
+                                        {{ \Carbon\Carbon::parse($item->created_at)->addDays($item->hari - 1)->locale('id')->isoFormat('DD MMMM YYYY') }}
                                         <br>
                                         <div style="text-align: justify">
                                             {{ $item->hasil }}
+                                        </div>
+                                        <div>
+                                            {{-- show image label --}}
+                                            @if ($item->foto_notes)
+                                                <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#fotoModal">
+                                                    Lihat Foto
+                                                </a>
+                                            @endif
+
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="fotoModal" tabindex="-1"
+                                                aria-labelledby="fotoModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="fotoModalLabel">Foto Catatan</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <img src="{{ asset('assets/absen-konsultasi/' . str_replace(' ', '_', strtolower($item->supportTeacher->name)) . '/' . $item->foto_notes) }}"
+                                                                alt="Foto Catatan" class="img-fluid">
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Tutup</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>
