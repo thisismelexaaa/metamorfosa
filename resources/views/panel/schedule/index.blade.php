@@ -145,10 +145,11 @@
                                         } else {
                                             $hari_konsultasi_selesai = [];
                                         }
+                                        // dd(count($hari_konsultasi_selesai) == $durasi);
                                     @endphp
 
                                     <div
-                                        class="form-check mt-2 {{ $item->status == 3 ? 'd-none' : '' }} {{ $tgl_sekarang > $tgl_selesai ? 'd-none' : '' }} {{ $tgl_sekarang < $tgl_masuk ? 'd-none' : '' }}">
+                                        class="form-check mt-2 {{ $item->status == 3 ? 'd-none' : '' }} {{ $tgl_sekarang > $tgl_selesai ? 'd-none' : '' }} {{ $tgl_sekarang < $tgl_masuk ? 'd-none' : '' }} {{ count($hari_konsultasi_selesai) == $durasi ? 'd-none' : '' }}">
                                         <input class="form-check-input" type="checkbox" id="isKonsul{{ $item->id }}"
                                             name="isKonsul" {{ $item->hasil_konsultasi != null ? 'checked' : '' }}>
                                         <label class="form-check-label" for="isKonsul{{ $item->id }}">
@@ -156,7 +157,7 @@
                                         </label>
                                     </div>
 
-                                    <div class="row {{ $item->hasil_konsultasi == null ? 'd-none' : '' }} {{ $item->status == 3 ? 'd-none' : '' }}"
+                                    <div class="row {{ $item->hasil_konsultasi == null ? 'd-none' : '' }} {{ $item->status == 3 ? 'd-none' : '' }} {{ count($hari_konsultasi_selesai) == $durasi ? 'd-none' : '' }}"
                                         id="hasilKonsultasi{{ $item->id }}">
                                         <input type="hidden" name="id_konsultasi" value="{{ $item->id }}">
                                         <input type="hidden" name="id_layanan" value="{{ $item->id_layanan }}">
