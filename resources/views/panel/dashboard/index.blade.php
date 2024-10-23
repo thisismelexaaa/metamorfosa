@@ -204,6 +204,7 @@
         const ctx = document.getElementById('incomeChart').getContext('2d');
         const customerIncomeCtx = document.getElementById('customerIncomeChart').getContext('2d');
         let chart, customerIncomeChart;
+        const userRoles = @json(auth()->user()->role);
 
         // Function to update chart
         function updateChart(filter) {
@@ -303,16 +304,18 @@
                         }
                     }
                 });
-
-                const targetMessage = document.getElementById('targetMessage');
-                if (totalCustomers >= targetCustomer) {
-                    targetMessage.textContent =
-                        `Target tercapai: ${totalCustomers} pelanggan (Target: ${targetCustomer} pelanggan)`;
-                    targetMessage.style.color = 'green';
-                } else {
-                    targetMessage.textContent =
-                        `Total pelanggan: ${totalCustomers} (Target: ${targetCustomer} pelanggan)`;
-                    targetMessage.style.color = 'red';
+                if(userRoles != 'admin'){
+                    
+                    const targetMessage = document.getElementById('targetMessage');
+                    if (totalCustomers >= targetCustomer) {
+                        targetMessage.textContent =
+                            `Target tercapai: ${totalCustomers} pelanggan (Target: ${targetCustomer} pelanggan)`;
+                        targetMessage.style.color = 'green';
+                    } else {
+                        targetMessage.textContent =
+                            `Total pelanggan: ${totalCustomers} (Target: ${targetCustomer} pelanggan)`;
+                        targetMessage.style.color = 'red';
+                    }
                 }
             });
     </script>

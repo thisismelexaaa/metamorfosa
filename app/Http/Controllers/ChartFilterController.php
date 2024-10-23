@@ -151,22 +151,45 @@ class ChartFilterController extends Controller
 
         $customerData = [];
 
-        $rawData = Customer::selectRaw('MONTH(created_at) as month, COUNT(id) as total')
-            ->whereYear('created_at', $currentYear)
-            ->groupBy('month')
-            ->get();
+        if (Auth::user()->role == 'admin') {
 
-        // Inisialisasi data customer setiap bulan dengan 0
-        foreach ($months as $monthNumber => $monthName) {
-            $customerData[] = [
-                'month' => $monthName,
-                'total' => 0
-            ];
+            $rawData = Konsultasi::selectRaw('MONTH(created_at) as month, COUNT(id) as total')
+                ->whereYear('created_at', $currentYear)
+                ->groupBy('month')
+                ->get();
+
+            // Inisialisasi data customer setiap bulan dengan 0
+            foreach ($months as $monthNumber => $monthName) {
+                $customerData[] = [
+                    'month' => $monthName,
+                    'total' => 0
+                ];
+            }
+
+            foreach ($rawData as $data) {
+                $customerData[$data->month - 1]['total'] = $data->total;
+            }
+        } else {
+
+            $rawData = Konsultasi::selectRaw('MONTH(created_at) as month, COUNT(id) as total')
+                ->whereYear('created_at', $currentYear)
+                ->where('id_support_teacher', Auth::user()->id)
+                ->groupBy('month')
+                ->get();
+
+            // Inisialisasi data customer setiap bulan dengan 0
+            foreach ($months as $monthNumber => $monthName) {
+                $customerData[] = [
+                    'month' => $monthName,
+                    'total' => 0
+                ];
+            }
+
+            foreach ($rawData as $data) {
+                $customerData[$data->month - 1]['total'] = $data->total;
+            }
         }
 
-        foreach ($rawData as $data) {
-            $customerData[$data->month - 1]['total'] = $data->total;
-        }
 
         return response()->json($customerData);
     }
