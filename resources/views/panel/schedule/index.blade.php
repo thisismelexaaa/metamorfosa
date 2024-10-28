@@ -74,7 +74,8 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="labelModal">Detail Konsultasi {{ $item->kode_konsultasi }}</h1>
-                        <a href="" class="btn btn-link">Lihat Riwayat Konsultasi</a>
+                        <a href="{{ route('konsultasi.show', encrypt($item->id)) }}" target="_blank" class="btn btn-link">Lihat Riwayat
+                            Konsultasi</a>
                         {{-- <div class="d-flex justify-content-between">
                         </div> --}}
                         {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}

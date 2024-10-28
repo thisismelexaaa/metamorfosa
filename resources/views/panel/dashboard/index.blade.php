@@ -165,7 +165,7 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
-                        <h5 class="card-title d-inline">Grafik Pendapatan Pelanggan</h5>
+                        <h5 class="card-title d-inline">Grafik Konsultasi</h5>
                     </div>
                     <div class="card-body">
                         <div class="chart-container" style="position: relative; width: 100%;">
@@ -287,7 +287,7 @@
                     data: {
                         labels: labels,
                         datasets: [{
-                            label: 'Pendapatan Pelanggan',
+                            label: 'Konsultasi',
                             data: values,
                             backgroundColor: 'rgba(255, 159, 64, 0.2)',
                             borderColor: 'rgba(255, 159, 64, 1)',
@@ -305,7 +305,7 @@
                     }
                 });
                 if(userRoles != 'admin'){
-                    
+
                     const targetMessage = document.getElementById('targetMessage');
                     if (totalCustomers >= targetCustomer) {
                         targetMessage.textContent =
