@@ -4,8 +4,9 @@ namespace App\Models\Panel;
 
 use App\Models\Panel\Customer;
 use App\Models\Panel\SubLayanan;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Layanan extends Model
 {

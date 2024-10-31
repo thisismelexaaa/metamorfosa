@@ -172,8 +172,8 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // Append options for bulan and tahun
-    $("#bulan").append(`<option value="all">Semua</option>`);
-    $("#tahun").append(`<option value="all">Semua</option>`);
+    // $("#bulan").append(`<option value="all">Semua</option>`);
+    // $("#tahun").append(`<option value="all">Semua</option>`);
 
     // Get current year and month
     const yearNow = new Date().getFullYear();

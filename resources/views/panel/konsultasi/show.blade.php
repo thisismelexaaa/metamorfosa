@@ -85,31 +85,30 @@
                         <tbody>
                             @foreach ($hasil_konsultasi as $item)
                                 <tr
-                                    style="background: {{ $item->hasil == 'Tidak Hadir' ? '' : 'rgba(0, 255, 72, 0.145)' }}">
+                                    style="background: {{ $item->hasil == 'Tidak Hadir' ? 'rgba(255, 0, 0, 0.145)' : 'rgba(0, 255, 72, 0.145)' }}">
                                     <th>
                                         {{ $loop->iteration }}
                                     </th>
-                                    <th>
+                                    <th style="width: 15%">
                                         <span>
                                             {{ \Carbon\Carbon::parse($item->created_at)->addDays($item->hari - 1)->locale('id')->isoFormat('DD MMMM YYYY') }}
                                         </span>
                                     </th>
                                     <td>:</td>
                                     <td style="width: 85%">
-                                        <div style="text-align: justify" class="mb-3">
+                                        <div style="text-align: justify" class="mb-3 d-flex justify-content-between">
                                             {{ $item->hasil }}
-                                        </div>
-                                        <div>
+
                                             {{-- show image label --}}
                                             @if ($item->foto_notes)
                                                 <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                                                    data-bs-target="#fotoModal">
+                                                    data-bs-target="#fotoModal{{ $item->id }}">
                                                     Lihat Foto
                                                 </a>
                                             @endif
 
                                             <!-- Modal -->
-                                            <div class="modal fade" id="fotoModal" tabindex="-1"
+                                            <div class="modal fade" id="fotoModal{{ $item->id }}" tabindex="-1"
                                                 aria-labelledby="fotoModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered">
                                                     <div class="modal-content">

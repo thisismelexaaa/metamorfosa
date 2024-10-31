@@ -17,7 +17,7 @@ class Konsultasi extends Model
 
     public function customer()
     {
-        return $this->belongsTo(Customer::class, 'id_customer');
+        return $this->belongsTo(Customer::class, 'id_customer')->withTrashed();
     }
 
     public function layanan()
@@ -32,7 +32,7 @@ class Konsultasi extends Model
 
     public function supportTeacher()
     {
-        return $this->belongsTo(User::class, 'id_support_teacher');
+        return $this->belongsTo(User::class, 'id_support_teacher')->withTrashed();
     }
 
     public function hasilKonsultasi()

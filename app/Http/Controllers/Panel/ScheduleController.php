@@ -73,7 +73,7 @@ class ScheduleController extends Controller
             mkdir(public_path('assets/absen-konsultasi/' . $username), 0777, true);
         }
 
-        $new_name = $username. '_' . $request->hari . '_' . rand() . '.' . $image->getClientOriginalExtension();
+        $new_name = $username . '_' . $request->hari . '_' . rand() . '.' . $image->getClientOriginalExtension();
 
         $image->move(public_path('assets/absen-konsultasi/' . $username), $new_name);
 
@@ -98,9 +98,15 @@ class ScheduleController extends Controller
         $hasil_kons = HasilKonsultasi::where('id_konsultasi', $request->id_konsultasi)->orderBy('hari', 'desc')->first();
         // dd($hasil_kons);
 
-        if($request->hari > $hasil_kons->hari){
+        if (!$hasil_kons) {
+            $loop = 0;
+        } else {
+            $loop = $hasil_kons->hari;
+        }
+
+        if ($request->hari > $loop) {
             // buatkan hasil konsultasi baru di hari sebelum $request->hari dengan foto null dan hasil tidak hadir
-            for($i = $hasil_kons->hari + 1; $i < $request->hari; $i++){
+            for ($i = $loop + 1; $i < $request->hari; $i++) {
                 HasilKonsultasi::create([
                     'id_konsultasi' => $request->id_konsultasi,
                     'id_sub_layanan' => $request->id_sub_layanan,

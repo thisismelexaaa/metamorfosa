@@ -18,6 +18,7 @@ return new class extends Migration
             $table->float('harga', 8, 2);
             $table->string('status')->default(1);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

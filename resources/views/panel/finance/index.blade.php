@@ -54,7 +54,7 @@
                     </form>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-hover table-striped align-middle w-100" id="datatable">
+                    <table class="table table-hover table-striped align-items-baseline w-100" id="datatable">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -80,7 +80,8 @@
                                     <td><a
                                             href="{{ route('konsultasi.show', encrypt($item->id)) }}">{{ $item->customer->no_daftar }}</a>
                                     </td>
-                                    <td><a target="_blank" rel="noopener noreferrer"
+                                    <td>
+                                        <a target="_blank" rel="noopener noreferrer"
                                             href="{{ route('konsultasi.show', encrypt($item->id)) }}">{{ $item->kode_konsultasi }}</a>
                                     </td>
                                     <td>{{ $item->layanan->layanan }}</td>
@@ -110,17 +111,7 @@
                             @endforeach
                         </tbody>
                         <tfoot>
-                            <th>Total</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
+                            <th colspan="11" class="text-end">Total</th>
                             <th class="currency bg-white text-dark" data-value="{{ $total }}">{{ $total }}
                             </th>
                         </tfoot>
