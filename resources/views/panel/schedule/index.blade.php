@@ -136,6 +136,9 @@
                                         $tgl_masuk = \Carbon\Carbon::parse($item->tgl_masuk)->day;
                                         $tgl_selesai = \Carbon\Carbon::parse($item->tgl_selesai)->day;
                                         $tgl_sekarang = \Carbon\Carbon::now()->day;
+                                        $tgl_sekarang_date = \Carbon\Carbon::now()->format('Y-m-d');
+                                        $tgl_selesai_date = \Carbon\Carbon::parse($item->tgl_selesai)->format('Y-m-d');
+                                        $tgl_masuk_date = \Carbon\Carbon::parse($item->tgl_masuk)->format('Y-m-d');
 
                                         // range dari tgl_masuk sampai tgl_selesai
                                         $range = range($tgl_masuk, $tgl_selesai);
@@ -147,13 +150,20 @@
                                         } else {
                                             $hari_konsultasi_selesai = [];
                                         }
-                                        // dd(count($hari_konsultasi_selesai) == $durasi);
+                                        // dd($tgl_sekarang_date, $tgl_selesai_date, $tgl_masuk_date);
+                                        // dd($tgl_sekarang_date >= $tgl_masuk_date)
+
+                                        if($tgl_sekarang_date >= $tgl_masuk_date && $tgl_sekarang_date <= $tgl_selesai_date){
+                                            $absenStatus = true;
+                                        } else {
+                                            $absenStatus = false;
+                                        }
                                     @endphp
 
                                     <div
                                         class="form-check mt-2 {{ $item->status == 3 ? 'd-none' : '' }}
-                                        {{ $tgl_sekarang > $tgl_selesai ? 'd-none' : '' }}
-                                        ">
+                                        {{ $absenStatus ? '' : 'd-none'  }}
+                                        {{ count($hari_konsultasi_selesai) == $durasi ? 'd-none' : '' }}">
                                         <input class="form-check-input" type="checkbox" id="isKonsul{{ $item->id }}"
                                             name="isKonsul" {{ $item->hasil_konsultasi != null ? 'checked' : '' }}>
                                         <label class="form-check-label" for="isKonsul{{ $item->id }}">
