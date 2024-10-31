@@ -84,15 +84,19 @@
                     <table class="table table-bordered">
                         <tbody>
                             @foreach ($hasil_konsultasi as $item)
-                                <tr>
+                                <tr
+                                    style="background: {{ $item->hasil == 'Tidak Hadir' ? '' : 'rgba(0, 255, 72, 0.145)' }}">
                                     <th>
-                                        {{ __('Hasil Konsultasi') }}
+                                        {{ $loop->iteration }}
+                                    </th>
+                                    <th>
+                                        <span>
+                                            {{ \Carbon\Carbon::parse($item->created_at)->addDays($item->hari - 1)->locale('id')->isoFormat('DD MMMM YYYY') }}
+                                        </span>
                                     </th>
                                     <td>:</td>
                                     <td style="width: 85%">
-                                        {{ \Carbon\Carbon::parse($item->created_at)->addDays($item->hari - 1)->locale('id')->isoFormat('DD MMMM YYYY') }}
-                                        <br>
-                                        <div style="text-align: justify">
+                                        <div style="text-align: justify" class="mb-3">
                                             {{ $item->hasil }}
                                         </div>
                                         <div>
@@ -116,7 +120,7 @@
                                                         </div>
                                                         <div class="modal-body">
                                                             <img src="{{ asset('assets/absen-konsultasi/' . str_replace(' ', '_', strtolower($item->supportTeacher->name)) . '/' . $item->foto_notes) }}"
-                                                                alt="Foto Catatan" class="img-fluid">
+                                                                alt="Foto Catatan" class="img-fluid w-100">
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary"

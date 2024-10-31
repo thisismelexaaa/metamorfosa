@@ -72,7 +72,7 @@ class ScheduleController extends Controller
         if (!file_exists(public_path('assets/absen-konsultasi/' . $username))) {
             mkdir(public_path('assets/absen-konsultasi/' . $username), 0777, true);
         }
-        
+
         $new_name = $username. '_' . $request->hari . '_' . rand() . '.' . $image->getClientOriginalExtension();
 
         $image->move(public_path('assets/absen-konsultasi/' . $username), $new_name);
@@ -88,6 +88,7 @@ class ScheduleController extends Controller
             'foto_notes' => $new_name,
             'created_at' => now(),
             'updated_at' => now(),
+            'hari' => $request->hari,
         ];
 
         // dd($data);
@@ -98,8 +99,9 @@ class ScheduleController extends Controller
             ->first();
 
         // Increment 'hari' if a previous result exists, otherwise set to 1
-        $data['hari'] = optional($cek)->hari + 1 ?? 1;
+        // $data['hari'] = optional($cek)->hari + 1 ?? 1;
 
+        // dd($data);
         // Create a new consultation result
         HasilKonsultasi::create($data);
 
