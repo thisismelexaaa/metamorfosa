@@ -89,14 +89,39 @@ class ScheduleController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
             'hari' => $request->hari,
+            // 'hari' => 4, //delete in prod
         ];
+
+
+        // check hasil konsultasi
+        // get the biggest hari in hasil konsultasi
+        $hasil_kons = HasilKonsultasi::where('id_konsultasi', $request->id_konsultasi)->orderBy('hari', 'desc')->first();
+        // dd($hasil_kons);
+
+        if($request->hari > $hasil_kons->hari){
+            // buatkan hasil konsultasi baru di hari sebelum $request->hari dengan foto null dan hasil tidak hadir
+            for($i = $hasil_kons->hari + 1; $i < $request->hari; $i++){
+                HasilKonsultasi::create([
+                    'id_konsultasi' => $request->id_konsultasi,
+                    'id_sub_layanan' => $request->id_sub_layanan,
+                    'id_layanan' => $request->id_layanan,
+                    'id_user' => $request->id_user,
+                    'id_customer' => $request->id_customer,
+                    'hasil' => 'Tidak Hadir',
+                    'foto_notes' => null,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                    'hari' => $i,
+                ]);
+            }
+        }
 
         // dd($data);
 
         // Check if a previous consultation result exists for this consultation
-        $cek = HasilKonsultasi::where('id_konsultasi', $data['id_konsultasi'])
-            ->latest()
-            ->first();
+        // $cek = HasilKonsultasi::where('id_konsultasi', $data['id_konsultasi'])
+        //     ->latest()
+        //     ->first();
 
         // Increment 'hari' if a previous result exists, otherwise set to 1
         // $data['hari'] = optional($cek)->hari + 1 ?? 1;
