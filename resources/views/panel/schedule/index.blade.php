@@ -74,7 +74,8 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="labelModal">Detail Konsultasi {{ $item->kode_konsultasi }}</h1>
-                        <a href="{{ route('konsultasi.show', encrypt($item->id)) }}" target="_blank" class="btn btn-link">Lihat Riwayat
+                        <a href="{{ route('konsultasi.show', encrypt($item->id)) }}" target="_blank"
+                            class="btn btn-link">Lihat Riwayat
                             Konsultasi</a>
                         {{-- <div class="d-flex justify-content-between">
                         </div> --}}
@@ -150,7 +151,9 @@
                                     @endphp
 
                                     <div
-                                        class="form-check mt-2 {{ $item->status == 3 ? 'd-none' : '' }} {{ $tgl_sekarang > $tgl_selesai ? 'd-none' : '' }} {{ $tgl_sekarang < $tgl_masuk ? 'd-none' : '' }} {{ count($hari_konsultasi_selesai) == $durasi ? 'd-none' : '' }}">
+                                        class="form-check mt-2 {{ $item->status == 3 ? 'd-none' : '' }}
+                                        {{ $tgl_sekarang > $tgl_selesai ? 'd-none' : '' }}
+                                        ">
                                         <input class="form-check-input" type="checkbox" id="isKonsul{{ $item->id }}"
                                             name="isKonsul" {{ $item->hasil_konsultasi != null ? 'checked' : '' }}>
                                         <label class="form-check-label" for="isKonsul{{ $item->id }}">

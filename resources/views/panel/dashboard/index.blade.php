@@ -114,9 +114,7 @@
                                     <h6 class="pb-2 currency" data-value="{{ $total_harga_full }}"></h6>
                                 </div>
                             </div>
-                            <div class="card-body pt-0">
-
-                            </div>
+                            <div class="card-body pt-0"></div>
                         </div>
                     </div>
 

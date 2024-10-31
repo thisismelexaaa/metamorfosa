@@ -247,7 +247,8 @@
                 </div>
             </div> <!-- /.row -->
         </div> <!-- /.container -->
-    </div> <!-- /.untree_co-hero -->
+    </div>
+    <!-- /.untree_co-hero -->
 
     <div class="untree_co-section" id="about-section">
         <div class="container">
@@ -357,7 +358,7 @@
             </div>
 
             <!-- Founder Section -->
-            @if (isset($founder))
+            @if (isset($founders))
                 <div class="row mb-5">
                     <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
                         <h3 class="subheading">Founder</h3>
@@ -385,7 +386,7 @@
             @endif
 
             <!-- Co-Founders Section -->
-            @if ($cofounders->isNotEmpty())
+            @if (isset($cofounders))
                 <div class="row mb-5">
                     <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
                         <h3 class="subheading">Co-Founders</h3>
@@ -415,7 +416,7 @@
             @endif
 
             <!-- Support Teachers Section -->
-            @if ($support_teachers->isNotEmpty())
+            @if (isset($support_teachers))
                 <div class="row mb-5">
                     <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
                         <h3 class="subheading">Support Teachers</h3>
@@ -450,7 +451,7 @@
             @endif
 
             <!-- Empty State Message -->
-            @if ($support_teachers->isEmpty() && $cofounders->isEmpty() && !$founders)
+            @if (!isset($founders) && !isset($cofounders) && !isset($support_teachers))
                 <div class="row mb-5">
                     <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
                         <h3 class="subheading">Tidak Ada Support Teacher, Co-Founders, atau Founder</h3>
@@ -468,7 +469,8 @@
                 <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="0">
                     <h2 class="heading">Layanan Kami</h2>
                 </div>
-            </div> <!-- /.row -->
+            </div>
+            <!-- /.row -->
 
             <div class="row justify-content-center">
                 <div class="col-lg-10">
@@ -505,8 +507,10 @@
                         </div>
                     @endif
                 </div>
-            </div> <!-- /.row -->
-        </div> <!-- /.container -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
     </div>
 
     {{-- AKTIVITAS SELANJUTNYA --}}
@@ -551,8 +555,10 @@
                     </div>
                 @endif
 
-            </div> <!-- /.row -->
-        </div> <!-- /.container -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
     </div>
 
     <div class="untree_co-section bg-light" id="berita-section">
@@ -595,8 +601,10 @@
                         <h3 class="subheading text-center">Tidak Ada Berita Terbaru</h3>
                     </div>
                 @endif
-            </div> <!-- /.row -->
-        </div> <!-- /.container -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
     </div>
 
     {{-- PARTNER --}}

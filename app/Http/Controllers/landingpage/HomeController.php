@@ -25,6 +25,7 @@ class HomeController extends Controller
 
         $data['founders'] = User::where('isFounder', 1)->first();
         $data['cofounders'] = User::where('isCoFounder', 1)->get();
+        // dd($data);
         return view('landingpage.home.index', $data);
     }
 

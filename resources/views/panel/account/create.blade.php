@@ -116,7 +116,7 @@
                                             Founder
                                         </label>
                                     </div>
-                                    <div class="form-check" {{ $isCoFounder ? 'hidden' : '' }}>
+                                    <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="isCoFounder"
                                             id="isCoFounder">
                                         <label class="form-check-label" for="isCoFounder">
