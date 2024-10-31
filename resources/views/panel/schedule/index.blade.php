@@ -141,7 +141,7 @@
                                         $tgl_masuk_date = \Carbon\Carbon::parse($item->tgl_masuk)->format('Y-m-d');
 
                                         // range dari tgl_masuk sampai tgl_selesai
-                                        $range = range($tgl_masuk, $tgl_selesai);
+                                        $range = range(strtotime($tgl_masuk_date), strtotime($tgl_selesai_date), 86400);
                                         $days = count($range);
                                         $durasi = $days;
                                         // count beetween tgl_masuk and tgl_selesai
