@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Panel;
 
 use App\Http\Controllers\Controller;
+use App\Models\NewsImage;
 use App\Models\Panel\News;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -147,6 +148,8 @@ class NewsController extends Controller
 
         $this->DefineId($data['news']);
 
+        $data['imgaes'] = NewsImage::where('news_id', $id)->get();
+
         return view('panel.news.edit', $data);
     }
 
@@ -176,6 +179,8 @@ class NewsController extends Controller
             'updated_at' => now(),
         ];
 
+
+
         // Check if a new image file is uploaded
         if ($request->hasFile('image')) {
             // Delete the old image if it exists
@@ -203,9 +208,50 @@ class NewsController extends Controller
             // Save the new file name in the 'image' column
             $data['image'] = $fileName;
         }
-
         // Update the news item in the database
         $news->update($data);
+        
+        if($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                // Get the original name of the uploaded file
+                $originalFileName = $image->getClientOriginalName();
+
+                // Get the file extension
+                $fileExtension = $image->getClientOriginalExtension();
+
+                // Hash the original file name
+                $hashedFileName = hash('sha256', $originalFileName);
+
+                // Combine the hashed name with the original file extension
+                $fileName = $hashedFileName . '.' . $fileExtension;
+
+                // Optionally, sanitize the file name to avoid issues with special characters
+                $fileName = str_replace(' ', '_', $fileName);
+
+                // Move the file to the public folder with the new name
+                $image->move(public_path('assets/image/news'), $fileName);
+
+                // delete all image first except in $request->image_id
+                $imageIds = array_filter($request->image_id, function($value) {
+                    return !is_null($value);
+                }); 
+
+                $unlink = NewsImage::where('news_id', $id)->whereNotIn('id', $imageIds)->get();
+                foreach ($unlink as $key => $value) {
+                    unlink(public_path('assets/image/news/' . $value->image));
+                }
+
+                // delete all image first except in $request->image_id
+                NewsImage::where('news_id', $id)->whereNotIn('id', $imageIds)->delete();
+
+                // Save the file name in the 'image' column
+                $news->images()->create([
+                    'image' => $fileName,
+                    'alt_text' => $originalFileName,
+                ]);
+            }
+        }
+
 
         // Redirect back with a success message
         toast('Berita berhasil diupdate!', 'success');
