@@ -81,7 +81,7 @@
                             <label for="imageInput" class="form-label d-block">Tambah Gambar</label>
                         </div>
                         <div class="image-box mb-3">
-                            <img id="imagePreview" src="" alt="" class="img-fluid mb-1">
+                            <img id="imagePreview" src="{{ asset('assets/panel/profile_images/image-icon.jpg') }}" alt="" class="img-fluid mb-1">
                             <input type="file" class="form-control image-input" name="images[]" required id="imageInput"
                                 accept="image/*">
                         </div>
@@ -144,7 +144,7 @@
 
             const newImagePreview = document.createElement('img');
             newImagePreview.classList.add('img-fluid', 'mb-1');
-            newImagePreview.src = '';
+            newImagePreview.src = '{{ asset('assets/panel/profile_images/image-icon.jpg') }}';
 
             const newImageInput = document.createElement('input');
             newImageInput.type = 'file';

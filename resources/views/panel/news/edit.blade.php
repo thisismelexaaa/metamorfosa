@@ -203,7 +203,7 @@
 
             const newImagePreview = document.createElement('img');
             newImagePreview.classList.add('img-fluid', 'mb-1');
-            newImagePreview.src = '';
+            newImagePreview.src = '{{ asset('assets/panel/profile_images/image-icon.jpg') }}';
 
             const newImageInput = document.createElement('input');
             newImageInput.type = 'file';
