@@ -526,16 +526,15 @@
                             @foreach ($news as $i => $item)
                                 @if ($item->category == 2)
                                     <div class="news-item" data-aos="fade-up" data-aos-delay="100">
-                                        <img src="{{ asset('assets/image/news/' . $item->image) }}"
-                                            alt="Thumbnail Aktivitas {{ $i }}" class="news-image">
                                         <div class="news-content">
                                             <div class="news-date">{{ $item->created_at->format('d M Y') }}</div>
                                             <h3 class="news-title">{{ $item->judul }}</h3>
-                                            <p class="news-description">{!! Str::limit($item->content, 40) !!}</p>
                                             <a href="{{ route('home.news', encrypt($item->id)) }}"
                                                 class="btn btn-primary view-details" data-id="{{ $i }}">Baca
                                                 Selengkapnya</a>
-                                        </div>
+                                            </div>
+                                            <img src="{{ asset('assets/image/news/' . $item->image) }}"
+                                                alt="Thumbnail Aktivitas {{ $i }}" class="news-image">
                                     </div>
                                 @endif
                             @endforeach

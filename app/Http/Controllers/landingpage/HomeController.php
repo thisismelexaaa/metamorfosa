@@ -17,7 +17,7 @@ class HomeController extends Controller
     {
         $data['layanan'] = Layanan::where('status', 1)->get();
         $data['sublayanan'] = SubLayanan::all();
-        $data['news'] = News::where('status', 1)->orderBy('id', 'desc')->limit(4)->get();
+        $data['news'] = News::where('status', 1)->orderBy('id', 'desc')->limit(6)->get();
         $data['partners'] = Partners::where('status', 1)->get();
         $data['support_teachers'] = User::where('role', 2)->get();
         $data['support_teachers']->each(function ($data) {
