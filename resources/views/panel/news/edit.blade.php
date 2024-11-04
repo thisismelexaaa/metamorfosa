@@ -50,6 +50,7 @@
             </div>
         </div>
     </div>
+
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
@@ -84,24 +85,11 @@
                             </div>
                         </div>
                     </div>
-                    <div id="imageInputsContainer" class="form-group">
+                    {{-- <div id="imageInputsContainer" class="form-group">
                         <div class="mb-3 mt-4">
-                            <label for="imageInput" class="form-label d-block">Gambar</label>
+                            <button type="button" class="btn btn-primary" id="addImageButton"><i class="fas fa-plus"></i>
+                                Tambah Gambar</button>
                         </div>
-                        {{-- <div class="image-box mb-3">
-                            <img id="imagePreview" src="" alt="" class="img-fluid mb-1">
-                            <input type="file" class="form-control image-input" name="images[]" required id="imageInput"
-                                accept="image/*">
-                        </div> --}}
-                        {{-- @foreach ($news->images as $image)
-                            <div class="image-box mb-3">
-                                <img src="{{ asset('assets/image/news/' . $image->image) }}" alt=""
-                                    class="img-fluid mb-1" id="imagePreview">
-                                <input type="file" class="form-control image-input" name="images[]" accept="image/*"
-                                    value="{{ $image->image }}" id="imageInput">
-                                <input type="hidden" name="image_id[]" value="{{ $image->id }}">
-                            </div>
-                        @endforeach --}}
                         @foreach ($news->images as $image)
                             <div class="image-box mb-3">
                                 <img src="{{ asset('assets/image/news/' . $image->image) }}" alt=""
@@ -112,11 +100,7 @@
                                     data-index="{{ $loop->index }}" class="image-id">
                             </div>
                         @endforeach
-                    </div>
-                    <div class="text-end">
-                        <button type="button" class="btn btn-primary" id="addImageButton"><i class="fas fa-plus"></i>
-                            Tambah</button>
-                    </div>
+                    </div> --}}
                     <div class="form-group">
                         <label for="konten">Konten</label>
                         <div id="editor">{!! $news->content !!}</div>
@@ -157,8 +141,56 @@
         });
 
         // quill editor
-        var quill = new Quill('#editor', {
-            theme: 'snow'
+        const quill = new Quill('#editor', {
+            theme: 'snow',
+            modules: {
+                toolbar: {
+                    container: [
+                        [{
+                            'header': [1, 2, false]
+                        }],
+                        ['bold', 'italic', 'underline'],
+                        [{
+                            'list': 'ordered'
+                        }, {
+                            'list': 'bullet'
+                        }],
+                        ['image', 'code-block'],
+                        [{
+                            'size': ['small', false, 'large', 'huge']
+                        }],
+                        [{
+                            'color': []
+                        }, {
+                            'background': []
+                        }],
+                        [{
+                            'align': []
+                        }]
+                    ],
+                    handlers: {
+                        image: function() {
+                            let input = document.createElement('input');
+                            input.setAttribute('type', 'file');
+                            input.setAttribute('accept', 'image/*');
+                            input.click();
+
+                            input.onchange = () => {
+                                const file = input.files[0];
+                                if (file) {
+                                    const reader = new FileReader();
+                                    reader.onload = (e) => {
+                                        const range = this.quill.getSelection();
+                                        this.quill.insertEmbed(range.index, 'image', e.target.result);
+                                    };
+                                    reader.readAsDataURL(file);
+                                }
+                            };
+                        }
+                    }
+                },
+                imageResize: {} // Aktifkan fitur image resize
+            }
         });
 
         quill.on('text-change', function(delta, oldDelta, source) {
@@ -167,70 +199,70 @@
 
         // const imageInput = document.getElementById('imageInput');
         // const imagePreview = document.getElementById('imagePreview');
-        const imageInputs = document.querySelectorAll('.image-input');
+        // const imageInputs = document.querySelectorAll('.image-input');
 
-        imageInputs.forEach(imageInput => {
-            imageInput.addEventListener('change', function() {
-                const index = this.getAttribute('data-index');
-                const imagePreview = document.querySelector(`.image-preview[data-index="${index}"]`);
-                const imageIdInput = document.querySelector(`.image-id[data-index="${index}"]`);
+        // imageInputs.forEach(imageInput => {
+        //     imageInput.addEventListener('change', function() {
+        //         const index = this.getAttribute('data-index');
+        //         const imagePreview = document.querySelector(`.image-preview[data-index="${index}"]`);
+        //         const imageIdInput = document.querySelector(`.image-id[data-index="${index}"]`);
 
-                const file = this.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        if (imagePreview) {
-                            imagePreview.src = e.target.result;
-                        }
-                    };
-                    reader.readAsDataURL(file);
+        //         const file = this.files[0];
+        //         if (file) {
+        //             const reader = new FileReader();
+        //             reader.onload = function(e) {
+        //                 if (imagePreview) {
+        //                     imagePreview.src = e.target.result;
+        //                 }
+        //             };
+        //             reader.readAsDataURL(file);
 
-                    // Update the image_id to "newImage"
-                    if (imageIdInput) {
-                        imageIdInput.value = "";
-                    }
-                }
-            });
-        });
+        //             // Update the image_id to "newImage"
+        //             if (imageIdInput) {
+        //                 imageIdInput.value = "";
+        //             }
+        //         }
+        //     });
+        // });
 
-        const addImageButton = document.getElementById('addImageButton');
-        const imageInputsContainer = document.getElementById('imageInputsContainer');
+        // const addImageButton = document.getElementById('addImageButton');
+        // const imageInputsContainer = document.getElementById('imageInputsContainer');
 
-        addImageButton.addEventListener('click', function() {
-            // Membuat elemen baru untuk input gambar
-            const newImageBox = document.createElement('div');
-            newImageBox.classList.add('image-box', 'mb-3');
+        // addImageButton.addEventListener('click', function() {
+        //     // Membuat elemen baru untuk input gambar
+        //     const newImageBox = document.createElement('div');
+        //     newImageBox.classList.add('image-box', 'mb-3');
 
-            const newImagePreview = document.createElement('img');
-            newImagePreview.classList.add('img-fluid', 'mb-1');
-            newImagePreview.src = '{{ asset('assets/panel/profile_images/image-icon.jpg') }}';
+        //     const newImagePreview = document.createElement('img');
+        //     newImagePreview.classList.add('img-fluid', 'mb-1');
+        //     newImagePreview.src = '{{ asset('assets/panel/profile_images/image-icon.jpg') }}';
 
-            const newImageInput = document.createElement('input');
-            newImageInput.type = 'file';
-            newImageInput.name = 'images[]';
-            newImageInput.classList.add('form-control', 'image-input');
-            newImageInput.required = true;
-            newImageInput.accept = 'image/*';
-           
+        //     const newImageInput = document.createElement('input');
+        //     newImageInput.type = 'file';
+        //     newImageInput.name = 'images[]';
+        //     newImageInput.classList.add('form-control', 'image-input');
+        //     newImageInput.required = true;
+        //     newImageInput.accept = 'image/*';
 
-            // Menambahkan preview image
-            newImageInput.addEventListener('change', function() {
-                const file = this.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function() {
-                        newImagePreview.src = reader.result;
-                    };
-                    reader.readAsDataURL(file);
-                }
-                // add input hidden for image_id
-                
-            });
 
-            // Menyusun elemen baru ke dalam container
-            newImageBox.appendChild(newImagePreview);
-            newImageBox.appendChild(newImageInput);
-            imageInputsContainer.appendChild(newImageBox);
-        });
+        //     // Menambahkan preview image
+        //     newImageInput.addEventListener('change', function() {
+        //         const file = this.files[0];
+        //         if (file) {
+        //             const reader = new FileReader();
+        //             reader.onload = function() {
+        //                 newImagePreview.src = reader.result;
+        //             };
+        //             reader.readAsDataURL(file);
+        //         }
+        //         // add input hidden for image_id
+
+        //     });
+
+        //     // Menyusun elemen baru ke dalam container
+        //     newImageBox.appendChild(newImagePreview);
+        //     newImageBox.appendChild(newImageInput);
+        //     imageInputsContainer.appendChild(newImageBox);
+        // });
     </script>
 @endsection

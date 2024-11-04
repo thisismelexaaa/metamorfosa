@@ -40,8 +40,8 @@
                 <table class="table nowrap table-striped table-hover align-middle" id="datatable">
                     <thead>
                         <tr>
-                            <th>{{ __('Poster') }}</th>
                             <th>{{ __('Judul') }}</th>
+                            <th>{{ __('Poster') }}</th>
                             <th>{{ __('Penulis') }}</th>
                             <th>{{ __('Kategori') }}</th>
                             <th>{{ __('Status') }}</th>

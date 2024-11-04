@@ -21,7 +21,6 @@ class NewsController extends Controller
     public function index()
     {
         $data['news'] = News::all();
-
         $data['news']->each(function ($data) {
             $this->DefineId($data);
         });
@@ -43,93 +42,69 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate the incoming request data
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'images' => 'required|array',
-            'kategori' => 'required|string|max:255',
-            'konten' => 'required|string',
-        ]);
-        
+        // dd($request->all());
+        try {
+            // Validate the incoming request data
+            $validatedData = $request->validate([
+                'title' => 'required|string|max:255',
+                'image' => 'required|image|max:2048',
+                // 'images' => 'required|array',
+                'kategori' => 'required|string|max:255',
+                'konten' => 'required|string',
+            ]);
 
-        // Prepare the data for storing
-        $data = [
-            'judul' => $validatedData['title'],
-            'author' => Auth::user()->name,
-            'category' => $validatedData['kategori'],
-            'status' => 1,
-            'content' => $validatedData['konten'],
-            'created_at' => now(),
-            'updated_at' => now(),
-        ];
+            // Prepare the data for storing
+            $data = [
+                'judul' => $validatedData['title'],
+                'author' => Auth::user()->name,
+                'category' => $validatedData['kategori'],
+                'status' => 1,
+                'content' => $validatedData['konten'],
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
 
-        // Check if the request has a file named 'image'
-        if ($request->hasFile('image')) {
-            // Get the original name of the uploaded file
-            $originalFile = $request->file('image');
-            $originalFileName = $originalFile->getClientOriginalName();
-
-            // Get the file extension
-            $fileExtension = $originalFile->getClientOriginalExtension();
-
-            // Hash the original file name
-            $hashedFileName = hash('sha256', $originalFileName);
-
-            // Combine the hashed name with the original file extension
-            $fileName = $hashedFileName . '.' . $fileExtension;
-
-            // Optionally, sanitize the file name to avoid issues with special characters
-            $fileName = str_replace(' ', '_', $fileName);
-
-            // Move the file to the public folder with the new name
-            $originalFile->move(public_path('assets/image/news'), $fileName);
-
-            // Save the file name in the 'image' column
-            $data['image'] = $fileName;
-        }
-
-        // Dump the validated data and prepared data for debugging
-        // dd($request->all(), $data);
-
-        // Store the data in the database and get the id
-        // News::create($data);
-        $news = News::create($data);
-
-        // Check if the request has files named 'images'
-        if ($request->hasFile('images')) {
-            // Loop through each image file
-            foreach ($request->file('images') as $image) {
-                // Get the original name of the uploaded file
-                $originalFileName = $image->getClientOriginalName();
-
-                // Get the file extension
-                $fileExtension = $image->getClientOriginalExtension();
-
-                // Hash the original file name
-                $hashedFileName = hash('sha256', $originalFileName);
-
-                // Combine the hashed name with the original file extension
-                $fileName = $hashedFileName . '.' . $fileExtension;
-
-                // Optionally, sanitize the file name to avoid issues with special characters
-                $fileName = str_replace(' ', '_', $fileName);
-
-                // Move the file to the public folder with the new name
-                $image->move(public_path('assets/image/news'), $fileName);
-
-                // Save the file name in the 'image' column
-                $news->images()->create([
-                    'image' => $fileName,
-                    'alt_text' => $originalFileName,
-                ]);
+            // Process the main image
+            if ($request->hasFile('image')) {
+                $data['image'] = $this->processImage($request->file('image'));
             }
-        }
 
-        // Redirect back with success message
-        toast('Berita berhasil di post!', 'success');
-        return redirect()->route('news.index');
+            // Store the main news data
+            $news = News::create($data);
+
+            // Process additional images
+            if ($request->hasFile('images')) {
+                foreach ($request->file('images') as $image) {
+                    $fileName = $this->processImage($image);
+                    $news->images()->create([
+                        'image' => $fileName,
+                        'alt_text' => $image->getClientOriginalName(),
+                    ]);
+                }
+            }
+
+            // Redirect with success message
+            toast('Berita berhasil di post!', 'success');
+            return redirect()->route('news.index');
+        } catch (\Exception $e) {
+            // Handle exceptions and redirect back with error message
+            toast('Terjadi kesalahan saat memposting berita!, ' . $e, 'error');
+            dd($e);
+            return redirect()->back()->withInput();
+        }
     }
+
+    // Helper function to process image
+    private function processImage($image)
+    {
+        $originalFileName = $image->getClientOriginalName();
+        $fileExtension = $image->getClientOriginalExtension();
+        $hashedFileName = hash('sha256', $originalFileName);
+        $fileName = str_replace(' ', '_', $hashedFileName . '.' . $fileExtension);
+        $image->move(public_path('assets/image/news'), $fileName);
+        return $fileName;
+    }
+
 
     /**
      * Display the specified resource.
@@ -149,7 +124,6 @@ class NewsController extends Controller
         $this->DefineId($data['news']);
 
         $data['imgaes'] = NewsImage::where('news_id', $id)->get();
-
         return view('panel.news.edit', $data);
     }
 
@@ -178,8 +152,6 @@ class NewsController extends Controller
             'content' => $validatedData['konten'],
             'updated_at' => now(),
         ];
-
-
 
         // Check if a new image file is uploaded
         if ($request->hasFile('image')) {
@@ -210,8 +182,8 @@ class NewsController extends Controller
         }
         // Update the news item in the database
         $news->update($data);
-        
-        if($request->hasFile('images')) {
+
+        if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
                 // Get the original name of the uploaded file
                 $originalFileName = $image->getClientOriginalName();
@@ -232,9 +204,9 @@ class NewsController extends Controller
                 $image->move(public_path('assets/image/news'), $fileName);
 
                 // delete all image first except in $request->image_id
-                $imageIds = array_filter($request->image_id, function($value) {
+                $imageIds = array_filter($request->image_id, function ($value) {
                     return !is_null($value);
-                }); 
+                });
 
                 $unlink = NewsImage::where('news_id', $id)->whereNotIn('id', $imageIds)->get();
                 foreach ($unlink as $key => $value) {

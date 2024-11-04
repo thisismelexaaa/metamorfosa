@@ -586,7 +586,7 @@
                                         <div class="berita-content">
                                             <div class="berita-date">{{ $berita->created_at->format('d M Y') }}</div>
                                             <h3 class="berita-title">{{ $berita->judul }}</h3>
-                                            <p class="berita-description">{!! Str::limit($berita->content, 40) !!}</p>
+                                            {{-- <p class="berita-description">{!! Str::limit($berita->content, 40) !!}</p> --}}
                                             <a href="{{ route('home.news', encrypt($berita->id)) }}"
                                                 class="btn btn-primary view-details" data-id="{{ $i }}">Baca
                                                 Selengkapnya</a>

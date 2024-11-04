@@ -25,6 +25,8 @@
     <link rel="stylesheet" href="{{ asset('assets/landingpage/css/style.css') }}">
 
     <title>{{ env('APP_NAME') }}</title>
+    @yield('styles')
+
 </head>
 
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="100">

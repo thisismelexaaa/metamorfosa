@@ -26,6 +26,11 @@
             /* Adjust the height as needed */
             object-fit: cover;
         }
+
+        .ql-editor img {
+            max-width: 100%;
+            height: auto;
+        }
     </style>
 @endsection
 
@@ -50,6 +55,7 @@
             </div>
         </div>
     </div>
+
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
@@ -76,23 +82,21 @@
                                 required>
                         </div>
                     </div>
-                    <div id="imageInputsContainer" class="form-group">
+                    {{-- <div id="imageInputsContainer" class="form-group mt-3">
                         <div class="mb-3 mt-4">
-                            <label for="imageInput" class="form-label d-block">Tambah Gambar</label>
+                            <button type="button" class="btn btn-primary" id="addImageButton"><i class="fas fa-plus"></i>
+                                Tambah Gambar</button>
                         </div>
                         <div class="image-box mb-3">
-                            <img id="imagePreview" src="{{ asset('assets/panel/profile_images/image-icon.jpg') }}" alt="" class="img-fluid mb-1">
+                            <img id="imagePreview" src="{{ asset('assets/panel/profile_images/image-icon.jpg') }}"
+                                alt="" class="img-fluid mb-1">
                             <input type="file" class="form-control image-input" name="images[]" required id="imageInput"
                                 accept="image/*">
                         </div>
-                    </div>
-                    <div class="text-end">
-                        <button type="button" class="btn btn-primary" id="addImageButton"><i class="fas fa-plus"></i>
-                            Tambah</button>
-                    </div>
+                    </div> --}}
                     <div class="form-group">
                         <label for="konten">Konten</label>
-                        <div id="editor"></div>
+                        <div id="editor" class="form-control"></div>
                         <textarea hidden name="konten" id="konten"></textarea>
                     </div>
                     <button class="btn btn-primary mt-3">Submit</button>
@@ -112,63 +116,116 @@
         });
 
         // quill editor
-        var quill = new Quill('#editor', {
-            theme: 'snow'
+        // Daftarkan module image resize
+        const ImageResize = window.ImageResize.default;
+        Quill.register('modules/imageResize', ImageResize);
+
+        // Inisialisasi editor Quill
+        const quill = new Quill('#editor', {
+            theme: 'snow',
+            modules: {
+                toolbar: {
+                    container: [
+                        [{
+                            'header': [1, 2, false]
+                        }],
+                        ['bold', 'italic', 'underline'],
+                        [{
+                            'list': 'ordered'
+                        }, {
+                            'list': 'bullet'
+                        }],
+                        ['image', 'code-block'],
+                        [{
+                            'size': ['small', false, 'large', 'huge']
+                        }],
+                        [{
+                            'color': []
+                        }, {
+                            'background': []
+                        }],
+                        [{
+                            'align': []
+                        }]
+                    ],
+                    handlers: {
+                        image: function() {
+                            let input = document.createElement('input');
+                            input.setAttribute('type', 'file');
+                            input.setAttribute('accept', 'image/*');
+                            input.click();
+
+                            input.onchange = () => {
+                                const file = input.files[0];
+                                if (file) {
+                                    const reader = new FileReader();
+                                    reader.onload = (e) => {
+                                        const range = this.quill.getSelection();
+                                        this.quill.insertEmbed(range.index, 'image', e.target.result);
+                                    };
+                                    reader.readAsDataURL(file);
+                                }
+                            };
+                        }
+                    }
+                },
+                imageResize: {} // Aktifkan fitur image resize
+            }
         });
 
         quill.on('text-change', function(delta, oldDelta, source) {
             document.getElementById("konten").value = quill.root.innerHTML;
         });
 
-        const imageInput = document.getElementById('imageInput');
-        const imagePreview = document.getElementById('imagePreview');
+        // const imageInput = document.getElementById('imageInput');
+        // const imagePreview = document.getElementById('imagePreview');
 
-        imageInput.addEventListener('change', function() {
-            const file = this.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    imagePreview.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
+        // imageInput.addEventListener('change', function() {
+        //     const file = this.files[0];
+        //     if (file) {
+        //         const reader = new FileReader();
+        //         reader.onload = function(e) {
+        //             imagePreview.src = e.target.result;
+        //         };
+        //         reader.readAsDataURL(file);
+        //     }
+        // });
 
-        const addImageButton = document.getElementById('addImageButton');
-        const imageInputsContainer = document.getElementById('imageInputsContainer');
+        // const addImageButton = document.getElementById('addImageButton');
+        // const imageInputsContainer = document.getElementById('imageInputsContainer');
 
-        addImageButton.addEventListener('click', function() {
-            // Membuat elemen baru untuk input gambar
-            const newImageBox = document.createElement('div');
-            newImageBox.classList.add('image-box', 'mb-3');
+        // addImageButton.addEventListener('click', function() {
+        //     // Membuat elemen baru untuk input gambar
+        //     const newImageBox = document.createElement('div');
+        //     newImageBox.classList.add('image-box', 'mb-3');
 
-            const newImagePreview = document.createElement('img');
-            newImagePreview.classList.add('img-fluid', 'mb-1');
-            newImagePreview.src = '{{ asset('assets/panel/profile_images/image-icon.jpg') }}';
+        //     const newImagePreview = document.createElement('img');
+        //     newImagePreview.classList.add('img-fluid', 'mb-1');
+        //     newImagePreview.src = '{{ asset('assets/panel/profile_images/image-icon.jpg') }}';
 
-            const newImageInput = document.createElement('input');
-            newImageInput.type = 'file';
-            newImageInput.name = 'images[]';
-            newImageInput.classList.add('form-control', 'image-input');
-            newImageInput.required = true;
-            newImageInput.accept = 'image/*';
+        //     const newImageInput = document.createElement('input');
+        //     newImageInput.type = 'file';
+        //     newImageInput.name = 'images[]';
+        //     newImageInput.classList.add('form-control', 'image-input');
+        //     newImageInput.required = true;
+        //     newImageInput.accept = 'image/*';
 
-            // Menambahkan preview image
-            newImageInput.addEventListener('change', function() {
-                const file = this.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function() {
-                        newImagePreview.src = reader.result;
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
+        //     // Menambahkan preview image
+        //     newImageInput.addEventListener('change', function() {
+        //         const file = this.files[0];
+        //         if (file) {
+        //             const reader = new FileReader();
+        //             reader.onload = function() {
+        //                 newImagePreview.src = reader.result;
+        //             };
+        //             reader.readAsDataURL(file);
+        //         }
+        //     });
 
-            // Menyusun elemen baru ke dalam container
-            newImageBox.appendChild(newImagePreview);
-            newImageBox.appendChild(newImageInput);
-            imageInputsContainer.appendChild(newImageBox);
-        });
+        //     // Menyusun elemen baru ke dalam container
+        //     newImageBox.appendChild(newImagePreview);
+        //     newImageBox.appendChild(newImageInput);
+        //     imageInputsContainer.appendChild(newImageBox);
+        // });
     </script>
 @endsection

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Panel\Layanan;
 use App\Models\Panel\SubLayanan;
 use App\Http\Controllers\Controller;
+use App\Models\NewsImage;
 use App\Models\Panel\News;
 use App\Models\Panel\Partners;
 use App\Models\User;
@@ -38,8 +39,11 @@ class HomeController extends Controller
     public function showNews(string $id)
     {
         $data['news'] = News::findOrFail($id);
-        $data['berita'] = News::where('category', 1)->get();
+        $data['berita'] = News::where('category', 1)->get()->except($data['news']->id);
         $data['acara'] = News::where('category', 2)->get();
+        $data['newsImages'] = NewsImage::where('news_id', $id)->get();
+
+        // dd($data);
         return view('landingpage.news.index', $data);
     }
 

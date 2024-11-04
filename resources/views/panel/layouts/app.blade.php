@@ -40,7 +40,7 @@
     <link rel="stylesheet" href="{{ asset('assets/DataTables/datatables.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/select2-4.1.0-rc.0/dist/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/select2-4.1.0-rc.0/dist/css/select2-bootstrap-5-theme.min.css') }}">
-    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
     @yield('styles')
 </head>
 
@@ -95,10 +95,11 @@
     <script src="{{ asset('assets/select2-4.1.0-rc.0/dist/js/select2.full.min.js') }}"></script>
     {{-- sweet alert --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="{{ asset('assets/panel/js/image-resize.min.js') }}"></script>
 
     @yield('scripts')
 </body>
